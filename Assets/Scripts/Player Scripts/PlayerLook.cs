@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    public CinemachineVirtualCamera cinemachine;
+    public Camera cam;
     private float xRotation = 0f;
 
     public float xSensitivity = 30f;
@@ -15,7 +15,7 @@ public class PlayerLook : MonoBehaviour
     Vector2 inputValue;
     
     private void Awake() {
-        cinemachine = GetComponentInChildren<CinemachineVirtualCamera>();
+        cam = GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class PlayerLook : MonoBehaviour
         float mouseY = input.y;
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-        cinemachine.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
     }

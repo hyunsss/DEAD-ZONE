@@ -2,27 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magazine : MonoBehaviour
+public class Magazine : Item
 {
     [SerializeField] private int maxAmmoCount;
     [SerializeField] private int currentAmmoCount;
 
-    Stack<Ammo> currentAmmoList = new Stack<Ammo>();
+    public Ammo thisAmmo;
 
-    public bool UseMagazine(out Ammo ammo)
+    public void UseMagazine(out bool isEnough)
     {
-        if(currentAmmoList.Count != 0) {
-            ammo = currentAmmoList.Pop();
-            return true;
+        if(currentAmmoCount != 0) {
+            currentAmmoCount--;
+            isEnough = true;
         } else {
-            ammo = null;
-            return false;
+            isEnough = false;
         }
     }
 
     public void InsertAmmo(Ammo ammo, out bool isSuccess) {
-        if(currentAmmoList.Count <= maxAmmoCount) {
-            currentAmmoList.Push(ammo);
+        if(currentAmmoCount <= maxAmmoCount) {
+            currentAmmoCount++;
             isSuccess = true;
         } else {
             isSuccess = false;
@@ -31,8 +30,9 @@ public class Magazine : MonoBehaviour
     }
 
     public Ammo RemoveAmmo() {
-        if(currentAmmoList.Count != 0) {
-            return currentAmmoList.Pop();
+        if(currentAmmoCount != 0) {
+            currentAmmoCount--;
+            return thisAmmo; 
         } else {
             return null;
         }

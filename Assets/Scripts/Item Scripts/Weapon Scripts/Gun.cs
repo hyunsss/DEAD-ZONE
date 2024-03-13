@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using Lean.Pool;
 using UnityEngine;
 
@@ -10,11 +11,15 @@ public class Gun : Weapon
 
     public override void Shot()
     {
-        currentMagazine.UseMagazine(out Ammo currentAmmo);
+        currentMagazine.UseMagazine(out bool isEnough);
 
-        if(currentAmmo != null) {
-            Ammo ShotAmmo = LeanPool.Spawn(currentAmmo);
-            ShotAmmo.state = AmmoState.Shot;
+        if(isEnough == true) {
+            Ammo ammo = LeanPool.Spawn(currentMagazine.thisAmmo, shotPoint.position, shotPoint.rotation);
+            ammo.rigid.velocity = shotPoint.forward * ammo.bulletSpeed;
+
+            LeanPool.Despawn(ammo, 3f);
         }
+
     }
+
 }

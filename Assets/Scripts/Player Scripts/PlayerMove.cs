@@ -6,9 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     CharacterController characterController;
-    Vector3 inputVec;
     Rigidbody rigid;
+    Animator animator;
 
+    Vector3 moveDir;
+    Vector3 inputVec;
+    Vector3 gravityDir;
     float gravityValue;
     public float jumpPower;
     bool isCanjump;
@@ -22,48 +25,66 @@ public class PlayerMove : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
         currentSpeed = walkSpeed;
-        gravityValue = -9.81f;
+        gravityValue = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
+        CalcGravity();
         MoveState();
         RunState();
+        PlayAnim();
+    }
+
+    void CalcGravity() {
+        //중력 가속도 가산
+        gravityDir.y += Physics.gravity.y * gravityValue * Time.deltaTime;
+    }
+
+    void PlayAnim() {
+        animator.SetFloat("Speed", moveDir.magnitude);
+        Debug.Log(moveDir.magnitude);
+        
+        if(moveDir.y > 0 && isRun == true) SetPlayerWalkAnimation(0, 2);
+        else {SetPlayerWalkAnimation(moveDir.x, moveDir.y);}
+
+        if(characterController.isGrounded == true) {
+            animator.SetBool("isJump", false);
+        }
+
     }
 
     void OnMove(InputValue value) {
-        Vector2 TempVec = value.Get<Vector2>();
+        moveDir = value.Get<Vector2>();
 
         float x, y;
 
-        Debug.Log(inputVec.x + ", " + inputVec.z);
-        if(TempVec.y < 0) {
-            x = TempVec.x;
-            y = TempVec.y + 0.5f;
+        if(moveDir.y < 0) {
+            x = moveDir.x;
+            y = moveDir.y + 0.5f;
         } 
         else 
         {
-            x = TempVec.x;
-            y = TempVec.y;
+            x = moveDir.x;
+            y = moveDir.y;
         }
 
         inputVec.x = x;
         inputVec.z = y;
     }
 
+
     void OnJump(InputValue value) {
-        Debug.Log("Jump Pressed");
 
         if(characterController.isGrounded == true) {
-            Debug.Log("Can Jump");
-            inputVec.y = jumpPower;
-        } else {
-            Debug.Log("Can not Jump");
-        }
+            gravityDir.y = jumpPower;
+            animator.SetBool("isJump", true);
+        } 
     }
 
     void OnRun(InputValue value) {
@@ -72,16 +93,26 @@ public class PlayerMove : MonoBehaviour
 
     void RunState() {
         if(isRun == true && inputVec.z > 0) { 
-            Debug.Log("달리는 상태");
             currentSpeed = runSpeed;
+            
         }
-        else {currentSpeed = walkSpeed; Debug.Log("걷는 상태");}
+        else {currentSpeed = walkSpeed;}
     }
 
     void MoveState() {
         Vector3 nextVec = inputVec * currentSpeed * Time.deltaTime;
-        if(characterController.isGrounded == false) inputVec.y += gravityValue * Time.deltaTime;
         characterController.Move(transform.TransformDirection(nextVec));
+        inputVec.y = gravityDir.y;
+    }
+
+    void SetPlayerWalkAnimation(float x, float y) {
+        float TimeSpeed = 6f;
+        Debug.Log("setplay enable");
+        float newX = Mathf.Lerp(animator.GetFloat("WalkX"), x, Time.deltaTime * TimeSpeed);
+        float newY = Mathf.Lerp(animator.GetFloat("WalkY"), y, Time.deltaTime * TimeSpeed);
+
+        animator.SetFloat("WalkX", newX);
+        animator.SetFloat("WalkY", newY);
     }
 
 }
