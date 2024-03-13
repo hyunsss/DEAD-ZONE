@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     CharacterController characterController;
-    Rigidbody rigid;
     Animator animator;
 
     Vector3 moveDir;
@@ -14,7 +13,6 @@ public class PlayerMove : MonoBehaviour
     Vector3 gravityDir;
     float gravityValue;
     public float jumpPower;
-    bool isCanjump;
 
     public float walkSpeed;
     public float runSpeed;
@@ -24,10 +22,9 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-
+        animator.SetLayerWeight(1, 0f);
         currentSpeed = walkSpeed;
         gravityValue = 1;
     }
@@ -48,12 +45,11 @@ public class PlayerMove : MonoBehaviour
 
     void PlayAnim() {
         animator.SetFloat("Speed", moveDir.magnitude);
-        Debug.Log(moveDir.magnitude);
         
         if(moveDir.y > 0 && isRun == true) SetPlayerWalkAnimation(0, 2);
         else {SetPlayerWalkAnimation(moveDir.x, moveDir.y);}
 
-        if(characterController.isGrounded == true) {
+        if(characterController.isGrounded == true && animator.GetBool("isJump") == true) {
             animator.SetBool("isJump", false);
         }
 
@@ -107,7 +103,6 @@ public class PlayerMove : MonoBehaviour
 
     void SetPlayerWalkAnimation(float x, float y) {
         float TimeSpeed = 6f;
-        Debug.Log("setplay enable");
         float newX = Mathf.Lerp(animator.GetFloat("WalkX"), x, Time.deltaTime * TimeSpeed);
         float newY = Mathf.Lerp(animator.GetFloat("WalkY"), y, Time.deltaTime * TimeSpeed);
 

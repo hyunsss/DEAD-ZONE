@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    public Camera cam;
+    public CinemachineVirtualCamera cam;
     private float xRotation = 0f;
 
     public float xSensitivity = 30f;
@@ -15,7 +15,7 @@ public class PlayerLook : MonoBehaviour
     Vector2 inputValue;
     
     private void Awake() {
-        cam = GetComponentInChildren<Camera>();
+        cam = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
     // Update is called once per frame
