@@ -81,7 +81,7 @@ public class PlayerMove : MonoBehaviour
     void MoveState() {
         Vector3 nextVec = inputVec * currentSpeed * Time.deltaTime;
         if(characterController.isGrounded == false) inputVec.y += gravityValue * Time.deltaTime;
-        characterController.Move(nextVec);
+        characterController.Move(transform.TransformDirection(nextVec));
     }
 
 }
