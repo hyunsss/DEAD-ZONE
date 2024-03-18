@@ -49,9 +49,7 @@ public class PlayerMove : MonoBehaviour
         if(moveDir.y > 0 && isRun == true) SetPlayerWalkAnimation(0, 2);
         else {SetPlayerWalkAnimation(moveDir.x, moveDir.y);}
 
-        if(characterController.isGrounded == true && animator.GetBool("isJump") == true) {
-            animator.SetBool("isJump", false);
-        }
+        
 
     }
 
@@ -78,9 +76,14 @@ public class PlayerMove : MonoBehaviour
     void OnJump(InputValue value) {
 
         if(characterController.isGrounded == true) {
-            gravityDir.y = jumpPower;
             animator.SetBool("isJump", true);
+            gravityDir.y = jumpPower;
+            Debug.Log("onjump");
         } 
+    }
+
+    void EndJump() {
+        animator.SetBool("isJump", false);
     }
 
     void OnRun(InputValue value) {

@@ -5,3 +5,7 @@ using UnityEngine;
 public interface IUseable {
     public void Use();
 }
+
+public interface IInteractable {
+    public void Interact();
+}

@@ -1,9 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
+
+    private void Awake() {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -13,9 +16,12 @@ public class CameraManager : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void CursorVisible(bool isVisible) {
+        Cursor.visible = isVisible;
+        Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
     }
+    public void CursorVisible() {
+        Cursor.visible = !Cursor.visible;
+        Cursor.lockState = Cursor.visible == true ? CursorLockMode.None : CursorLockMode.Locked;
+    }   
 }

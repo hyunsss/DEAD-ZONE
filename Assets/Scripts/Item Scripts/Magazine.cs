@@ -5,7 +5,7 @@ using UnityEngine;
 public class Magazine : Item
 {
     [SerializeField] private int maxAmmoCount;
-    [SerializeField] private int currentAmmoCount;
+    public int currentAmmoCount;
 
     public Ammo thisAmmo;
 

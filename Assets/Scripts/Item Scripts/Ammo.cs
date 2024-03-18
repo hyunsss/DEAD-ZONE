@@ -9,18 +9,18 @@ public class Ammo : Item
     public AmmoState state;
     public int damage;
     public int bulletSpeed;
-    public Rigidbody rigid;
-
-    private void Awake() {
-        rigid = GetComponent<Rigidbody>();
-    }
 
     private void OnEnable() {
-        rigid.useGravity = false;
+        rigid.useGravity = true;
+        rigid.isKinematic = true;
     }
 
     private void OnDisable() {
         rigid.position = Vector3.zero;
+    }
+
+    public void AmmoShot() {
+        rigid.isKinematic = false;
     }
 
 
