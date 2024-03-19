@@ -29,4 +29,17 @@ public class UseSanpShot : MonoBehaviour
             SnapshotCamera.SavePNG(snapshot, Name, Path);
         }
     }
+
+    public void GetPictureFunc(GameObject[] gameObjects, int width, int height) {
+        snapshotCamera = SnapshotCamera.MakeSnapshotCamera(0);
+        for (int i = 0; i < gameObjects.Length; i++)
+        {
+            // 파일 이름 설정
+            Name = gameObjects[i].gameObject.name + "_Icon";
+            // 사진 찍기
+            Texture2D snapshot = snapshotCamera.TakePrefabSnapshot(gameObjects[i], width, height);
+            // 사진 저장
+            SnapshotCamera.SavePNG(snapshot, Name, Path);
+        }
+    }
 }
