@@ -8,25 +8,31 @@ using Lean.Pool;
 
 public abstract class Item : SerializedMonoBehaviour, IInteractable
 {
+    [Header("Cell Parameter")]
     public ItemKey type;
+    public Sprite inventorySprite;
+    public int cellwidth;
+    public int cellheight;
+    [Space]
+    [Header("Item Status")]
     public string item_name;
     public string item_desc;
-    public Sprite inventorySprite;
     public int prize;
     
     [HideInInspector] public MeshCollider meshCollider;
     [HideInInspector] public MeshRenderer meshRenderer;
     [HideInInspector] public Rigidbody rigid;
 
-    private void Awake() {
-        meshCollider = GetComponent<MeshCollider>();
-        meshRenderer = GetComponent<MeshRenderer>();
+    protected virtual void Awake() {
+        meshCollider = GetComponentInChildren<MeshCollider>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
         rigid = GetComponent<Rigidbody>();
     }
 
     public void Interact()
     {
-        ItemManager.Instance.MoveToInventory(this);
+        ItemManager.Instance.MoveToInventoryFindCell(UIManager.Instance.player_Inven.grid, this);
+        Debug.Log("interact enable");
     }
 
     

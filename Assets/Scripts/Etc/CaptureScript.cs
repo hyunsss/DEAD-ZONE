@@ -28,16 +28,15 @@ public class SnapshotCamera : MonoBehaviour {
     /// <summary>
     /// The default position offset applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultPositionOffset = new Vector3(0, -0.2f, 1);
+    public Vector3 defaultPositionOffset = new Vector3(-1f, 0, 1);
     /// <summary>
     /// The default rotation applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultRotation = new Vector3(315.8529f, 300.8297f, 37.28433f);
-    // public Vector3 defaultRotation = new Vector3(360.8529f, 290.8297f, 40.28433f);
+    public Vector3 defaultRotation = new Vector3(0, 90, 0);
     /// <summary>
     /// The default scale applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultScale = new Vector3(5.2f, 5.2f, 5.2f);
+    public Vector3 defaultScale = new Vector3(4.2f, 4.2f, 4.2f);
 
     // This private constructor serves to ensure only the factory can produce new instances.
     private SnapshotCamera () { }

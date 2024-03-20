@@ -2,13 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
+#region 1by1 snapshot setting
 
+//default rotation  public Vector3 defaultRotation = new Vector3(360.8529f, 290.8297f, 40.28433f);
+/*
+    /// </summary>
+    public Vector3 defaultPositionOffset = new Vector3(0, -0.2f, 1);
+    /// <summary>
+    /// The default rotation applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultRotation = new Vector3(315.8529f, 300.8297f, 37.28433f);
+    /// <summary>
+    /// The default scale applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultScale = new Vector3(5.2f, 5.2f, 5.2f);
+*/
+#endregion
+#region 1by2 snapshot setting
+/*
+    public Vector3 defaultPositionOffset = new Vector3(0, -0.9f, 1);
+    /// <summary>
+    /// The default rotation applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultRotation = new Vector3(0, 0, 0);
+    /// <summary>
+    /// The default scale applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultScale = new Vector3(3.2f, 3.2f, 3.2f);
+*/
+#endregion
+#region 2by1 Gun snapshot setting
+/*
+    public Vector3 defaultPositionOffset = new Vector3(-1f, 0, 1);
+    /// <summary>
+    /// The default rotation applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultRotation = new Vector3(0, 90, 0);
+    /// <summary>
+    /// The default scale applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultScale = new Vector3(7f, 7f, 7f);
+*/
+#endregion
+#region 1by3 snapshot setting
+
+#endregion
+#region 2by5 Gun snapshot setting
+
+#endregion
 public class UseSanpShot : MonoBehaviour
 {
+    public Button item1by2button;
     // 받은 스냅샷 카메라 스크립트
     private SnapshotCamera snapshotCamera;
     // 찍을 오브젝트를 배열로 입력 받음
-    public GameObject[] gameObjectToSnapshot;
+    public GameObject[] item1by2Snapshot;
 
     // 파일 주소 설정
     readonly string Path = Application.dataPath + "/Textures";
@@ -18,19 +67,11 @@ public class UseSanpShot : MonoBehaviour
     void Start()
     {
         // 카메라 설정
-        snapshotCamera = SnapshotCamera.MakeSnapshotCamera(0);
-        for (int i = 0; i < gameObjectToSnapshot.Length; i++)
-        {
-            // 파일 이름 설정
-            Name = gameObjectToSnapshot[i].gameObject.name + "_Icon";
-            // 사진 찍기
-            Texture2D snapshot = snapshotCamera.TakePrefabSnapshot(gameObjectToSnapshot[i]);
-            // 사진 저장
-            SnapshotCamera.SavePNG(snapshot, Name, Path);
-        }
-    }
+        GetPictureFunc(item1by2Snapshot, 640, 256);
 
-    public void GetPictureFunc(GameObject[] gameObjects, int width, int height) {
+    }
+    //기본 128 x 128
+    public void GetPictureFunc(GameObject[] gameObjects, int width = 128, int height = 128) {
         snapshotCamera = SnapshotCamera.MakeSnapshotCamera(0);
         for (int i = 0; i < gameObjects.Length; i++)
         {

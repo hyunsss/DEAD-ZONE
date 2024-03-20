@@ -15,8 +15,9 @@ public class Gun : Weapon
     public float shotDelay;
     public Coroutine coroutine;
     public bool isShot;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         mode = global::FireMode.Single;
     }
 

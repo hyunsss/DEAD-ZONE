@@ -9,7 +9,7 @@ public class ItemCellPanel : MonoBehaviour
 
     RectTransform rect;
 
-    GridXY grid;
+    public GridXY grid;
 
 
     private void Awake() {
@@ -20,15 +20,6 @@ public class ItemCellPanel : MonoBehaviour
     void Start()
     {
         grid = new GridXY(width, height, transform);
-        /*
-            그리드를 그릴 때    5번째 1 2 3 4 5
-                            4번째 1 2 3 4 5
-                            .
-                            .
-                            .
-                            순서이므로 반복문으로 셀마다의 위치를 지정해줄 때 주의할 것.
-        
-        */
     }
 
     public void InsertItem(Item item, int x, int y, out bool isInsert) {
@@ -39,7 +30,6 @@ public class ItemCellPanel : MonoBehaviour
             return;
         }
 
-        cell.slotcurrentItem = item;
         isInsert = true;
         return;
     }
@@ -52,8 +42,16 @@ public class ItemCellPanel : MonoBehaviour
             return;
         }
 
-        cell.slotcurrentItem = item;
         isInsert = true;
         return;
     }
+
+
+
+    /*
+    1. 아이템을 인벤토리로 옮겼을 때 남는 크기에 맞는 셀이 존재하는지 확인.
+    2. 존재한다면 그거에 맞게 셀 크기를 조정해준 뒤 이미지를 삽입한다. 
+    
+    
+    */
 }

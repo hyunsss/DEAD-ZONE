@@ -89,7 +89,7 @@
                 {
                     "name": "Interaction",
                     "type": "Button",
-                    "id": "dee787c4-c8d6-4e1a-977c-b4426ce6b3d0",
+                    "id": "c8f85ce7-1738-4b23-a561-6db1537170ed",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -98,16 +98,7 @@
                 {
                     "name": "Inventory",
                     "type": "Button",
-                    "id": "76130ce1-a62d-4e76-b308-a7cdf42c2d1e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "DropItem",
-                    "type": "Button",
-                    "id": "0cb04572-96de-4051-bb6d-94b6e51862d2",
+                    "id": "32110bc5-737a-4343-826c-7e7c2759bafc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -403,7 +394,7 @@
                 },
                 {
                     "name": "",
-                    "id": "a98ff342-a6a8-40fd-85d7-c174f91b76a7",
+                    "id": "a737afa6-af07-4ced-949a-0491597f4aa6",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -414,34 +405,12 @@
                 },
                 {
                     "name": "",
-                    "id": "9261e016-96de-4899-a009-586912826e1d",
+                    "id": "ab3fd441-acf7-49a0-a2ab-2a2ca8c7afed",
                     "path": "<Keyboard>/tab",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6916ba2d-7b20-42af-ad7c-b66f0129954c",
-                    "path": "<Keyboard>/delete",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DropItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "dc988a0d-5f21-45a8-8037-9d1aa9330239",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DropItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -537,6 +506,24 @@
                     "type": "PassThrough",
                     "id": "ea8a3332-4852-4094-892f-5f123c2cb71f",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropItem",
+                    "type": "Button",
+                    "id": "d215ef6c-150d-4006-9e18-69067272b68e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "6bdbdb1f-17d5-46da-a57a-730ba1f4faa0",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -958,6 +945,39 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "392f7b9b-44e7-45d8-bffd-b5eef9b9f83a",
+                    "path": "<Keyboard>/delete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82b51ad4-2549-40c5-ad2b-37e9e895f7cd",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89585211-fbd2-418c-ba2b-0092864587ce",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
