@@ -44,6 +44,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
+        UIManager.Instance.CellRayCastTarget(true);
         GetComponent<Image>().raycastTarget = false;
         rect.position = eventData.position;
     }
@@ -57,6 +58,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
         dropCell = null;
         CompleteMoveCell(parentAfterCell);
+        UIManager.Instance.CellRayCastTarget(false);
     }
 
     /// <summary>

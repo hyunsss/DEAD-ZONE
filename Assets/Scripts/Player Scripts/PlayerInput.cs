@@ -57,6 +57,7 @@ public class PlayerInput : MonoBehaviour
         bool isActive = UIManager.Instance.Inventory.activeSelf;
         CameraManager.Instance.CursorVisible(!isActive);
         UIManager.Instance.Inventory.SetActive(!isActive);
+        UIManager.Instance.CellRayCastTarget(false);
         ChangeActionMap();
     }
 
@@ -64,12 +65,11 @@ public class PlayerInput : MonoBehaviour
         if(UIManager.Instance.handler_focus != null) {
             Cell cell;
             UIManager.Instance.handler_focus.TryGetComponent(out cell);
-            ItemManager.Instance.DropItem(cell.slotcurrentItem);
-
-            cell.item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
-            cell.slotcurrentItem = null;
-
-            Destroy(cell.item_ParentCell.transform.GetChild(0).gameObject);
+            if(cell.slotcurrentItem != null) {
+                ItemManager.Instance.DropItem(cell.slotcurrentItem);
+                Destroy(cell.item_ParentCell.transform.GetChild(0).gameObject);
+                cell.item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
+            }
         }
     }
 

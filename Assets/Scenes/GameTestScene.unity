@@ -8645,6 +8645,7 @@ MonoBehaviour:
   handler_focus: {fileID: 0}
   interactionPanel: {fileID: 1653644935657053917, guid: aff59df446fc842feab8d4e5294e696d,
     type: 3}
+  AllCells: []
   cell: {fileID: -5813776784782365721, guid: 9142e1737815e48ab98497e0cf2e9364, type: 3}
   Inventory: {fileID: 0}
   player_Inven: {fileID: 0}
