@@ -37,14 +37,12 @@ public class GridXY
 
     public void GenerateGrid()
     {
-        Debug.Log("그리드 생성 로직 enable");
-        Debug.Log(trans_parent);
         for (int y = gridArray.GetLength(1) - 1 ; y >= 0; y--)
         {
             for (int x = 0; x < gridArray.GetLength(0); x++)
             {
                 Cell cell = GameObject.Instantiate(UIManager.Instance.cell, trans_parent).GetComponent<Cell>();
-                cell.current_lotation = new Vector2Int(x, y);
+                cell.Current_lotation = new Vector2Int(x, y);
                 gridArray[x, y] = cell;
 
                 cell.name = UIManager.Instance.cell.name;
@@ -73,10 +71,8 @@ public class GridXY
     public List<Cell> SizeofItemCellList(Item item, Cell Start_cell, out bool isComplete, bool isRotation = false) {
         List<Cell> tempCells = new List<Cell>();
         int cellx, celly;
-        cellx = Start_cell.current_lotation.x;
-        celly = Start_cell.current_lotation.y;
-
-        Debug.Log($"{width} : {height}");
+        cellx = Start_cell.Current_lotation.x;
+        celly = Start_cell.Current_lotation.y;
 
         // 할당된 인벤토리 그리드에서 인덱스 범위가 넘지 않도록 조건체크 해주기
         if(isRotation == false) {

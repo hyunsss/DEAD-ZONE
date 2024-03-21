@@ -1,10 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ItemKey { Ammo, AmmoBox, Magazine, Weapon, Medical, Food, Money, Etc, None }
+[Flags]
+public enum ItemKey { 
+    Not = 0,
+    Ammo = 1 << 0, 
+    AmmoBox = 1 << 1, 
+    Magazine = 1 << 2, 
+    Weapon = 1 << 3, 
+    Medical = 1 << 4, 
+    Food = 1 << 5, 
+    Money = 1 << 6, 
+    Etc = 1 << 7, 
+    None = Ammo | AmmoBox | Magazine | Weapon | Medical | Food | Money | Etc }
 
 public class ItemManager : MonoBehaviour
 {
@@ -63,15 +75,15 @@ public class ItemManager : MonoBehaviour
     {
         isRotation = false;
         bool isComplete;
-        tempCells = cell.parentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
-        if (isComplete == true && cell.parentPanel.grid.IsCellInItemPossible(tempCells) == true)
+        tempCells = cell.ParentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
+        if (isComplete == true && cell.ParentPanel.grid.IsCellInItemPossible(tempCells) == true)
         {
             Debug.Log("rotation false rosics");
             foreach (Cell list_cell in tempCells)
             {
                 list_cell.slotcurrentItem = cloneitem;
                 Debug.Log(list_cell + "," + cell);
-                list_cell.item_ParentCell = cell;
+                list_cell.Item_ParentCell = cell;
             }
             Finish = true;
             return;
@@ -79,15 +91,15 @@ public class ItemManager : MonoBehaviour
         else
         {
             isRotation = true;
-            tempCells = cell.parentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
-            if (isComplete == true && cell.parentPanel.grid.IsCellInItemPossible(tempCells) == true)
+            tempCells = cell.ParentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
+            if (isComplete == true && cell.ParentPanel.grid.IsCellInItemPossible(tempCells) == true)
             {
                 Debug.Log("rotation true rosics");
                 foreach (Cell list_cell in tempCells)
                 {
                     list_cell.slotcurrentItem = cloneitem;
                     Debug.Log(list_cell + "," + cell);
-                    list_cell.item_ParentCell = cell;
+                    list_cell.Item_ParentCell = cell;
                 }
                 Finish = true;
                 return;

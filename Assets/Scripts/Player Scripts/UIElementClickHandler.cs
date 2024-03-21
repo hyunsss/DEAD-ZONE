@@ -12,6 +12,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     private RectTransform rect;
     private Image image;
+    private bool current_Rotation;
     public bool isRotation;
     public List<Cell> itemCells = new List<Cell>();
 
@@ -29,12 +30,29 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
         itemCells = itemcells;
         this.isRotation = isRotation;
+        current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
     }
+
+    public void ItemRotation()
+    {
+        isRotation = !isRotation;
+        if (isRotation == true) { rect.eulerAngles = new Vector3(0, 0, 90); }
+        else { rect.eulerAngles = new Vector3(0, 0, 0); }
+    }
+
+    public void ItemRotation(bool rotation)
+    {
+        isRotation = rotation;
+        if (isRotation == true) { rect.eulerAngles = new Vector3(0, 0, 90); }
+        else { rect.eulerAngles = new Vector3(0, 0, 0); }
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         RemoveCellItem();
+        UIManager.Instance.current_MoveItem = this;
         parentAfterCell = transform.parent.GetComponent<Cell>();
         // myItem = parentAfterCell.GetComponent<Cell>().slotcurrentItem;
         parentAfterCell.slotcurrentItem = null;
@@ -51,7 +69,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(dropCell == null) {
+        if (dropCell == null)
+        {
             dropCell = parentAfterCell;
         }
         InsertCellItem(dropCell);
@@ -59,6 +78,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         dropCell = null;
         CompleteMoveCell(parentAfterCell);
         UIManager.Instance.CellRayCastTarget(false);
+        UIManager.Instance.current_MoveItem = null;
     }
 
     /// <summary>
@@ -67,19 +87,39 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     /// <param name="currentcell"></param>
     public void InsertCellItem(Cell currentcell)
     {
-        itemCells = dropCell.parentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete);
-        if (isComplete == true && currentcell.parentPanel.grid.IsCellInItemPossible(itemCells) == true)
+        List<Cell> tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete, isRotation);
+        if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
         {
-            foreach (Cell cell in itemCells)
+            foreach (Cell cell in tempList)
             {
                 cell.slotcurrentItem = myItem;
-                cell.item_ParentCell = currentcell;
+                cell.Item_ParentCell = currentcell;
 
             }
 
             parentAfterCell = currentcell;
+            itemCells = tempList;
+            // current_Rotation = rotation;
         }
+        else
+        {
+            ItemRotation(!isRotation);
+            tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out isComplete, isRotation);
+            if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
+            {
+                foreach (Cell cell in tempList)
+                {
+                    cell.slotcurrentItem = myItem;
+                    cell.Item_ParentCell = currentcell;
+                }
 
+                parentAfterCell = currentcell;
+                itemCells = tempList;
+                // current_Rotation = rotation;
+            } else {
+                InsertCellItem(parentAfterCell);
+            }
+        }
     }
 
     public void RemoveCellItem()
@@ -87,7 +127,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         foreach (Cell cell in itemCells)
         {
             cell.slotcurrentItem = null;
-            cell.item_ParentCell = null;
+            cell.Item_ParentCell = null;
         }
 
         itemCells.Clear();

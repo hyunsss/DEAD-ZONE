@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public UserInteractionPanel interactionPanel;
     public Cell[] AllCells;
 
+    public UIElementClickHandler current_MoveItem;
+
     public Cell cell;
     [HideInInspector] public GameObject Inventory;
     [HideInInspector] public ItemCellPanel player_Inven;
@@ -18,7 +20,6 @@ public class UIManager : MonoBehaviour
     private void Awake() {
         if(Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(this);
         } else {
             Destroy(this);
         }
@@ -42,7 +43,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void CellRayCastTarget(bool isallow) {
-        if(AllCells == null) AllCells = GameObject.FindObjectsOfType<Cell>();
+        if(AllCells.Length == 0) AllCells = GameObject.FindObjectsOfType<Cell>();
         foreach(Cell cell in AllCells) {
             cell.GetComponent<Image>().raycastTarget = isallow;
         }

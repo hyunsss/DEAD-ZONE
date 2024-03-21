@@ -7,9 +7,13 @@ using UnityEngine.UI;
 public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item slotcurrentItem;
-    public Vector2Int current_lotation;
-    public ItemCellPanel parentPanel;
-    public Cell item_ParentCell;
+    private Vector2Int current_lotation;
+    private ItemCellPanel parentPanel;
+    private Cell item_ParentCell;
+
+    public ItemCellPanel ParentPanel { get { return parentPanel; } set { parentPanel = value; } }
+    public Vector2Int Current_lotation { get { return current_lotation; } set { current_lotation = value;}}
+    public Cell Item_ParentCell { get {return item_ParentCell;} set {item_ParentCell = value;} }
 
     private void Awake() {
         parentPanel = GetComponentInParent<ItemCellPanel>();

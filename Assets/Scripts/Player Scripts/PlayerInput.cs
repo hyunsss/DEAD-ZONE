@@ -44,7 +44,6 @@ public class PlayerInput : MonoBehaviour
 
     public void OnInteraction(InputValue value)
     {
-        Debug.Log("press E");
         if (isInteraction == true)
         {
             interactable.Interact();
@@ -53,12 +52,17 @@ public class PlayerInput : MonoBehaviour
     }
 
     public void OnInventory(InputValue value) {
-        Debug.Log("OnInventory Enable");
         bool isActive = UIManager.Instance.Inventory.activeSelf;
         CameraManager.Instance.CursorVisible(!isActive);
         UIManager.Instance.Inventory.SetActive(!isActive);
         UIManager.Instance.CellRayCastTarget(false);
         ChangeActionMap();
+    }
+
+    public void OnItemRotation(InputValue value) {
+        if(UIManager.Instance.current_MoveItem != null) {
+            UIManager.Instance.current_MoveItem.ItemRotation();
+        }
     }
 
     public void OnDropItem(InputValue value) {
@@ -67,8 +71,8 @@ public class PlayerInput : MonoBehaviour
             UIManager.Instance.handler_focus.TryGetComponent(out cell);
             if(cell.slotcurrentItem != null) {
                 ItemManager.Instance.DropItem(cell.slotcurrentItem);
-                Destroy(cell.item_ParentCell.transform.GetChild(0).gameObject);
-                cell.item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
+                Destroy(cell.Item_ParentCell.transform.GetChild(0).gameObject);
+                cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
             }
         }
     }
