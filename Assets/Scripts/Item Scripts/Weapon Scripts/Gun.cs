@@ -19,6 +19,8 @@ public class Gun : Weapon
     {
         base.Awake();
         mode = global::FireMode.Single;
+        subHandIK_target = transform.Find("SubHandIK_target").transform;
+        subHandIK_hint = transform.Find("SubHandIK_hint").transform;
     }
 
     public override void Shot()

@@ -377,6 +377,12 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
+  handPosition: {x: 0.0793, y: 0.0311, z: -0.0219}
+  handRotation: {x: 0, y: 90, z: -90}
+  subPosition: {x: 0.0006, y: 0.185, z: 0}
+  subRotation: {x: 180, y: -120.3, z: 90}
+  subHandIK_target: {fileID: 5396313321251386576}
+  subHandIK_hint: {fileID: 7242379498490786492}
   mode: 0
   currentMagazine: {fileID: 5217037342252886352}
   shotPoint: {fileID: 4654940216389232221}

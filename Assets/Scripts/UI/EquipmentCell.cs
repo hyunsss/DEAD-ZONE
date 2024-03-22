@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum EquipmentType { Helmat, Armor, Accesary1, Accesary2, Weapon1, Weapon2, Bag }
 public class EquipmentCell : Cell
 {
-    public enum EquipmentType { Helmat, Armor, Accesary, Weapon }
     public EquipmentType equiptype;
     //public Item slotcurrentItem;
 
@@ -20,6 +20,7 @@ public class EquipmentCell : Cell
         if(slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component)) {
             if(IsItemAllowed(this.equiptype, component.myItem.type) == true) {
                 component.dropCell = this;
+                EquipItem(equiptype, component.myItem);
             }
         }
     }
@@ -34,28 +35,52 @@ public class EquipmentCell : Cell
             case EquipmentType.Armor:
                 // Armor
                 return (itemKey & ItemKey.Armor) != ItemKey.Not;
-            case EquipmentType.Accesary:
+            case EquipmentType.Accesary1:
+            case EquipmentType.Accesary2:
                 // Accessory
                 return (itemKey & (ItemKey.Accesary)) != ItemKey.Not;
-            case EquipmentType.Weapon:
+            case EquipmentType.Weapon1:
+            case EquipmentType.Weapon2:
                 // Weapon
                 return (itemKey & (ItemKey.Weapon)) != ItemKey.Not;
+            case EquipmentType.Bag:
+                // Bag
+                return (itemKey & (ItemKey.Bag)) != ItemKey.Not;
             default:
                 return false;
         }
     }
 
-    public void EquipItem(Item item)
+    public void EquipItem(EquipmentType cellType, Item item)
     {
-        if(IsItemAllowed(equiptype, item.type) == true) {
-            //장착 로직
-            /*
+        //장착 로직
+        /*
             1. 아이템마다 포지션을 정해서 장착해줄지는 모르겠으나 weapon의 경우 손에 장착되는 포지션이 있을테니 포지션을 설정해주는 로직을 작성해야한다. 
             2. 장착했을 때 아이템이 소환되도록하고 이것을 복제하지 않게 하기위해 장착 해제 로직에서는 해당 오브젝트를 삭제하도록 한다. 
             3. --- 아니면 플레이어 프렙스로 저장하는 방법도 괜찮을 듯.
             4. 장착하는 아이템의 경우 rigidbody같은 물리적 상호작용 컴포넌트를 비활성화 한다.
-            */
+        */
+        switch (cellType)
+        {
+            case EquipmentType.Helmat:
+                // Helmet
+            case EquipmentType.Armor:
+                // Armor
+            case EquipmentType.Accesary1:
+            case EquipmentType.Accesary2:
+                // Accessory
+            case EquipmentType.Weapon1:
+                Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertWeapon(item as Weapon, 0);
+                break;
+            case EquipmentType.Weapon2:
+                Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertWeapon(item as Weapon, 1);
+                break;
+            case EquipmentType.Bag:
+                // Bag
+            default:
+                break;
         }
+           
     }
 
     public void UnEquipItem()

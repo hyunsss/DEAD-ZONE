@@ -19,7 +19,8 @@ public enum ItemKey {
     Helmat = 1 << 8,
     Accesary = 1 << 9,
     Armor = 1 << 10,
-    None = Ammo | AmmoBox | Magazine | Weapon | Medical | Food | Money | Etc | Helmat | Accesary | Armor }
+    Bag = 1 << 11,
+    None = Ammo | AmmoBox | Magazine | Weapon | Medical | Food | Money | Etc | Helmat | Accesary | Armor | Bag }
 
 public class ItemManager : MonoBehaviour
 {
