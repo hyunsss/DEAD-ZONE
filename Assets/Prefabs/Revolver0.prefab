@@ -47,15 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 2d010900000063006f0072006f007500740069006e006500
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  type: 3
+    SerializationNodes:
+    - Name: coroutine
+      Entry: 6
+      Data: 
+  type: 8
   inventorySprite: {fileID: 21300000, guid: 6f9ffcabf1e6441c188eec477f0065a0, type: 3}
   cellwidth: 2
   cellheight: 1

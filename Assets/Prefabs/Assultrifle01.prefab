@@ -367,7 +367,7 @@ MonoBehaviour:
     - Name: coroutine
       Entry: 6
       Data: 
-  type: 3
+  type: 8
   inventorySprite: {fileID: 21300000, guid: 52553bcc9d90c47e1a6c8ad4bc9d1d49, type: 3}
   cellwidth: 4
   cellheight: 2

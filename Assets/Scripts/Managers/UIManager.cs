@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject handler_focus;
     public UserInteractionPanel interactionPanel;
     public Cell[] AllCells;
+    public EquipmentCell[] equipmentCells;
 
     public UIElementClickHandler current_MoveItem;
 
@@ -33,7 +34,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Inventory.SetActive(false);
-        
+        equipmentCells = FindObjectsOfType<EquipmentCell>();
     }
 
     // Update is called once per frame

@@ -55,7 +55,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  type: 1
+  type: 128
   inventorySprite: {fileID: 21300000, guid: 33e0a716291bc493f8abbe7725fe5254, type: 3}
   cellwidth: 1
   cellheight: 2

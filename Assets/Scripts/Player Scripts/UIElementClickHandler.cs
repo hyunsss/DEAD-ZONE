@@ -2,6 +2,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -23,15 +24,45 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         myItem = item;
         image.sprite = item.inventorySprite;
         //Rect Transform 초기화
-        rect.pivot = new Vector2(1f / (myItem.cellwidth * 2), 1f - (1f / (myItem.cellheight * 2)));
-        rect.sizeDelta = new Vector2(myItem.cellwidth * 100, myItem.cellheight * 100);
-        rect.localPosition = Vector3.zero;
+        SetDefaultImageSize();
         //Rect Transform 초기화 
 
         itemCells = itemcells;
         this.isRotation = isRotation;
         current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
+    }
+
+    private void SetDefaultImageSize() {
+            rect.anchorMin = new Vector2(0.5f, 0.5f); // 왼쪽 하단 앵커
+            rect.anchorMax = new Vector2(0.5f, 0.5f); // 오른쪽 상단 앵커
+
+            rect.pivot = new Vector2(1f / (myItem.cellwidth * 2), 1f - (1f / (myItem.cellheight * 2)));
+            rect.sizeDelta = new Vector2(myItem.cellwidth * 100, myItem.cellheight * 100);
+            rect.localPosition = Vector3.zero;
+    }
+
+    private void ImagePropertyCellType(Cell cell)
+    {
+        if (cell is EquipmentCell == true)
+        {
+            Debug.Log("true");
+            // 부모 컴포넌트의 전체를 채우도록 앵커 설정
+            rect.anchorMin = new Vector2(0, 0); // 왼쪽 하단 앵커
+            rect.anchorMax = new Vector2(1, 1); // 오른쪽 상단 앵커
+
+            // 오프셋을 0으로 설정하여 정확히 부모를 채우도록 함
+            rect.offsetMin = new Vector2(0, 0);
+            rect.offsetMax = new Vector2(0, 0);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.eulerAngles = new Vector3(0, 0, 0);
+            rect.localPosition = Vector3.zero;
+
+
+        } else {
+            Debug.Log("false");
+            SetDefaultImageSize();
+        }
     }
 
     public void ItemRotation()
@@ -57,6 +88,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         // myItem = parentAfterCell.GetComponent<Cell>().slotcurrentItem;
         parentAfterCell.slotcurrentItem = null;
         transform.SetParent(UIManager.Instance.topCanvas.transform, false);
+        SetDefaultImageSize();
         transform.SetAsLastSibling();
     }
 
@@ -72,11 +104,20 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         if (dropCell == null)
         {
             dropCell = parentAfterCell;
+            //Todo Drop되는 셀의 타입에 따라 rect를 설정해주는 함수가 필요할 것 같음.
         }
-        InsertCellItem(dropCell);
+        else if (dropCell.TryGetComponent(out EquipmentCell equipmentCell))
+        {
+            parentAfterCell = dropCell;
 
-        dropCell = null;
+        }
+        else if (dropCell.TryGetComponent(out Cell cell))
+        {
+            InsertCellItem(dropCell);
+        }
+
         CompleteMoveCell(parentAfterCell);
+        dropCell = null;
         UIManager.Instance.CellRayCastTarget(false);
         UIManager.Instance.current_MoveItem = null;
     }
@@ -116,8 +157,14 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
                 parentAfterCell = currentcell;
                 itemCells = tempList;
                 // current_Rotation = rotation;
-            } else {
-                InsertCellItem(parentAfterCell);
+            }
+            else
+            {
+                if(parentAfterCell is EquipmentCell == false) {
+                    InsertCellItem(parentAfterCell);
+                } else {
+                    return;
+                }
             }
         }
     }
@@ -138,7 +185,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         transform.SetParent(parentCell.transform, false);
         transform.position = Vector3.zero;
 
-        rect.localPosition = Vector3.zero;
+        ImagePropertyCellType(parentCell);
+        // rect.localPosition = Vector3.zero;
         parentCell.slotcurrentItem = myItem;
         GetComponent<Image>().raycastTarget = true;
     }

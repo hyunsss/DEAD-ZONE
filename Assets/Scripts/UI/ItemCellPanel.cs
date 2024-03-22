@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemCellPanel : MonoBehaviour
 {
@@ -8,13 +9,17 @@ public class ItemCellPanel : MonoBehaviour
     public int height;
 
     RectTransform rect;
+    GridLayoutGroup gridLayoutGroup;
 
     public GridXY grid;
 
 
     private void Awake() {
         rect = GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(width * 100, height * 100);
+        gridLayoutGroup = GetComponent<GridLayoutGroup>();
+        rect.sizeDelta = new Vector2(width * 100 + 10, height * 100 + 10);
+        gridLayoutGroup.padding.left = 5;
+        gridLayoutGroup.padding.top = 5;
     }
     // Start is called before the first frame update
     void Start()

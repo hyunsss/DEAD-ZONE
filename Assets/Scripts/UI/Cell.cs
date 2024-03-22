@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item slotcurrentItem;
@@ -19,7 +20,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         parentPanel = GetComponentInParent<ItemCellPanel>();
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
 
