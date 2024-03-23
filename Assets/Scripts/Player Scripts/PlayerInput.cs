@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -88,12 +89,16 @@ public class PlayerInput : MonoBehaviour
 
     public void OnDropItem(InputValue value) {
         if(UIManager.Instance.handler_focus != null) {
-            Cell cell;
-            UIManager.Instance.handler_focus.TryGetComponent(out cell);
-            if(cell.slotcurrentItem != null) {
-                ItemManager.Instance.DropItem(cell.slotcurrentItem);
-                Destroy(cell.Item_ParentCell.transform.GetChild(0).gameObject);
-                cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
+            if(UIManager.Instance.handler_focus.TryGetComponent(out EquipmentCell equipmentcell)) {
+                if(equipmentcell.slotcurrentItem != null) {
+                    //장착 아이템을 해제하는 로직
+                }
+            } else if(UIManager.Instance.handler_focus.TryGetComponent(out Cell cell)) {
+                if(cell.slotcurrentItem != null) {
+                    ItemManager.Instance.DropItem(cell.slotcurrentItem);
+                    Destroy(cell.Item_ParentCell.transform.GetChild(0).gameObject);
+                    cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
+                }
             }
         }
     }
