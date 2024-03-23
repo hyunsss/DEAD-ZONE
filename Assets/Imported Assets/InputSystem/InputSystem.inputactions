@@ -103,6 +103,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Weapon1",
+                    "type": "Button",
+                    "id": "7b09fc1d-b252-49ab-b6fb-d280834c7fd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Weapon2",
+                    "type": "Button",
+                    "id": "7a510d3b-9e1f-48d1-a509-e5f23a203254",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -411,6 +429,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2f2daa1-9ff0-4fa0-9b75-8a9946277f28",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6bf6737c-7eaf-4086-9432-b5164593e349",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Weapon2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

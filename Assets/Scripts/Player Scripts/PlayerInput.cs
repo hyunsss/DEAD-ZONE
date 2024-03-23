@@ -8,10 +8,17 @@ public class PlayerInput : MonoBehaviour
 {
     bool isInteraction;
     IInteractable interactable;
+    PlayerEquipManagment playerEquipManagment;
+    PlayerAttack playerAttack;
 
     public InputActionAsset inputActions;
     private InputActionMap uiActionMap;
     private InputActionMap playerActionMap;
+
+    void Awake() {
+        playerEquipManagment = GetComponent<PlayerEquipManagment>();
+        playerAttack = GetComponent<PlayerAttack>();
+    }
 
     private void Start() {
         uiActionMap = inputActions.FindActionMap("UI");
@@ -63,6 +70,20 @@ public class PlayerInput : MonoBehaviour
         if(UIManager.Instance.current_MoveItem != null) {
             UIManager.Instance.current_MoveItem.ItemRotation();
         }
+    }
+
+    public void OnWeapon1(InputValue value) {
+        AssignmentWeapon(0);
+    }
+
+    public void OnWeapon2(InputValue value) {
+        AssignmentWeapon(1);
+    }
+
+    public void AssignmentWeapon(int index) {
+        playerEquipManagment.currentindex = index;
+        playerAttack.CurrentWeapon = playerEquipManagment.GetWeapon(index);
+
     }
 
     public void OnDropItem(InputValue value) {

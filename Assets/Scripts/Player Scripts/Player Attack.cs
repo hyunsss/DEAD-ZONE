@@ -5,12 +5,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public Weapon currentWeapon;
+    private PlayerEquipManagment playerEquipManagment;
+
+
+    private Weapon currentWeapon;
     Animator animator;
+
+
+    public Weapon CurrentWeapon { get { return currentWeapon; } set { currentWeapon = value; playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon); }}
 
     private void Awake()
     {
+        currentWeapon = null;
         animator = GetComponent<Animator>();
+        playerEquipManagment = GetComponent<PlayerEquipManagment>();
     }
 
 
