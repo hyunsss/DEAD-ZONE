@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3017703487219580434}
   - component: {fileID: 1741398906605561684}
   - component: {fileID: 7597683277672352061}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_SubMGun_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 197706019831739191}
   - component: {fileID: 520233930337358152}
   - component: {fileID: 2933651078111346038}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_SubMGun_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 2470380627581743941}
   - component: {fileID: 7785829817583030448}
   - component: {fileID: 2949936113828550404}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_SubMGun_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 3449883710759005639}
   - component: {fileID: 5349723712034124132}
   - component: {fileID: 1305080214710884443}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}

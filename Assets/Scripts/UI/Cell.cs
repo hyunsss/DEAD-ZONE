@@ -13,10 +13,11 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     private Cell item_ParentCell;
 
     public ItemCellPanel ParentPanel { get { return parentPanel; } set { parentPanel = value; } }
-    public Vector2Int Current_lotation { get { return current_lotation; } set { current_lotation = value;}}
-    public Cell Item_ParentCell { get {return item_ParentCell;} set {item_ParentCell = value;} }
+    public Vector2Int Current_lotation { get { return current_lotation; } set { current_lotation = value; } }
+    public Cell Item_ParentCell { get { return item_ParentCell; } set { item_ParentCell = value; } }
 
-    private void Awake() {
+    private void Awake()
+    {
         parentPanel = GetComponentInParent<ItemCellPanel>();
     }
 
@@ -24,10 +25,17 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     {
         GameObject dropped = eventData.pointerDrag;
 
-        if(slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component)) {
+        if (slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component))
+        {
             component.dropCell = this;
+            component.image.preserveAspect = false;
         }
-        
+
+    }
+
+    public virtual void RemoveItem() {
+        ItemManager.Instance.DropItem(slotcurrentItem);
+        Destroy(Item_ParentCell.transform.GetChild(0).gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

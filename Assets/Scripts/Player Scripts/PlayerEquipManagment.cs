@@ -19,32 +19,51 @@ public class PlayerEquipManagment : MonoBehaviour
 
     public Action<Weapon> CurrentWeaponSetting;
     private TwoBoneIKConstraint subHandIK;
-    
-    void Awake() {
+
+    void Awake()
+    {
         playerAttack = GetComponent<PlayerAttack>();
         playerInput = GetComponent<PlayerInput>();
         subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
     }
 
-    public void InsertWeapon(Weapon weapon, int index) {
-        print("Insert Weapon Enable");
-        Weapon thisweapon = LeanPool.Spawn(weapon, Vector3.zero, Quaternion.identity);
-        weapons[index] = thisweapon;
-        thisweapon.rigid.isKinematic = true;
+    public void RemoveWeapon(Weapon weapon)
+    {
+        int index = Array.IndexOf(weapons, weapon);
+        weapons[index] = null;
+        if (index == currentindex) playerAttack.CurrentWeapon = null;
 
-        if(playerAttack.CurrentWeapon == null) {
+        if (currentindex == index && weapons[1 - index] != null)
+        {
+            playerInput.AssignmentWeapon(1 - index);
+        }
+    }
+
+    public void InsertWeapon(Weapon weapon, int index)
+    {
+        print("Insert Weapon Enable");
+        weapon.gameObject.SetActive(true);
+        weapons[index] = weapon;
+        weapon.rigid.isKinematic = true;
+
+        if (playerAttack.CurrentWeapon == null)
+        {
             playerInput.AssignmentWeapon(index);
-        } else {
-            SubWeaponSetting(thisweapon);
+        }
+        else
+        {
+            SubWeaponSetting(weapon);
         }
 
     }
 
-    public Weapon GetWeapon(int index) {
+    public Weapon GetWeapon(int index)
+    {
         return weapons[index];
     }
 
-    public void CurrentChangeWeaponSetting(Weapon currentWeapon) {
+    public void CurrentChangeWeaponSetting(Weapon currentWeapon)
+    {
         print("CurrentWeaponSetting");
         currentWeapon.transform.SetParent(hand_R);
         subHandIK.data.target = currentWeapon.subHandIK_target;
@@ -52,13 +71,15 @@ public class PlayerEquipManagment : MonoBehaviour
         currentWeapon.transform.localPosition = currentWeapon.handPosition;
         currentWeapon.transform.localRotation = Quaternion.Euler(currentWeapon.handRotation);
 
-        if(weapons[1 - currentindex] != null) {
+        if (weapons[1 - currentindex] != null)
+        {
             Weapon subWeapon = weapons[1 - currentindex];
             SubWeaponSetting(subWeapon);
         }
     }
 
-    public void SubWeaponSetting(Weapon subWeapon) {
+    public void SubWeaponSetting(Weapon subWeapon)
+    {
         print("subweapon setting enable");
         subWeapon.transform.SetParent(spine_03);
         subWeapon.transform.localPosition = subWeapon.subPosition;
@@ -74,6 +95,6 @@ public class PlayerEquipManagment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

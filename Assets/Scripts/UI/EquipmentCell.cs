@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public enum EquipmentType { Helmat, Armor, Accesary1, Accesary2, Weapon1, Weapon2, Bag }
@@ -17,9 +18,12 @@ public class EquipmentCell : Cell
     {
         GameObject dropped = eventData.pointerDrag;
 
-        if(slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component)) {
-            if(IsItemAllowed(this.equiptype, component.myItem.type) == true) {
+        if (slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component))
+        {
+            if (IsItemAllowed(this.equiptype, component.myItem.type) == true)
+            {
                 component.dropCell = this;
+                component.image.preserveAspect = true;
                 EquipItem(equiptype, component.myItem);
             }
         }
@@ -63,12 +67,12 @@ public class EquipmentCell : Cell
         switch (cellType)
         {
             case EquipmentType.Helmat:
-                // Helmet
+            // Helmet
             case EquipmentType.Armor:
-                // Armor
+            // Armor
             case EquipmentType.Accesary1:
             case EquipmentType.Accesary2:
-                // Accessory
+            // Accessory
             case EquipmentType.Weapon1:
                 Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertWeapon(item as Weapon, 0);
                 break;
@@ -76,19 +80,18 @@ public class EquipmentCell : Cell
                 Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertWeapon(item as Weapon, 1);
                 break;
             case EquipmentType.Bag:
-                // Bag
+            // Bag
             default:
                 break;
         }
-           
+
     }
 
-    public void UnEquipItem()
+    public override void RemoveItem()
     {
-        //장착 해제 로직 
-        /*
-                  
-        */
+        ItemManager.Instance.DropItem(slotcurrentItem);
+        slotcurrentItem = null;
+        Destroy(transform.GetChild(0).gameObject);
     }
 
     // Update is called once per frame

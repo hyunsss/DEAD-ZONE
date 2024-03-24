@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7386343191252977690}
   - component: {fileID: 6448595077925419402}
   - component: {fileID: 4757812213939451842}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 4652531470524054863}
   - component: {fileID: 1225897120026501891}
   - component: {fileID: 5361002283964826666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_MachineGun_02_Handle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 2740296655776556201}
   - component: {fileID: 7840458098084494139}
   - component: {fileID: 1826750375459549607}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_MachineGun_02_Top_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 7961342541286712387}
   - component: {fileID: 8576745589867711544}
   - component: {fileID: 2914036512552828469}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_MachineGun_02_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 3896194523132711402}
   - component: {fileID: 4897075719282780857}
   - component: {fileID: 1782525081963459938}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_MachineGun_02_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 4721761477127156805}
   - component: {fileID: 3709657245123214885}
   - component: {fileID: 7490536932468052096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SM_Wep_MachineGun_02_Magazine_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

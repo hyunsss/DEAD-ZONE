@@ -12,7 +12,23 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
 
 
-    public Weapon CurrentWeapon { get { return currentWeapon; } set { currentWeapon = value; playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon); }}
+    public Weapon CurrentWeapon
+    {
+        get { return currentWeapon; }
+        set
+        {
+            currentWeapon = value;
+            if (currentWeapon != null)
+            {
+                playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon);
+                animator.SetLayerWeight(1, 1);
+            }
+            else
+            {
+                animator.SetLayerWeight(1, 0);
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -20,7 +36,6 @@ public class PlayerAttack : MonoBehaviour
         animator = GetComponent<Animator>();
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
     }
-
 
     void OnFire(InputValue value)
     {
@@ -30,8 +45,9 @@ public class PlayerAttack : MonoBehaviour
             currentWeapon.TryGetComponent(out Gun gun);
             gun.isShot = isFire;
             gun.Fire();
-            if(isFire == false) animator.SetBool("AutoFire", false);
-            else {
+            if (isFire == false) animator.SetBool("AutoFire", false);
+            else
+            {
                 if (gun.mode == FireMode.Single) animator.SetTrigger("SingleFire");
                 if (gun.mode == FireMode.Burst) animator.SetTrigger("SingleFire");
                 if (gun.mode == FireMode.Auto) animator.SetBool("AutoFire", true);

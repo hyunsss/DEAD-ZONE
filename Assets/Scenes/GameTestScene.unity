@@ -9135,6 +9135,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 35787954997880357, guid: dc14cc675c95b41a6a0590d3f068a769,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 288599363536838956, guid: dc14cc675c95b41a6a0590d3f068a769,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -9145,6 +9150,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Revolver0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3911038613835030409, guid: dc14cc675c95b41a6a0590d3f068a769,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7640657023734910295, guid: dc14cc675c95b41a6a0590d3f068a769,
         type: 3}
@@ -9340,11 +9350,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3415922055220061769, guid: 80d9c4139c6a8b445956baf413f97a5b,
         type: 3}
-      propertyPath: currentMagazine
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3415922055220061769, guid: 80d9c4139c6a8b445956baf413f97a5b,
-        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 3415922055220061769, guid: 80d9c4139c6a8b445956baf413f97a5b,
@@ -9498,11 +9503,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8571697610057881528, guid: 4ee0320851ab0e3449c01e26ee906643,
         type: 3}
-      propertyPath: currentMagazine
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8571697610057881528, guid: 4ee0320851ab0e3449c01e26ee906643,
-        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8571697610057881528, guid: 4ee0320851ab0e3449c01e26ee906643,
@@ -9577,11 +9577,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8454244734075814442, guid: d13470ec93c0e6a47bd027979d51a945,
         type: 3}
-      propertyPath: currentMagazine
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454244734075814442, guid: d13470ec93c0e6a47bd027979d51a945,
-        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8454244734075814442, guid: d13470ec93c0e6a47bd027979d51a945,
@@ -9599,11 +9594,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1315890846575324812, guid: 4e8d72fefa472464bb6671fea064eb99,
-        type: 3}
-      propertyPath: currentMagazine
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1315890846575324812, guid: 4e8d72fefa472464bb6671fea064eb99,
         type: 3}
       propertyPath: serializationData.Prefab

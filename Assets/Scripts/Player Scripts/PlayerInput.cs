@@ -16,12 +16,14 @@ public class PlayerInput : MonoBehaviour
     private InputActionMap uiActionMap;
     private InputActionMap playerActionMap;
 
-    void Awake() {
+    void Awake()
+    {
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
         playerAttack = GetComponent<PlayerAttack>();
     }
 
-    private void Start() {
+    private void Start()
+    {
         uiActionMap = inputActions.FindActionMap("UI");
         playerActionMap = inputActions.FindActionMap("Player");
 
@@ -39,8 +41,10 @@ public class PlayerInput : MonoBehaviour
             // 아이템인 경우에만 처리
             if (interactable != null) // "Item"은 충돌한 객체의 태그와 일치해야 합니다.
             {
-                isInteraction = true; 
-            } else {
+                isInteraction = true;
+            }
+            else
+            {
                 isInteraction = false;
             }
         }
@@ -59,7 +63,8 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public void OnInventory(InputValue value) {
+    public void OnInventory(InputValue value)
+    {
         bool isActive = UIManager.Instance.Inventory.activeSelf;
         CameraManager.Instance.CursorVisible(!isActive);
         UIManager.Instance.Inventory.SetActive(!isActive);
@@ -67,49 +72,66 @@ public class PlayerInput : MonoBehaviour
         ChangeActionMap();
     }
 
-    public void OnItemRotation(InputValue value) {
-        if(UIManager.Instance.current_MoveItem != null) {
+    public void OnItemRotation(InputValue value)
+    {
+        if (UIManager.Instance.current_MoveItem != null)
+        {
             UIManager.Instance.current_MoveItem.ItemRotation();
         }
     }
 
-    public void OnWeapon1(InputValue value) {
+    public void OnWeapon1(InputValue value)
+    {
         AssignmentWeapon(0);
     }
 
-    public void OnWeapon2(InputValue value) {
+    public void OnWeapon2(InputValue value)
+    {
         AssignmentWeapon(1);
     }
 
-    public void AssignmentWeapon(int index) {
+    public void AssignmentWeapon(int index)
+    {
         playerEquipManagment.currentindex = index;
         playerAttack.CurrentWeapon = playerEquipManagment.GetWeapon(index);
 
     }
 
-    public void OnDropItem(InputValue value) {
-        if(UIManager.Instance.handler_focus != null) {
-            if(UIManager.Instance.handler_focus.TryGetComponent(out EquipmentCell equipmentcell)) {
-                if(equipmentcell.slotcurrentItem != null) {
+    public void OnDropItem(InputValue value)
+    {
+        if (UIManager.Instance.handler_focus != null)
+        {
+            if (UIManager.Instance.handler_focus.TryGetComponent(out EquipmentCell equipmentcell))
+            {
+                if (equipmentcell.slotcurrentItem != null)
+                {
                     //장착 아이템을 해제하는 로직
+                    playerEquipManagment.RemoveWeapon(equipmentcell.slotcurrentItem as Weapon);
+                    equipmentcell.RemoveItem();
                 }
-            } else if(UIManager.Instance.handler_focus.TryGetComponent(out Cell cell)) {
-                if(cell.slotcurrentItem != null) {
-                    ItemManager.Instance.DropItem(cell.slotcurrentItem);
-                    Destroy(cell.Item_ParentCell.transform.GetChild(0).gameObject);
+            }
+            else if (UIManager.Instance.handler_focus.TryGetComponent(out Cell cell))
+            {
+                if (cell.slotcurrentItem != null)
+                {
+                    cell.RemoveItem();
                     cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
                 }
             }
         }
     }
 
-    private void ChangeActionMap() {
+    private void ChangeActionMap()
+    {
         bool isInventoryActive = UIManager.Instance.Inventory.activeSelf;
 
-        if(isInventoryActive == true) {
+        if (isInventoryActive == true)
+        {
             playerActionMap.Disable();
             uiActionMap.Enable();
-        } else {
+        }
+        else
+        {
             playerActionMap.Enable();
             uiActionMap.Disable();
         }

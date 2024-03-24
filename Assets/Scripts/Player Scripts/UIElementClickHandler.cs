@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 
 public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -12,7 +13,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public Cell dropCell;
 
     private RectTransform rect;
-    private Image image;
+    public Image image;
     private bool current_Rotation;
     public bool isRotation;
     public List<Cell> itemCells = new List<Cell>();
@@ -23,6 +24,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         image = GetComponent<Image>();
         myItem = item;
         image.sprite = item.inventorySprite;
+
         //Rect Transform 초기화
         SetDefaultImageSize();
         //Rect Transform 초기화 
@@ -33,13 +35,14 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
     }
 
-    private void SetDefaultImageSize() {
-            rect.anchorMin = new Vector2(0.5f, 0.5f); // 왼쪽 하단 앵커
-            rect.anchorMax = new Vector2(0.5f, 0.5f); // 오른쪽 상단 앵커
+    private void SetDefaultImageSize()
+    {
+        rect.anchorMin = new Vector2(0.5f, 0.5f); // 왼쪽 하단 앵커
+        rect.anchorMax = new Vector2(0.5f, 0.5f); // 오른쪽 상단 앵커
 
-            rect.pivot = new Vector2(1f / (myItem.cellwidth * 2), 1f - (1f / (myItem.cellheight * 2)));
-            rect.sizeDelta = new Vector2(myItem.cellwidth * 100, myItem.cellheight * 100);
-            rect.localPosition = Vector3.zero;
+        rect.pivot = new Vector2(1f / (myItem.cellwidth * 2), 1f - (1f / (myItem.cellheight * 2)));
+        rect.sizeDelta = new Vector2(myItem.cellwidth * 100, myItem.cellheight * 100);
+        rect.localPosition = Vector3.zero;
     }
 
     private void ImagePropertyCellType(Cell cell)
@@ -59,7 +62,9 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             rect.localPosition = Vector3.zero;
 
 
-        } else {
+        }
+        else
+        {
             Debug.Log("false");
             SetDefaultImageSize();
         }
@@ -109,7 +114,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         else if (dropCell.TryGetComponent(out EquipmentCell equipmentCell))
         {
             parentAfterCell = dropCell;
-
         }
         else if (dropCell.TryGetComponent(out Cell cell))
         {
@@ -160,9 +164,12 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             }
             else
             {
-                if(parentAfterCell is EquipmentCell == false) {
+                if (parentAfterCell is EquipmentCell == false)
+                {
                     InsertCellItem(parentAfterCell);
-                } else {
+                }
+                else
+                {
                     return;
                 }
             }
