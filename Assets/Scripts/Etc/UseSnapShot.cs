@@ -66,12 +66,13 @@ public class UseSanpShot : MonoBehaviour
 
     void Start()
     {
-        // 카메라 설정
+        // 카메라 설정 128 256 384 512 640
         GetPictureFunc(item1by2Snapshot, 640, 256);
 
     }
     //기본 128 x 128
-    public void GetPictureFunc(GameObject[] gameObjects, int width = 128, int height = 128) {
+    public void GetPictureFunc(GameObject[] gameObjects, int width = 128, int height = 128)
+    {
         snapshotCamera = SnapshotCamera.MakeSnapshotCamera(0);
         for (int i = 0; i < gameObjects.Length; i++)
         {

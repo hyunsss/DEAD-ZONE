@@ -11,10 +11,11 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Takes snapshot images of prefabs and GameObject instances, and provides methods to save them as PNG files.
 /// </summary>
-public class SnapshotCamera : MonoBehaviour {
+public class SnapshotCamera : MonoBehaviour
+{
     // This disables the "never assigned" warning.
     // These fields will be assigned by the factory.
-    #pragma warning disable 0649
+#pragma warning disable 0649
     /// <summary>
     /// The Camera used internally by the SnapshotCamera.
     /// </summary>
@@ -23,12 +24,12 @@ public class SnapshotCamera : MonoBehaviour {
     /// The layer on which the SnapshotCamera takes snapshots.
     /// </summary>
     private int layer;
-    #pragma warning restore 0649
+#pragma warning restore 0649
 
     /// <summary>
     /// The default position offset applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultPositionOffset = new Vector3(-1f, 0, 1);
+    public Vector3 defaultPositionOffset = new Vector3(-0.6f, -0.2f, 1);
     /// <summary>
     /// The default rotation applied to objects when none is specified.
     /// </summary>
@@ -36,10 +37,10 @@ public class SnapshotCamera : MonoBehaviour {
     /// <summary>
     /// The default scale applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultScale = new Vector3(4.2f, 4.2f, 4.2f);
+    public Vector3 defaultScale = new Vector3(4.6f, 4.6f, 4.6f);
 
     // This private constructor serves to ensure only the factory can produce new instances.
-    private SnapshotCamera () { }
+    private SnapshotCamera() { }
 
     /// <summary>
     /// Factory method which sets up and configures a new SnapshotCamera, then returns it.
@@ -47,7 +48,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="layer">The name of the layer on which to take snapshots.</param>
     /// <param name="name">The name that will be given to the new GameObject the SnapshotCamera will be attached to.</param>
     /// <returns>A new SnapshotCamera, ready for use.</returns>
-    public static SnapshotCamera MakeSnapshotCamera (string layer, string name = "Snapshot Camera")
+    public static SnapshotCamera MakeSnapshotCamera(string layer, string name = "Snapshot Camera")
     {
         return MakeSnapshotCamera(LayerMask.NameToLayer(layer), name);
     }
@@ -58,7 +59,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="layer">The layer number of the layer on which to take snapshots.</param>
     /// <param name="name">The name that will be given to the new GameObject the SnapshotCamera will be attached to.</param>
     /// <returns>A new SnapshotCamera, ready for use.</returns>
-    public static SnapshotCamera MakeSnapshotCamera (int layer = 5, string name = "Snapshot Camera")
+    public static SnapshotCamera MakeSnapshotCamera(int layer = 5, string name = "Snapshot Camera")
     {
         if (layer < 0 || layer > 31)
             throw new ArgumentOutOfRangeException("layer", "layer argument must specify a valid layer between 0 and 31");
@@ -76,10 +77,10 @@ public class SnapshotCamera : MonoBehaviour {
         cam.backgroundColor = Color.clear;
         cam.nearClipPlane = 0.1f;
         cam.enabled = false;
-        
+
         // Add a SnapshotCamera component to the GameObject
         SnapshotCamera snapshotCamera = snapshotCameraGO.AddComponent<SnapshotCamera>();
-        
+
         // Set the SnapshotCamera's cam and layer fields
         snapshotCamera.cam = cam;
         snapshotCamera.layer = layer;
@@ -94,7 +95,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// </summary>
     /// <param name="dirty">The unsanitized filename string.</param>
     /// <returns>A sanitized filename string with illegal characters replaced with underscores.</returns>
-    private static string SanitizeFilename (string dirty)
+    private static string SanitizeFilename(string dirty)
     {
         string invalidFileNameChars = Regex.Escape(new string(Path.GetInvalidFileNameChars()));
         string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidFileNameChars);
@@ -109,7 +110,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="filename">The name of the file. This will be the current timestamp if not specified.</param>
     /// <param name="directory">The directory in which to save the file. This will be the game/Snapshots directory if not specified.</param>
     /// <returns>A FileInfo pointing to the created PNG file</returns>
-    public static FileInfo SavePNG (byte[] bytes, string filename = "", string directory = "")
+    public static FileInfo SavePNG(byte[] bytes, string filename = "", string directory = "")
     {
         directory = directory != "" ? Directory.CreateDirectory(directory).FullName : Directory.CreateDirectory(Path.Combine(Application.dataPath, "../Snapshots")).FullName;
         filename = filename != "" ? SanitizeFilename(filename) + ".png" : System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ffff") + ".png";
@@ -127,7 +128,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="filename">The name of the file. This will be the current timestamp if not specified.</param>
     /// <param name="directory">The directory in which to save the file. This will be the game/Snapshots directory if not specified.</param>
     /// <returns>A FileInfo pointing to the created PNG file</returns>
-    public static FileInfo SavePNG (Texture2D tex, string filename = "", string directory = "")
+    public static FileInfo SavePNG(Texture2D tex, string filename = "", string directory = "")
     {
         return SavePNG(tex.EncodeToPNG(), filename, directory);
     }
@@ -149,7 +150,7 @@ public class SnapshotCamera : MonoBehaviour {
         /// Store the current state (layers, position, rotation, and scale) of a GameObject
         /// </summary>
         /// <param name="gameObject">The GameObject whose state to store.</param>
-        public GameObjectStateSnapshot (GameObject gameObject)
+        public GameObjectStateSnapshot(GameObject gameObject)
         {
             this.gameObject = gameObject;
             this.position = gameObject.transform.position;
@@ -166,7 +167,7 @@ public class SnapshotCamera : MonoBehaviour {
         /// <summary>
         /// Restore the gameObject to the state stored in this GameObjectStateSnapshot.
         /// </summary>
-        public void Restore ()
+        public void Restore()
         {
             this.gameObject.transform.position = this.position;
             this.gameObject.transform.rotation = this.rotation;
@@ -183,7 +184,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// Set the layers of the GameObject and all its children to the SnapshotCamera's snapshot layer so the SnapshotCamera can see it.
     /// </summary>
     /// <param name="gameObject">The GameObject apply the layer modifications to.</param>
-    private void SetLayersRecursively (GameObject gameObject)
+    private void SetLayersRecursively(GameObject gameObject)
     {
         foreach (Transform transform in gameObject.GetComponentsInChildren<Transform>(true))
             transform.gameObject.layer = layer;
@@ -197,7 +198,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="rotation">The rotation to apply to the gameObject.</param>
     /// <param name="scale">The scale to apply to the gameObject.</param>
     /// <returns>A GameObjectStateSnapshot containing the state of the gameObject prior to modifying its layers, position, rotation, and scale.</returns>
-    private GameObjectStateSnapshot PrepareObject (GameObject gameObject, Vector3 positionOffset, Quaternion rotation, Vector3 scale)
+    private GameObjectStateSnapshot PrepareObject(GameObject gameObject, Vector3 positionOffset, Quaternion rotation, Vector3 scale)
     {
         GameObjectStateSnapshot goss = new GameObjectStateSnapshot(gameObject);
 
@@ -217,7 +218,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="rotation">The rotation to apply to the prefab.</param>
     /// <param name="scale">The scale to apply to the prefab.</param>
     /// <returns>A prefab instance ready for taking a snapshot.</returns>
-    private GameObject PreparePrefab (GameObject prefab, Vector3 positionOffset, Quaternion rotation, Vector3 scale)
+    private GameObject PreparePrefab(GameObject prefab, Vector3 positionOffset, Quaternion rotation, Vector3 scale)
     {
         GameObject gameObject = GameObject.Instantiate(prefab, transform.position + positionOffset, rotation) as GameObject;
         gameObject.transform.localScale = scale;
@@ -238,7 +239,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakeObjectSnapshot (GameObject gameObject, int width = 128, int height = 128)
+    public Texture2D TakeObjectSnapshot(GameObject gameObject, int width = 128, int height = 128)
     {
         return TakeObjectSnapshot(gameObject, Color.clear, defaultPositionOffset, Quaternion.Euler(defaultRotation), defaultScale, width, height);
     }
@@ -253,9 +254,9 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakeObjectSnapshot (GameObject gameObject, Color backgroundColor, int width = 128, int height = 128)
+    public Texture2D TakeObjectSnapshot(GameObject gameObject, Color backgroundColor, int width = 128, int height = 128)
     {
-        return TakeObjectSnapshot (gameObject, backgroundColor, defaultPositionOffset, Quaternion.Euler(defaultRotation), defaultScale, width, height);
+        return TakeObjectSnapshot(gameObject, backgroundColor, defaultPositionOffset, Quaternion.Euler(defaultRotation), defaultScale, width, height);
     }
 
     /// <summary>
@@ -270,7 +271,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakeObjectSnapshot (GameObject gameObject, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
+    public Texture2D TakeObjectSnapshot(GameObject gameObject, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
     {
         return TakeObjectSnapshot(gameObject, Color.clear, positionOffset, rotation, scale, width, height);
     }
@@ -286,7 +287,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakeObjectSnapshot (GameObject gameObject, Color backgroundColor, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
+    public Texture2D TakeObjectSnapshot(GameObject gameObject, Color backgroundColor, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
     {
         if (gameObject == null)
             throw new ArgumentNullException("gameObject");
@@ -318,7 +319,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakePrefabSnapshot (GameObject prefab, int width = 128, int height = 128)
+    public Texture2D TakePrefabSnapshot(GameObject prefab, int width = 128, int height = 128)
     {
         return TakePrefabSnapshot(prefab, Color.clear, defaultPositionOffset, Quaternion.Euler(defaultRotation), defaultScale, width, height);
     }
@@ -333,7 +334,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakePrefabSnapshot (GameObject prefab, Color backgroundColor, int width = 128, int height = 128)
+    public Texture2D TakePrefabSnapshot(GameObject prefab, Color backgroundColor, int width = 128, int height = 128)
     {
         return TakePrefabSnapshot(prefab, backgroundColor, defaultPositionOffset, Quaternion.Euler(defaultRotation), defaultScale, width, height);
     }
@@ -350,7 +351,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakePrefabSnapshot (GameObject prefab, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
+    public Texture2D TakePrefabSnapshot(GameObject prefab, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
     {
         return TakePrefabSnapshot(prefab, Color.clear, positionOffset, rotation, scale, width, height);
     }
@@ -366,7 +367,7 @@ public class SnapshotCamera : MonoBehaviour {
     /// <param name="width">The width of the snapshot image.</param>
     /// <param name="height">The height of the snapshot image.</param>
     /// <returns>A Texture2D containing the captured snapshot.</returns>
-    public Texture2D TakePrefabSnapshot (GameObject prefab, Color backgroundColor, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
+    public Texture2D TakePrefabSnapshot(GameObject prefab, Color backgroundColor, Vector3 positionOffset, Quaternion rotation, Vector3 scale, int width = 128, int height = 128)
     {
         if (prefab == null)
             throw new ArgumentNullException("prefab");
@@ -375,7 +376,7 @@ public class SnapshotCamera : MonoBehaviour {
 
         // Prepare an instance of the prefab
         GameObject instance = PreparePrefab(prefab, positionOffset, rotation, scale);
-        
+
         // Take a snapshot
         Texture2D snapshot = TakeSnapshot(backgroundColor, width, height);
 
