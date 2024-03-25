@@ -4559,9 +4559,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hand_R: {fileID: 793144876}
   spine_03: {fileID: 793159720}
-  weapons:
-  - {fileID: 0}
-  - {fileID: 0}
   currentindex: 0
 --- !u!1 &812827590
 GameObject:
@@ -5512,6 +5509,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1049756360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1049756361}
+  m_Layer: 0
+  m_Name: ItemParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1049756361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049756360}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.032703254, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1169518384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8468,6 +8496,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory
       objectReference: {fileID: 0}
+    - target: {fileID: 8132814743505426420, guid: a9787a86ff6d64149857183faa30aad3,
+        type: 3}
+      propertyPath: width
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132814743505426420, guid: a9787a86ff6d64149857183faa30aad3,
+        type: 3}
+      propertyPath: height
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8508,7 +8546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ecb76af043848b58669ca60e900b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemParent: {fileID: 0}
+  itemParent: {fileID: 1049756361}
   ItemList:
   - {fileID: 7625183365776613066, guid: 3e0b5cabe96e74b4491b911843826af3, type: 3}
   - {fileID: 5819499696833084461, guid: 65ca5ac21ef5240448a2f82157e30a45, type: 3}
@@ -9674,6 +9712,7 @@ SceneRoots:
   - {fileID: 2086112388}
   - {fileID: 171317018}
   - {fileID: 1994999203}
+  - {fileID: 1049756361}
   - {fileID: 2471629569767425142}
   - {fileID: 1460580864}
   - {fileID: 3523280467152632705}
