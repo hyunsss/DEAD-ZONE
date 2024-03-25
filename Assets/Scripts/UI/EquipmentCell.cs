@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public enum EquipmentType { Helmat, Armor, Accesary1, Accesary2, Weapon1, Weapon2, Bag }
 public class EquipmentCell : Cell

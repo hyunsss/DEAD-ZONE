@@ -108,7 +108,13 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     {
         if (dropCell == null)
         {
+            print("drop cell null");
             dropCell = parentAfterCell;
+            if (dropCell is EquipmentCell equipmentcell)
+            {
+                image.preserveAspect = true;
+                equipmentcell.EquipItem(equipmentcell.equiptype, myItem);
+            }
             //Todo Drop되는 셀의 타입에 따라 rect를 설정해주는 함수가 필요할 것 같음.
         }
         else if (dropCell.TryGetComponent(out EquipmentCell equipmentCell))
@@ -178,13 +184,26 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void RemoveCellItem()
     {
-        foreach (Cell cell in itemCells)
+        if (parentAfterCell is EquipmentCell == true)
         {
-            cell.slotcurrentItem = null;
-            cell.Item_ParentCell = null;
+            parentAfterCell.slotcurrentItem.transform.SetParent(ItemManager.Instance.itemParent);
+            parentAfterCell.slotcurrentItem.gameObject.SetActive(false);
+            Data.Instance.Player.GetComponent<PlayerEquipManagment>().RemoveWeapon(parentAfterCell.slotcurrentItem as Weapon);
+            // Data.Instance.Player.GetComponent<PlayerEquipManagment>().Weapons
+            //                         [Array.IndexOf(Data.Instance.Player.GetComponent<PlayerEquipManagment>().Weapons, parentAfterCell.slotcurrentItem)] = null;
+            parentAfterCell.slotcurrentItem = null;
+        }
+        else
+        {
+            foreach (Cell cell in itemCells)
+            {
+                cell.slotcurrentItem = null;
+                cell.Item_ParentCell = null;
+            }
+
+            itemCells.Clear();
         }
 
-        itemCells.Clear();
     }
 
     private void CompleteMoveCell(Cell parentCell)
@@ -196,6 +215,9 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         // rect.localPosition = Vector3.zero;
         parentCell.slotcurrentItem = myItem;
         GetComponent<Image>().raycastTarget = true;
+
+
+
     }
 
 

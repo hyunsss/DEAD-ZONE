@@ -82,7 +82,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnWeapon1(InputValue value)
     {
-        if (playerEquipManagment.weapons[0] != null)
+        if (playerEquipManagment.Weapons[0] != null)
         {
             AssignmentWeapon(0);
         }
@@ -90,7 +90,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnWeapon2(InputValue value)
     {
-        if (playerEquipManagment.weapons[1] != null)
+        if (playerEquipManagment.Weapons[1] != null)
         {
             AssignmentWeapon(1);
         }
@@ -99,7 +99,7 @@ public class PlayerInput : MonoBehaviour
     public void AssignmentWeapon(int index)
     {
         playerEquipManagment.currentindex = index;
-        playerAttack.CurrentWeapon = playerEquipManagment.GetWeapon(index);
+        playerAttack.CurrentWeapon = playerEquipManagment.Weapons[index];
 
     }
 

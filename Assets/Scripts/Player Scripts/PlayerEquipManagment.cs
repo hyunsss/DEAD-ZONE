@@ -14,7 +14,8 @@ public class PlayerEquipManagment : MonoBehaviour
     public Transform hand_R;
     public Transform spine_03;
 
-    public Weapon[] weapons = new Weapon[2];
+    private Weapon[] weapons = new Weapon[2];
+    public Weapon[] Weapons { get { return weapons; } set { weapons = value; } }
     public int currentindex;
 
     public Action<Weapon> CurrentWeaponSetting;
@@ -56,12 +57,7 @@ public class PlayerEquipManagment : MonoBehaviour
         }
 
     }
-
-    public Weapon GetWeapon(int index)
-    {
-        return weapons[index];
-    }
-
+    
     public void CurrentChangeWeaponSetting(Weapon currentWeapon)
     {
         print("CurrentWeaponSetting");
