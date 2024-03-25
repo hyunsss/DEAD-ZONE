@@ -82,12 +82,18 @@ public class PlayerInput : MonoBehaviour
 
     public void OnWeapon1(InputValue value)
     {
-        AssignmentWeapon(0);
+        if (playerEquipManagment.weapons[0] != null)
+        {
+            AssignmentWeapon(0);
+        }
     }
 
     public void OnWeapon2(InputValue value)
     {
-        AssignmentWeapon(1);
+        if (playerEquipManagment.weapons[1] != null)
+        {
+            AssignmentWeapon(1);
+        }
     }
 
     public void AssignmentWeapon(int index)
