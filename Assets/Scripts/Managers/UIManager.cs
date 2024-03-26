@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public Cell cell;
     [HideInInspector] public GameObject Inventory;
     [HideInInspector] public ItemCellPanel player_Inven;
+    public GameObject inventory_prefab;
 
     bool firstInit = false;
     float startTime;

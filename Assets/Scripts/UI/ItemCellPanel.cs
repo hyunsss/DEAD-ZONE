@@ -11,6 +11,8 @@ public class ItemCellPanel : MonoBehaviour
     RectTransform rect;
     GridLayoutGroup gridLayoutGroup;
 
+    public Transform parent_Bag;
+
     public GridXY grid;
 
 
@@ -26,6 +28,18 @@ public class ItemCellPanel : MonoBehaviour
     {
         grid = new GridXY(width, height, transform);
     }
+
+    public void ShowInventory(Transform UIParent) {
+        transform.SetParent(UIParent, false);
+        gameObject.SetActive(true);
+    }
+
+    public void HideInventory() {
+        transform.SetParent(parent_Bag, false);
+        gameObject.SetActive(false);
+    }
+
+
 
     public void InsertItem(Item item, int x, int y, out bool isInsert) {
         Cell cell = grid.GetCell(x, y);
