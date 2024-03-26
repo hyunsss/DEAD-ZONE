@@ -33,9 +33,11 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     }
 
-    public virtual void RemoveItem() {
+    public virtual void RemoveItem()
+    {
         ItemManager.Instance.DropItem(slotcurrentItem);
         Destroy(Item_ParentCell.transform.GetChild(0).gameObject);
+        Destroy(Item_ParentCell.transform.GetChild(1).gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -24,10 +24,14 @@ public class UIManager : MonoBehaviour
     bool firstInit = false;
     float startTime;
 
-    private void Awake() {
-        if(Instance == null) {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(this);
         }
 
@@ -39,11 +43,12 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         startTime = Time.time;
     }
 
-    void LateStart() {
+    void LateStart()
+    {
         equipmentCells = FindObjectsOfType<EquipmentCell>();
         AllCells = FindObjectsOfType<Cell>();
         Debug.Log(equipmentCells.Length);
@@ -58,17 +63,42 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(firstInit == false && 0.1f < Time.time - startTime) {
+        if (firstInit == false && 0.1f < Time.time - startTime)
+        {
             Debug.Log("eanble latestart");
             LateStart();
             firstInit = true;
         }
     }
 
-    public void CellRayCastTarget(bool isallow) {
+    public void CellRayCastTarget(bool isallow)
+    {
         // if(AllCells.Length == 0) AllCells = GameObject.FindObjectsOfType<Cell>();
-        foreach(Cell cell in AllCells) {
+        foreach (Cell cell in AllCells)
+        {
             cell.GetComponent<Image>().raycastTarget = isallow;
         }
+    }
+
+    public Color GetItemTypeColor(ItemKey key = ItemKey.Not)
+    {
+        switch (key)
+        {
+            case ItemKey.Not:
+                return new Color(96f / 255f, 96f / 255f, 96f / 255f, 125f / 255f);
+            case ItemKey.Bag:
+                return new Color(112f / 255f, 95f / 255f, 130f / 255f, 125f / 255f);
+            case ItemKey.Weapon:
+                return new Color(33f / 255f, 33f / 255f, 33f / 255f, 125f / 255f);
+            case ItemKey.Etc:
+                return new Color(86f / 255f, 106f / 255f, 142f / 255f, 125f / 255f);
+            case ItemKey.Food:
+                return new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
+            case ItemKey.Medical:
+                return new Color(181f / 255f, 87f / 255f, 77f / 255f, 125f / 255f);
+            default:
+                return new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
+        }
+
     }
 }

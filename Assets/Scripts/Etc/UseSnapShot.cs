@@ -73,6 +73,21 @@ using UnityEngine.UI;
 #region 3by2 bag snapshot setting
 
 #endregion
+
+#region armor snapshot setting
+/*
+/// </summary>
+    public Vector3 defaultPositionOffset = new Vector3(0f, -3.5f, 1);
+    /// <summary>
+    /// The default rotation applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultRotation = new Vector3(0, 200, 0);
+    /// <summary>
+    /// The default scale applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultScale = new Vector3(2.8f, 2.8f, 2.8f);
+*/
+#endregion
 public class UseSanpShot : MonoBehaviour
 {
     public Button item1by2button;

@@ -26,16 +26,16 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         image.sprite = item.inventorySprite;
 
         //Rect Transform 초기화
-        ImagePropertyCellType(parentAfterCell);
+        ImagePropertyCellType(parentAfterCell, rect, image);
         //Rect Transform 초기화 
-
+        ItemManager.Instance.CreateItemBackGround(this);
         itemCells = itemcells;
         this.isRotation = isRotation;
         current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
     }
 
-    private void SetDefaultImageSize()
+    private void SetDefaultImageSize(RectTransform rect)
     {
         rect.anchorMin = new Vector2(0.5f, 0.5f); // 왼쪽 하단 앵커
         rect.anchorMax = new Vector2(0.5f, 0.5f); // 오른쪽 상단 앵커
@@ -45,7 +45,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         rect.localPosition = Vector3.zero;
     }
 
-    private void ImagePropertyCellType(Cell cell)
+    public void ImagePropertyCellType(Cell cell, RectTransform rect, Image image)
     {
         if (cell is EquipmentCell == true)
         {
@@ -66,7 +66,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         else
         {
             Debug.Log("false");
-            SetDefaultImageSize();
+            SetDefaultImageSize(rect);
         }
     }
 
@@ -93,7 +93,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         // myItem = parentAfterCell.GetComponent<Cell>().slotcurrentItem;
         parentAfterCell.slotcurrentItem = null;
         transform.SetParent(UIManager.Instance.topCanvas.transform, false);
-        SetDefaultImageSize();
+        SetDefaultImageSize(rect);
+        Destroy(parentAfterCell.transform.Find("Item Image").gameObject);
         transform.SetAsLastSibling();
     }
 
@@ -144,7 +145,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             {
                 cell.slotcurrentItem = myItem;
                 cell.Item_ParentCell = currentcell;
-
             }
 
             parentAfterCell = currentcell;
@@ -198,6 +198,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             {
                 cell.slotcurrentItem = null;
                 cell.Item_ParentCell = null;
+                cell.GetComponent<Image>().color = UIManager.Instance.GetItemTypeColor();
             }
 
             itemCells.Clear();
@@ -210,7 +211,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         transform.SetParent(parentCell.transform, false);
         transform.position = Vector3.zero;
 
-        ImagePropertyCellType(parentCell);
+        ImagePropertyCellType(parentCell, rect, image);
+        ItemManager.Instance.CreateItemBackGround(this);
         // rect.localPosition = Vector3.zero;
         parentCell.slotcurrentItem = myItem;
         GetComponent<Image>().raycastTarget = true;

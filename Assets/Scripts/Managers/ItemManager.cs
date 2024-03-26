@@ -138,9 +138,12 @@ public class ItemManager : MonoBehaviour
     {
         List<Cell> tempCells = new List<Cell>();
         bool Finish, isRotation;
-        if(cell is EquipmentCell == false) {
+        if (cell is EquipmentCell == false)
+        {
             CheckToInventory(cell, item, out tempCells, out isRotation, out Finish);
-        } else {
+        }
+        else
+        {
             Finish = true;
             isRotation = false;
         }
@@ -155,13 +158,28 @@ public class ItemManager : MonoBehaviour
             imageObj.AddComponent<Image>();
 
             handler.HanlderInit(tempCells, item, isRotation);
-            if(cell is EquipmentCell == false) item.gameObject.SetActive(false);
+
+            if (cell is EquipmentCell == false) item.gameObject.SetActive(false);
             isInInventory = true;
         }
         else
         {
             isInInventory = false;
         }
+    }
+
+    public void CreateItemBackGround(UIElementClickHandler uIElement)
+    {
+        GameObject gameObject = new GameObject("Item Image");
+        gameObject.transform.SetParent(uIElement.transform.parent);
+        gameObject.transform.SetAsFirstSibling();
+        Image image = gameObject.AddComponent<Image>();
+        image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.type);
+
+        RectTransform rect = gameObject.GetComponent<RectTransform>();
+        uIElement.ImagePropertyCellType(uIElement.parentAfterCell, rect, image);
+
+        if (uIElement.isRotation == true) rect.Rotate(new Vector3(0, 0, 90));
     }
 
     public void DropItem(Item item)

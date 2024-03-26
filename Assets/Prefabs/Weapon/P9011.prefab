@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 7757725803188119074}
   - component: {fileID: 8704381939130209232}
   m_Layer: 7
-  m_Name: P90
+  m_Name: P9011
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +478,7 @@ Transform:
   m_GameObject: {fileID: 8918622012703453554}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.916, y: 0.439, z: 1.983}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

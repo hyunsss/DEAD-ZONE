@@ -16,8 +16,9 @@ public class PlayerEquipManagment : MonoBehaviour
     public Transform hand_R;
     public Transform spine_03;
     public Transform head;
+    public Transform body;
 
-    [Space(20f)]
+    [Space(40f)]
     [Header("Weapon Properties")]
     private Weapon[] weapons = new Weapon[2];
     public Weapon[] Weapons { get { return weapons; } set { weapons = value; } }
@@ -143,7 +144,7 @@ public class PlayerEquipManagment : MonoBehaviour
                 break;
             case ItemKey.Armor:
                 currentArmors[1] = armor;
-                armor.transform.SetParent(spine_03, false);
+                armor.transform.SetParent(body, false);
                 break;
             default:
                 break;
