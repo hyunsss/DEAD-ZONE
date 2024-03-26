@@ -51,6 +51,28 @@ using UnityEngine.UI;
 #region 2by5 Gun snapshot setting
 
 #endregion
+
+#region 4by2 Gun snapshot setting
+/*
+ /// <summary>
+    /// The default position offset applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultPositionOffset = new Vector3(-0.6f, -0.2f, 1);
+    /// <summary>
+    /// The default rotation applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultRotation = new Vector3(0, 90, 0);
+    /// <summary>
+    /// The default scale applied to objects when none is specified.
+    /// </summary>
+    public Vector3 defaultScale = new Vector3(4.6f, 4.6f, 4.6f);
+*/
+#endregion
+
+
+#region 3by2 bag snapshot setting
+
+#endregion
 public class UseSanpShot : MonoBehaviour
 {
     public Button item1by2button;
@@ -67,7 +89,7 @@ public class UseSanpShot : MonoBehaviour
     void Start()
     {
         // 카메라 설정 128 256 384 512 640
-        GetPictureFunc(item1by2Snapshot, 640, 256);
+        GetPictureFunc(item1by2Snapshot, 256, 384);
 
     }
     //기본 128 x 128

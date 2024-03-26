@@ -26,18 +26,16 @@ public class SnapshotCamera : MonoBehaviour
     private int layer;
 #pragma warning restore 0649
 
-    /// <summary>
-    /// The default position offset applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultPositionOffset = new Vector3(-0.6f, -0.2f, 1);
+    public Vector3 defaultPositionOffset = new Vector3(0.2f, 0, 1);
     /// <summary>
     /// The default rotation applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultRotation = new Vector3(0, 90, 0);
+    public Vector3 defaultRotation = new Vector3(30, 20, 0);
     /// <summary>
     /// The default scale applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultScale = new Vector3(4.6f, 4.6f, 4.6f);
+    public Vector3 defaultScale = new Vector3(2, 2, 2);
 
     // This private constructor serves to ensure only the factory can produce new instances.
     private SnapshotCamera() { }
