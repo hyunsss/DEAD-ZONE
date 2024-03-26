@@ -8,14 +8,15 @@ public class Bag : Item
     [Space(10f)]
     [Header("Bag Properties")]
     public ItemCellPanel currentBagInventory;
-
+    public GameObject bagInventory_prefab;
 
     protected override void Awake() {
         base.Awake();
-        currentBagInventory = LeanPool.Spawn(UIManager.Instance.inventory_prefab, transform.position, Quaternion.identity, transform).GetComponent<ItemCellPanel>();
     }
 
-
+    private void Start() {
+        currentBagInventory = LeanPool.Spawn(bagInventory_prefab, transform.position, Quaternion.identity, transform).GetComponent<ItemCellPanel>();
+    }
 
 
 }

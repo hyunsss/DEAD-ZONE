@@ -18,7 +18,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public bool isRotation;
     public List<Cell> itemCells = new List<Cell>();
 
-    public void HanlderInit(List<Cell> itemcells, Item item, bool isRotation)
+    public void HanlderInit(List<Cell> itemcells, Item item, bool isRotation = false)
     {
         rect = GetComponent<RectTransform>();
         image = GetComponent<Image>();
@@ -26,7 +26,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         image.sprite = item.inventorySprite;
 
         //Rect Transform 초기화
-        SetDefaultImageSize();
+        ImagePropertyCellType(parentAfterCell);
         //Rect Transform 초기화 
 
         itemCells = itemcells;
@@ -60,7 +60,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.eulerAngles = new Vector3(0, 0, 0);
             rect.localPosition = Vector3.zero;
-
+            image.preserveAspect = true;
 
         }
         else
@@ -112,7 +112,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             dropCell = parentAfterCell;
             if (dropCell is EquipmentCell equipmentcell)
             {
-                image.preserveAspect = true;
                 equipmentcell.EquipItem(equipmentcell.equiptype, myItem);
             }
             //Todo Drop되는 셀의 타입에 따라 rect를 설정해주는 함수가 필요할 것 같음.

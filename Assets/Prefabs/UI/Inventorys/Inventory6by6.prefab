@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 6761053683355859651}
   - component: {fileID: 8132814743505426420}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: Inventory6by6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877130123994426958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -113,5 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3111e10273f7449ce83fa52764fadf81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 4
-  height: 4
+  width: 6
+  height: 6
+  parent_Bag: {fileID: 0}

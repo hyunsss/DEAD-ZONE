@@ -112,7 +112,8 @@ public class PlayerInput : MonoBehaviour
                 if (equipmentcell.slotcurrentItem != null)
                 {
                     //장착 아이템을 해제하는 로직
-                    playerEquipManagment.RemoveWeapon(equipmentcell.slotcurrentItem as Weapon);
+                    //해당 슬롯의 장비 유형에 따라 아이템을 해체하는 로직을 수행합니다.
+                    playerEquipManagment.RemoveItemofCelltype(equipmentcell.equiptype);
                     equipmentcell.RemoveItem();
                 }
             }

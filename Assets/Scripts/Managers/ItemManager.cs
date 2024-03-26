@@ -137,8 +137,13 @@ public class ItemManager : MonoBehaviour
     public void MoveToInventory(Cell cell, Item item, out bool isInInventory)
     {
         List<Cell> tempCells = new List<Cell>();
-
-        CheckToInventory(cell, item, out tempCells, out bool isRotation, out bool Finish);
+        bool Finish, isRotation;
+        if(cell is EquipmentCell == false) {
+            CheckToInventory(cell, item, out tempCells, out isRotation, out Finish);
+        } else {
+            Finish = true;
+            isRotation = false;
+        }
 
         if (Finish == true)
         {
@@ -146,11 +151,11 @@ public class ItemManager : MonoBehaviour
             cell.slotcurrentItem = item;
             imageObj.transform.SetParent(cell.transform, false);
             UIElementClickHandler handler = imageObj.AddComponent<UIElementClickHandler>();
+            handler.parentAfterCell = cell;
             imageObj.AddComponent<Image>();
+
             handler.HanlderInit(tempCells, item, isRotation);
-
-            item.gameObject.SetActive(false);
-
+            if(cell is EquipmentCell == false) item.gameObject.SetActive(false);
             isInInventory = true;
         }
         else

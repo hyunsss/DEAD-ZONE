@@ -81,7 +81,8 @@ public class EquipmentCell : Cell
                 Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertWeapon(item as Weapon, 1);
                 break;
             case EquipmentType.Bag:
-            // Bag
+                Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertBag(item as Bag);
+                break;
             default:
                 break;
         }

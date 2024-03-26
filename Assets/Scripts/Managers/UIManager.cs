@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public Cell cell;
     [HideInInspector] public GameObject Inventory;
     [HideInInspector] public ItemCellPanel player_Inven;
-    public GameObject inventory_prefab;
+    public Transform inven_trasform;
 
     bool firstInit = false;
     float startTime;
@@ -33,8 +33,8 @@ public class UIManager : MonoBehaviour
 
 
         Inventory = GameObject.Find("Inventory Canvas").gameObject;
-        player_Inven = GameObject.Find("BackPack Panel/Inventory").GetComponent<ItemCellPanel>();
-
+        // player_Inven = GameObject.Find("BackPack Panel/Inventory").GetComponent<ItemCellPanel>();
+        inven_trasform = GameObject.Find("BackPack Panel").transform;
     }
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(firstInit == false && 0.001f < Time.time - startTime) {
+        if(firstInit == false && 0.1f < Time.time - startTime) {
             Debug.Log("eanble latestart");
             LateStart();
             firstInit = true;
