@@ -16,10 +16,11 @@ public class ItemCellPanel : MonoBehaviour
     public GridXY grid;
 
 
-    private void Awake() {
+    private void Awake()
+    {
         rect = GetComponent<RectTransform>();
         gridLayoutGroup = GetComponent<GridLayoutGroup>();
-        rect.sizeDelta = new Vector2(width * 100 + 10, height * 100 + 10);
+        rect.sizeDelta = new Vector2(width * gridLayoutGroup.cellSize.x + 10, height * gridLayoutGroup.cellSize.y + 10);
         gridLayoutGroup.padding.left = 5;
         gridLayoutGroup.padding.top = 5;
     }
@@ -29,22 +30,26 @@ public class ItemCellPanel : MonoBehaviour
         grid = new GridXY(width, height, transform);
     }
 
-    public void ShowInventory(Transform UIParent) {
+    public void ShowInventory(Transform UIParent)
+    {
         transform.SetParent(UIParent, false);
         gameObject.SetActive(true);
     }
 
-    public void HideInventory() {
+    public void HideInventory()
+    {
         transform.SetParent(parent_Bag, false);
         gameObject.SetActive(false);
     }
 
 
 
-    public void InsertItem(Item item, int x, int y, out bool isInsert) {
+    public void InsertItem(Item item, int x, int y, out bool isInsert)
+    {
         Cell cell = grid.GetCell(x, y);
 
-        if(cell == null) {
+        if (cell == null)
+        {
             isInsert = false;
             return;
         }
@@ -53,10 +58,12 @@ public class ItemCellPanel : MonoBehaviour
         return;
     }
 
-    public void QuickInsterItem(Item item, out bool isInsert, out Cell cell) {
+    public void QuickInsterItem(Item item, out bool isInsert, out Cell cell)
+    {
         cell = grid.GetEmptyCell();
 
-        if(cell == null) {
+        if (cell == null)
+        {
             isInsert = false;
             return;
         }

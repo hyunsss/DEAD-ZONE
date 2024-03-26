@@ -68,6 +68,8 @@ MonoBehaviour:
   currentBagInventory: {fileID: 0}
   bagInventory_prefab: {fileID: 2255807845658480249, guid: a5f701a667626417493c9b990c0b338e,
     type: 3}
+  bagPosition: {x: 0, y: 0.037, z: 0}
+  bagRotation: {x: 98.4, y: 90, z: 180}
 --- !u!54 &1014183604145186675
 Rigidbody:
   m_ObjectHideFlags: 0

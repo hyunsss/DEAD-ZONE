@@ -41,7 +41,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         rect.anchorMax = new Vector2(0.5f, 0.5f); // 오른쪽 상단 앵커
 
         rect.pivot = new Vector2(1f / (myItem.cellwidth * 2), 1f - (1f / (myItem.cellheight * 2)));
-        rect.sizeDelta = new Vector2(myItem.cellwidth * 100, myItem.cellheight * 100);
+        rect.sizeDelta = new Vector2(myItem.cellwidth * 70, myItem.cellheight * 70);
         rect.localPosition = Vector3.zero;
     }
 

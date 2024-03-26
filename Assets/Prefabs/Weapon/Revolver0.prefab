@@ -101,10 +101,10 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
-  handPosition: {x: 0.065, y: 0.025, z: -0.04}
+  handPosition: {x: 0.0793, y: 0.0311, z: -0.0219}
   handRotation: {x: 0, y: 90, z: -90}
-  subPosition: {x: -0.089, y: 0.202, z: 0.03}
-  subRotation: {x: 0, y: 113, z: 90}
+  subPosition: {x: 0.114, y: 0.241, z: -0.233}
+  subRotation: {x: 0, y: -88, z: 180}
   subHandIK_target: {fileID: 7570226673528791534}
   subHandIK_hint: {fileID: 557182490689520141}
   mode: 0

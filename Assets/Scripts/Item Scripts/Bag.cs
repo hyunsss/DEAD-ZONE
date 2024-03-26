@@ -10,11 +10,11 @@ public class Bag : Item
     public ItemCellPanel currentBagInventory;
     public GameObject bagInventory_prefab;
 
-    protected override void Awake() {
-        base.Awake();
-    }
-
-    private void Start() {
+    public Vector3 bagPosition;
+    public Vector3 bagRotation;
+    
+    private void Start()
+    {
         currentBagInventory = LeanPool.Spawn(bagInventory_prefab, transform.position, Quaternion.identity, transform).GetComponent<ItemCellPanel>();
     }
 

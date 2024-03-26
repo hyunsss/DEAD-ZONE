@@ -15,6 +15,7 @@ public class PlayerEquipManagment : MonoBehaviour
     [Header("1번 2번 장착될 무기 Transform")]
     public Transform hand_R;
     public Transform spine_03;
+    public Transform head;
 
     [Space(20f)]
     [Header("Weapon Properties")]
@@ -27,6 +28,10 @@ public class PlayerEquipManagment : MonoBehaviour
     [Space(20f)]
     [Header("Bag Properties")]
     public Bag currentBag;
+
+    [Space(20f)]
+    [Header("Helmet / Armor Properties")]
+    public Armor[] currentArmors = new Armor[2];
 
     void Awake()
     {
@@ -76,7 +81,7 @@ public class PlayerEquipManagment : MonoBehaviour
         }
 
     }
-    
+
     public void CurrentChangeWeaponSetting(Weapon currentWeapon)
     {
         print("CurrentWeaponSetting");
@@ -102,28 +107,68 @@ public class PlayerEquipManagment : MonoBehaviour
     }
 
     #endregion
-
-    public void InsertBag(Bag bag) {
+    #region Bag equip rosics
+    public void InsertBag(Bag bag)
+    {
         currentBag = bag;
         UIManager.Instance.player_Inven = bag.currentBagInventory;
         bag.currentBagInventory.ShowInventory(UIManager.Instance.inven_trasform);
 
-        //아직 등에 장착을 안하기 때문에 액티브 비활성화
-        bag.gameObject.SetActive(false);
+        bag.gameObject.SetActive(true);
+        bag.rigid.isKinematic = true;
+
+        bag.transform.SetParent(spine_03, false);
+        bag.transform.localPosition = bag.bagPosition;
+        bag.transform.localRotation = Quaternion.Euler(bag.bagRotation);
     }
 
-    public void RemoveBag() {
+    public void RemoveBag()
+    {
         currentBag.currentBagInventory.HideInventory();
         currentBag = null;
     }
 
-    public void RemoveItemofCelltype(EquipmentType type) {
+    #endregion
+    #region Armor equip rosics
+    public void InsertArmor(Armor armor)
+    {
+        armor.gameObject.SetActive(true);
+        armor.rigid.isKinematic = true;
+
+        switch (armor.type)
+        {
+            case ItemKey.Helmat:
+                currentArmors[0] = armor;
+                armor.transform.SetParent(head, false);
+                break;
+            case ItemKey.Armor:
+                currentArmors[1] = armor;
+                armor.transform.SetParent(spine_03, false);
+                break;
+            default:
+                break;
+        }
+
+        armor.transform.localPosition = armor.armorPosition;
+        armor.transform.localRotation = Quaternion.Euler(armor.armorRotation);
+    }
+
+    public void RemoveArmor(int index)
+    {
+        currentArmors[index] = null;
+    }
+    #endregion
+
+    public void RemoveItemofCelltype(EquipmentType type)
+    {
         switch (type)
         {
             case EquipmentType.Helmat:
-            // Helmet
+                RemoveArmor(0);
+                break;
             case EquipmentType.Armor:
-            // Armor
+                RemoveArmor(1);
+                break;
             case EquipmentType.Accesary1:
             case EquipmentType.Accesary2:
             // Accessory
