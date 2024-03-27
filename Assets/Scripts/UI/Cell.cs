@@ -38,7 +38,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
-        LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
+        LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);     
     }
 
     public void OnPointerEnter(PointerEventData eventData)

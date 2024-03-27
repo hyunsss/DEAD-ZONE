@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
@@ -70,6 +67,13 @@ public class PlayerInput : MonoBehaviour
         UIManager.Instance.Inventory.SetActive(!isActive);
         UIManager.Instance.CellRayCastTarget(false);
         ChangeActionMap();
+
+        if(UIManager.Instance.Inventory.activeSelf == false) {
+            if(UIManager.Instance.handler_focus != null) {
+                UIManager.Instance.handler_focus.transform.GetChild(0).GetComponent<Image>().color = 
+                    UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.type);
+            }
+        }
     }
 
     public void OnItemRotation(InputValue value)
@@ -126,8 +130,8 @@ public class PlayerInput : MonoBehaviour
                     if (clickHandler != null)
                     {
                         //아래 두 함수 아이템 참조 해제 시키는 부분 순서 결정이 필요함
-                        clickHandler.RemoveCellItem();
                         cell.RemoveItem();
+                        clickHandler.RemoveCellItem();
                     }
                     else
                     {
