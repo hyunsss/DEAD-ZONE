@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,25 +40,37 @@ public class UIManager : MonoBehaviour
     public RectTransform belt_transform;
 
     [HideInInspector] public GameObject Inventory;
-    [HideInInspector] public ItemCellPanel player_Inven;
+    [HideInInspector] public List<ItemCellPanel> player_Inven = new List<ItemCellPanel>();
 
     bool firstInit = false;
     float startTime;
 
-    public void ShowInventory(GameObject target, RectTransform parent) {
+    public void ShowInventory(GameObject target, RectTransform parent)
+    {
         target.transform.SetParent(parent, false);
         target.SetActive(true);
 
         RectTransform child_rect = target.GetComponent<RectTransform>();
-        parent.sizeDelta = new Vector2(parent.sizeDelta.x, child_rect.sizeDelta.y + 30f);
+        parent.sizeDelta = new Vector2(child_rect.sizeDelta.x + 10f, child_rect.sizeDelta.y + 10f);
+
+        ItemCellPanel[] itemCellPanels = target.GetComponentsInChildren<ItemCellPanel>();
+        foreach (ItemCellPanel itemCell in itemCellPanels)
+        {
+            player_Inven.Add(itemCell);
+        }
     }
 
     public void HideInventory(GameObject target, Transform parent)
     {
+        target.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(180f, 180f);
         target.transform.SetParent(parent, false);
         target.SetActive(false);
 
-        parent.GetComponent<RectTransform>().sizeDelta = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, 60f);
+        ItemCellPanel[] itemCellPanels = target.GetComponentsInChildren<ItemCellPanel>();
+        foreach (ItemCellPanel itemCell in itemCellPanels)
+        {
+            player_Inven.Remove(itemCell);
+        }
     }
 
     private void Awake()
@@ -81,6 +94,25 @@ public class UIManager : MonoBehaviour
     {
 
         startTime = Time.time;
+
+    }
+
+    private void InventoryInit()
+    {
+        RectTransform[] rects = { inven_transform, rig_transform, pocket_transform, belt_transform };
+
+        foreach (RectTransform rect in rects)
+        {
+            ItemCellPanel[] itemcells = rect.GetComponentsInChildren<ItemCellPanel>();
+
+            if (itemcells.Length > 0)
+            {
+                foreach (ItemCellPanel itemcell in itemcells)
+                {
+                    player_Inven.Add(itemcell);
+                }
+            }
+        }
     }
 
     void LateStart()
@@ -94,6 +126,7 @@ public class UIManager : MonoBehaviour
             equipCell_Dic.Add(cell.equiptype, cell);
         }
         Inventory.SetActive(false);
+        InventoryInit();
     }
 
     // Update is called once per frame

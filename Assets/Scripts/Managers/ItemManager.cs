@@ -122,7 +122,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void MoveToInventoryFindCell(GridXY grid, Item item)
+    public void MoveToInventoryFindCell(GridXY grid, Item item, out bool Finish)
     {
         for (int y = grid.GridArray.GetLength(1) - 1; y >= 0; y--)
         {
@@ -132,10 +132,16 @@ public class ItemManager : MonoBehaviour
                 {
                     MoveToInventory(grid.GridArray[x, y], item, out bool isInInventory);
 
-                    if (isInInventory == true) return;
+                    if (isInInventory == true)
+                    {
+                        Finish = true;
+                        return;
+                    }
                 }
             }
         }
+
+        Finish = false;
     }
 
     public void MoveToInventory(Cell cell, Item item, out bool isInInventory)

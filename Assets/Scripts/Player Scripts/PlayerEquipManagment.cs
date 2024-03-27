@@ -112,7 +112,6 @@ public class PlayerEquipManagment : MonoBehaviour
     public void InsertBag(Bag bag)
     {
         currentBag = bag;
-        UIManager.Instance.player_Inven = bag.currentBagInventory.GetComponent<ItemCellPanel>();
         UIManager.Instance.ShowInventory(bag.currentBagInventory, UIManager.Instance.inven_transform);
 
         bag.gameObject.SetActive(true);
@@ -144,9 +143,9 @@ public class PlayerEquipManagment : MonoBehaviour
         armor.transform.localRotation = Quaternion.Euler(armor.armorRotation);
     }
 
-    public void RemoveArmor(int index)
+    public void RemoveArmor()
     {
-        UIManager.Instance.HideInventory(currentArmor.currentRigInventory, currentBag.transform);
+        UIManager.Instance.HideInventory(currentArmor.currentRigInventory, currentArmor.transform);
         currentArmor = null;
     }
     #endregion
@@ -156,10 +155,9 @@ public class PlayerEquipManagment : MonoBehaviour
         switch (type)
         {
             case EquipmentType.Helmat:
-                RemoveArmor(0);
                 break;
             case EquipmentType.Armor:
-                RemoveArmor(1);
+                RemoveArmor();
                 break;
             case EquipmentType.Accesary1:
             case EquipmentType.Accesary2:
