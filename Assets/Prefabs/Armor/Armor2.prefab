@@ -171,6 +171,9 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
+  currentRigInventory: {fileID: 0}
+  rigInventory_prefab: {fileID: 4107540154836632816, guid: 4ffec026dc3244675a6970ed43f1b7a3,
+    type: 3}
   armorPosition: {x: 1.148833, y: -0.16306, z: 0}
   armorRotation: {x: -81.6, y: 90, z: 0}
 --- !u!54 &166328010845376143

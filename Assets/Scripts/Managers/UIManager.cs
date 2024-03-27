@@ -13,21 +13,52 @@ public class UIManager : MonoBehaviour
     public GameObject handler_focus;
     public Color defaultColor = new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
     public Color focusColor = new Color(226f / 255f, 226f / 255f, 226f / 255f, 125f / 255f);
+
+    [Space]
+    [Header("상호작용 패널")]
     public UserInteractionPanel interactionPanel;
 
+
+    [Space]
+    [Header("Cell Lists")]
     public Cell[] AllCells;
     private EquipmentCell[] equipmentCells;
     public Dictionary<EquipmentType, EquipmentCell> equipCell_Dic = new Dictionary<EquipmentType, EquipmentCell>();
 
     public UIElementClickHandler current_MoveItem;
 
+    [Space]
+    [Header("Cell Prefab")]
     public Cell cell;
+
+    [Space]
+    [Header("Transform")]
+    public RectTransform inven_transform;
+    public RectTransform rig_transform;
+    public RectTransform pocket_transform;
+    public RectTransform belt_transform;
+
     [HideInInspector] public GameObject Inventory;
     [HideInInspector] public ItemCellPanel player_Inven;
-    public Transform inven_trasform;
 
     bool firstInit = false;
     float startTime;
+
+    public void ShowInventory(GameObject target, RectTransform parent) {
+        target.transform.SetParent(parent, false);
+        target.SetActive(true);
+
+        RectTransform child_rect = target.GetComponent<RectTransform>();
+        parent.sizeDelta = new Vector2(parent.sizeDelta.x, child_rect.sizeDelta.y + 30f);
+    }
+
+    public void HideInventory(GameObject target, Transform parent)
+    {
+        target.transform.SetParent(parent, false);
+        target.SetActive(false);
+
+        parent.GetComponent<RectTransform>().sizeDelta = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, 60f);
+    }
 
     private void Awake()
     {
@@ -43,7 +74,7 @@ public class UIManager : MonoBehaviour
 
         Inventory = GameObject.Find("Inventory Canvas").gameObject;
         // player_Inven = GameObject.Find("BackPack Panel/Inventory").GetComponent<ItemCellPanel>();
-        inven_trasform = GameObject.Find("BackPack Panel").transform;
+        // inven_transform = GameObject.Find("BackPack Panel");
     }
     // Start is called before the first frame update
     void Start()

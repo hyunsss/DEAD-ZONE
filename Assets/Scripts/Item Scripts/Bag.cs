@@ -7,7 +7,7 @@ public class Bag : Item
 {
     [Space(10f)]
     [Header("Bag Properties")]
-    public ItemCellPanel currentBagInventory;
+    public GameObject currentBagInventory;
     public GameObject bagInventory_prefab;
 
     public Vector3 bagPosition;
@@ -15,7 +15,7 @@ public class Bag : Item
     
     private void Start()
     {
-        currentBagInventory = LeanPool.Spawn(bagInventory_prefab, transform.position, Quaternion.identity, transform).GetComponent<ItemCellPanel>();
+        currentBagInventory = LeanPool.Spawn(bagInventory_prefab, transform.position, Quaternion.identity, transform);
     }
 
 

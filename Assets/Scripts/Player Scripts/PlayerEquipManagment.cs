@@ -32,7 +32,7 @@ public class PlayerEquipManagment : MonoBehaviour
 
     [Space(20f)]
     [Header("Helmet / Armor Properties")]
-    public Armor[] currentArmors = new Armor[2];
+    public Armor currentArmor;
 
     void Awake()
     {
@@ -112,8 +112,8 @@ public class PlayerEquipManagment : MonoBehaviour
     public void InsertBag(Bag bag)
     {
         currentBag = bag;
-        UIManager.Instance.player_Inven = bag.currentBagInventory;
-        bag.currentBagInventory.ShowInventory(UIManager.Instance.inven_trasform);
+        UIManager.Instance.player_Inven = bag.currentBagInventory.GetComponent<ItemCellPanel>();
+        UIManager.Instance.ShowInventory(bag.currentBagInventory, UIManager.Instance.inven_transform);
 
         bag.gameObject.SetActive(true);
         bag.rigid.isKinematic = true;
@@ -125,7 +125,7 @@ public class PlayerEquipManagment : MonoBehaviour
 
     public void RemoveBag()
     {
-        currentBag.currentBagInventory.HideInventory();
+        UIManager.Instance.HideInventory(currentBag.currentBagInventory, currentBag.transform);
         currentBag = null;
     }
 
@@ -136,19 +136,9 @@ public class PlayerEquipManagment : MonoBehaviour
         armor.gameObject.SetActive(true);
         armor.rigid.isKinematic = true;
 
-        switch (armor.type)
-        {
-            case ItemKey.Helmat:
-                currentArmors[0] = armor;
-                armor.transform.SetParent(head, false);
-                break;
-            case ItemKey.Armor:
-                currentArmors[1] = armor;
-                armor.transform.SetParent(body, false);
-                break;
-            default:
-                break;
-        }
+        currentArmor = armor;
+        armor.transform.SetParent(body, false);
+        UIManager.Instance.ShowInventory(armor.currentRigInventory, UIManager.Instance.rig_transform);
 
         armor.transform.localPosition = armor.armorPosition;
         armor.transform.localRotation = Quaternion.Euler(armor.armorRotation);
@@ -156,7 +146,8 @@ public class PlayerEquipManagment : MonoBehaviour
 
     public void RemoveArmor(int index)
     {
-        currentArmors[index] = null;
+        UIManager.Instance.HideInventory(currentArmor.currentRigInventory, currentBag.transform);
+        currentArmor = null;
     }
     #endregion
 

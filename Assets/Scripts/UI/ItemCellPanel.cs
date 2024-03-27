@@ -30,17 +30,17 @@ public class ItemCellPanel : MonoBehaviour
         grid = new GridXY(width, height, transform);
     }
 
-    public void ShowInventory(Transform UIParent)
-    {
-        transform.SetParent(UIParent, false);
-        gameObject.SetActive(true);
-    }
+    // public void ShowInventory(Transform UIParent)
+    // {
+    //     transform.SetParent(UIParent, false);
+    //     gameObject.SetActive(true);
+    // }
 
-    public void HideInventory()
-    {
-        transform.SetParent(parent_Bag, false);
-        gameObject.SetActive(false);
-    }
+    // public void HideInventory()
+    // {
+    //     transform.SetParent(parent_Bag, false);
+    //     gameObject.SetActive(false);
+    // }
 
 
 

@@ -65,6 +65,9 @@ MonoBehaviour:
   meshCollider: {fileID: 4710322979753705778}
   meshRenderer: {fileID: 9138393099998516693}
   rigid: {fileID: 5191967696938496992}
+  currentRigInventory: {fileID: 0}
+  rigInventory_prefab: {fileID: 6604363776295057543, guid: 3b6acd14aba8e4e718fed99e7ed40960,
+    type: 3}
   armorPosition: {x: 1.148833, y: -0.16306, z: 0}
   armorRotation: {x: -81.6, y: 90, z: 0}
 --- !u!54 &5191967696938496992
