@@ -31,6 +31,10 @@ public class ItemManager : MonoBehaviour
     public List<Item> ItemList = new List<Item>();
     public Dictionary<ItemKey, List<Item>> itemDic = new Dictionary<ItemKey, List<Item>>();
 
+    public GameObject ItemImage;
+    public GameObject ItemBackgroundImage;
+
+
     private void Awake()
     {
         Instance = this;
@@ -146,17 +150,22 @@ public class ItemManager : MonoBehaviour
         {
             Finish = true;
             isRotation = false;
+            tempCells.Clear();
+            tempCells.Add(cell);
         }
 
         if (Finish == true)
         {
-            GameObject imageObj = new GameObject(item.name + "Image");
+            GameObject imageObj = LeanPool.Spawn(ItemImage);
+            imageObj.name = $"{item.name}_Icon";
+
             cell.slotcurrentItem = item;
             imageObj.transform.SetParent(cell.transform, false);
-            UIElementClickHandler handler = imageObj.AddComponent<UIElementClickHandler>();
-            handler.parentAfterCell = cell;
-            imageObj.AddComponent<Image>();
 
+            UIElementClickHandler handler = imageObj.GetComponent<UIElementClickHandler>();
+            imageObj.GetComponent<Image>();
+
+            handler.parentAfterCell = cell;
             handler.HanlderInit(tempCells, item, isRotation);
 
             if (cell is EquipmentCell == false) item.gameObject.SetActive(false);
@@ -170,16 +179,17 @@ public class ItemManager : MonoBehaviour
 
     public void CreateItemBackGround(UIElementClickHandler uIElement)
     {
-        GameObject gameObject = new GameObject("Item Image");
+        GameObject gameObject = LeanPool.Spawn(ItemBackgroundImage);
         gameObject.transform.SetParent(uIElement.transform.parent);
         gameObject.transform.SetAsFirstSibling();
-        Image image = gameObject.AddComponent<Image>();
-        image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.type);
-
+        Image image = gameObject.GetComponent<Image>();
         RectTransform rect = gameObject.GetComponent<RectTransform>();
+
+        image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.type);
         uIElement.ImagePropertyCellType(uIElement.parentAfterCell, rect, image);
 
         if (uIElement.isRotation == true) rect.Rotate(new Vector3(0, 0, 90));
+        else rect.Rotate(new Vector3(0, 0, 0));
     }
 
     public void DropItem(Item item)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using Lean.Pool;
 
 public enum EquipmentType { Helmat, Armor, Accesary1, Accesary2, Weapon1, Weapon2, Bag }
 public class EquipmentCell : Cell
@@ -95,7 +96,8 @@ public class EquipmentCell : Cell
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
         slotcurrentItem = null;
-        Destroy(transform.GetChild(0).gameObject);
+        LeanPool.Despawn(transform.GetChild(0).gameObject);
+        LeanPool.Despawn(transform.GetChild(0).gameObject);
     }
 
     // Update is called once per frame

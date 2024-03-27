@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
+using Lean.Pool;
 
 public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -28,11 +29,11 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         //Rect Transform 초기화
         ImagePropertyCellType(parentAfterCell, rect, image);
         //Rect Transform 초기화 
-        ItemManager.Instance.CreateItemBackGround(this);
         itemCells = itemcells;
         this.isRotation = isRotation;
         current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
+        ItemManager.Instance.CreateItemBackGround(this);
     }
 
     private void SetDefaultImageSize(RectTransform rect)
@@ -94,7 +95,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         parentAfterCell.slotcurrentItem = null;
         transform.SetParent(UIManager.Instance.topCanvas.transform, false);
         SetDefaultImageSize(rect);
-        Destroy(parentAfterCell.transform.Find("Item Image").gameObject);
+        LeanPool.Despawn(parentAfterCell.transform.Find("ItemBackgroundImage").gameObject);
         transform.SetAsLastSibling();
     }
 
@@ -114,12 +115,16 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             if (dropCell is EquipmentCell equipmentcell)
             {
                 equipmentcell.EquipItem(equipmentcell.equiptype, myItem);
+                print("parentaftercell == equpment");
             }
             //Todo Drop되는 셀의 타입에 따라 rect를 설정해주는 함수가 필요할 것 같음.
         }
         else if (dropCell.TryGetComponent(out EquipmentCell equipmentCell))
         {
+            ItemRotation(false);
             parentAfterCell = dropCell;
+            itemCells.Clear();
+            itemCells.Add(parentAfterCell);
         }
         else if (dropCell.TryGetComponent(out Cell cell))
         {
@@ -169,13 +174,16 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             }
             else
             {
-                if (parentAfterCell is EquipmentCell == false)
+                if (parentAfterCell is EquipmentCell equipmentCell == false)
                 {
                     InsertCellItem(parentAfterCell);
                 }
                 else
                 {
-                    return;
+                    ItemRotation(false);
+                    equipmentCell.EquipItem(equipmentCell.equiptype, myItem);
+                    itemCells.Clear();
+                    itemCells.Add(parentAfterCell);
                 }
             }
         }

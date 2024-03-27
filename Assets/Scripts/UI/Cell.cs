@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,17 +37,31 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     public virtual void RemoveItem()
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
-        Destroy(Item_ParentCell.transform.GetChild(0).gameObject);
-        Destroy(Item_ParentCell.transform.GetChild(1).gameObject);
+        LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
+        LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         UIManager.Instance.handler_focus = gameObject;
+
+        if (item_ParentCell != null)
+        {
+            item_ParentCell.transform.GetChild(0).GetComponent<Image>().color = UIManager.Instance.focusColor;
+        }
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (UIManager.Instance.handler_focus == gameObject) UIManager.Instance.handler_focus = null;
+        if (UIManager.Instance.handler_focus == gameObject)
+        {
+            UIManager.Instance.handler_focus = null;
+
+            if (item_ParentCell != null)
+            {
+                item_ParentCell.transform.GetChild(0).GetComponent<Image>().color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
+            }
+        }
     }
 }

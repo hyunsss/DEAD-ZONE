@@ -7,7 +7,12 @@ public class UIManager : MonoBehaviour
 {
     public Canvas topCanvas;
     public static UIManager Instance;
+
+    [Space(30f)]
+    [Header("Focus Properties")]
     public GameObject handler_focus;
+    public Color defaultColor = new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
+    public Color focusColor = new Color(226f / 255f, 226f / 255f, 226f / 255f, 125f / 255f);
     public UserInteractionPanel interactionPanel;
 
     public Cell[] AllCells;

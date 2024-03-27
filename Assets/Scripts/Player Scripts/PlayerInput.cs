@@ -121,8 +121,18 @@ public class PlayerInput : MonoBehaviour
             {
                 if (cell.slotcurrentItem != null)
                 {
-                    cell.RemoveItem();
-                    cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>().RemoveCellItem();
+                    // 안전하게 UIElementClickHandler 찾기 및 RemoveCellItem 호출
+                    UIElementClickHandler clickHandler = cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>();
+                    if (clickHandler != null)
+                    {
+                        //아래 두 함수 아이템 참조 해제 시키는 부분 순서 결정이 필요함
+                        clickHandler.RemoveCellItem();
+                        cell.RemoveItem();
+                    }
+                    else
+                    {
+                        Debug.Log("UIElementClickHandler not found on Item_ParentCell.");
+                    }
                 }
             }
         }
