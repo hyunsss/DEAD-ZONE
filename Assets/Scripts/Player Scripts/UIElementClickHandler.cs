@@ -191,11 +191,11 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void RemoveCellItem()
     {
-        if (parentAfterCell is EquipmentCell == true)
+        if (parentAfterCell is EquipmentCell equipmentCell == true)
         {
             parentAfterCell.slotcurrentItem.transform.SetParent(ItemManager.Instance.itemParent);
             parentAfterCell.slotcurrentItem.gameObject.SetActive(false);
-            Data.Instance.Player.GetComponent<PlayerEquipManagment>().RemoveWeapon(parentAfterCell.slotcurrentItem as Weapon);
+            Data.Instance.Player.GetComponent<PlayerEquipManagment>().RemoveItemofCelltype(equipmentCell.equiptype);
             // Data.Instance.Player.GetComponent<PlayerEquipManagment>().Weapons
             //                         [Array.IndexOf(Data.Instance.Player.GetComponent<PlayerEquipManagment>().Weapons, parentAfterCell.slotcurrentItem)] = null;
             parentAfterCell.slotcurrentItem = null;

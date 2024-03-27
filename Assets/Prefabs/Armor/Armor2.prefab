@@ -171,8 +171,8 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
-  armorPosition: {x: 1.326412, y: 0.01484, z: 0.10044}
-  armorRotation: {x: 96.133, y: -20.491, z: 73.325}
+  armorPosition: {x: 1.148833, y: -0.16306, z: 0}
+  armorRotation: {x: -81.6, y: 90, z: 0}
 --- !u!54 &166328010845376143
 Rigidbody:
   m_ObjectHideFlags: 0

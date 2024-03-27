@@ -69,7 +69,7 @@ public class PlayerInput : MonoBehaviour
         ChangeActionMap();
 
         if(UIManager.Instance.Inventory.activeSelf == false) {
-            if(UIManager.Instance.handler_focus != null) {
+            if(UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0) {
                 UIManager.Instance.handler_focus.transform.GetChild(0).GetComponent<Image>().color = 
                     UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.type);
             }
