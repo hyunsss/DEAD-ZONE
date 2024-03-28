@@ -31,8 +31,12 @@ public class PlayerEquipManagment : MonoBehaviour
     public Bag currentBag;
 
     [Space(20f)]
-    [Header("Helmet / Armor Properties")]
+    [Header("Armor Properties")]
     public Armor currentArmor;
+
+    [Space(20f)]
+    [Header("Armor Properties")]
+    public Helmet currentHelmet;
 
     void Awake()
     {
@@ -150,11 +154,31 @@ public class PlayerEquipManagment : MonoBehaviour
     }
     #endregion
 
+    #region Helemt equip rosics
+    public void InsertHelmet(Helmet helmet)
+    {
+        helmet.gameObject.SetActive(true);
+        helmet.rigid.isKinematic = true;
+
+        currentHelmet = helmet;
+        helmet.transform.SetParent(head, false);
+
+        helmet.transform.localPosition = helmet.HelmetPosition;
+        helmet.transform.localRotation = Quaternion.Euler(helmet.HelmetRotation);
+    }
+
+    public void RemoveHelmet()
+    {
+        currentHelmet = null;
+    }
+    #endregion
+
     public void RemoveItemofCelltype(EquipmentType type)
     {
         switch (type)
         {
             case EquipmentType.Helmat:
+                RemoveHelmet();
                 break;
             case EquipmentType.Armor:
                 RemoveArmor();

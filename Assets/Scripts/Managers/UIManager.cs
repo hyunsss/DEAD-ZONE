@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
     public RectTransform belt_transform;
 
     [HideInInspector] public GameObject Inventory;
-    [HideInInspector] public List<ItemCellPanel> player_Inven = new List<ItemCellPanel>();
+    public List<ItemCellPanel> player_Inven = new List<ItemCellPanel>();
 
     bool firstInit = false;
     float startTime;
@@ -109,6 +109,7 @@ public class UIManager : MonoBehaviour
             {
                 foreach (ItemCellPanel itemcell in itemcells)
                 {
+                    Debug.Log(itemcell);
                     player_Inven.Add(itemcell);
                 }
             }

@@ -202,7 +202,7 @@ public class ItemManager : MonoBehaviour
     {
         item.gameObject.SetActive(true);
         item.transform.SetParent(itemParent);
-        item.transform.position = Data.Instance.Player.transform.position + new Vector3(0, 1.6f, 0);
+        item.transform.position = Data.Instance.Player.transform.localPosition + new Vector3(0, 1.2f, 1.2f);
         item.transform.rotation = Quaternion.identity;
         item.rigid.isKinematic = false;
         item.rigid.AddForce(Data.Instance.Player.transform.forward * 5f, ForceMode.Impulse);

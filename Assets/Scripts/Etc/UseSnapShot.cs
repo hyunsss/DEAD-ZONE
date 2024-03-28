@@ -104,7 +104,7 @@ public class UseSanpShot : MonoBehaviour
     void Start()
     {
         // 카메라 설정 128 256 384 512 640
-        GetPictureFunc(item1by2Snapshot, 512, 512);
+        GetPictureFunc(item1by2Snapshot, 256, 256);
 
     }
     //기본 128 x 128

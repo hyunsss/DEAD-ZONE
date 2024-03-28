@@ -69,7 +69,7 @@ public class EquipmentCell : Cell
         switch (cellType)
         {
             case EquipmentType.Helmat:
-                Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertArmor(item as Armor);
+                Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertHelmet(item as Helmet);
                 break;
             case EquipmentType.Armor:
                 Data.Instance.Player.GetComponent<PlayerEquipManagment>().InsertArmor(item as Armor);
