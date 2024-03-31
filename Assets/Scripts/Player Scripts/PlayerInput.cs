@@ -13,6 +13,8 @@ public class PlayerInput : MonoBehaviour
     private InputActionMap uiActionMap;
     private InputActionMap playerActionMap;
 
+    private bool isOnShift_UI;
+
     void Awake()
     {
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
@@ -31,7 +33,7 @@ public class PlayerInput : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7 | 1 << 8))
         {
             interactable = hit.collider.GetComponentInParent<IInteractable>();
             // 여기에서 hit.collider를 사용하여 충돌한 객체에 접근할 수 있습니다.
@@ -62,11 +64,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnInventory(InputValue value)
     {
-        bool isActive = UIManager.Instance.Inventory.activeSelf;
-        CameraManager.Instance.CursorVisible(!isActive);
-        UIManager.Instance.Inventory.SetActive(!isActive);
-        UIManager.Instance.CellRayCastTarget(false);
-        ChangeActionMap();
+        UIManager.Instance.ShowPlayerInventory();
 
         if(UIManager.Instance.Inventory.activeSelf == false) {
             if(UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0) {
@@ -90,6 +88,11 @@ public class PlayerInput : MonoBehaviour
         {
             AssignmentWeapon(0);
         }
+    }
+
+    public void OnShift(InputValue value) {
+        isOnShift_UI = value.isPressed;
+        Debug.Log("isOnShift" + isOnShift_UI);
     }
 
     public void OnWeapon2(InputValue value)
@@ -142,19 +145,5 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void ChangeActionMap()
-    {
-        bool isInventoryActive = UIManager.Instance.Inventory.activeSelf;
-
-        if (isInventoryActive == true)
-        {
-            playerActionMap.Disable();
-            uiActionMap.Enable();
-        }
-        else
-        {
-            playerActionMap.Enable();
-            uiActionMap.Disable();
-        }
-    }
+    
 }

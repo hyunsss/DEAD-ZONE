@@ -13,8 +13,9 @@ public class Bag : Item
     public Vector3 bagPosition;
     public Vector3 bagRotation;
     
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         currentBagInventory = LeanPool.Spawn(bagInventory_prefab, transform.position, Quaternion.identity, transform);
     }
 

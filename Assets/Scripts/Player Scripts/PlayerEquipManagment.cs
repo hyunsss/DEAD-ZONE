@@ -116,7 +116,7 @@ public class PlayerEquipManagment : MonoBehaviour
     public void InsertBag(Bag bag)
     {
         currentBag = bag;
-        UIManager.Instance.ShowInventory(bag.currentBagInventory, UIManager.Instance.inven_transform);
+        UIManager.Instance.InsertCellInventory(bag.currentBagInventory, UIManager.Instance.inven_transform);
 
         bag.gameObject.SetActive(true);
         bag.rigid.isKinematic = true;
@@ -128,7 +128,7 @@ public class PlayerEquipManagment : MonoBehaviour
 
     public void RemoveBag()
     {
-        UIManager.Instance.HideInventory(currentBag.currentBagInventory, currentBag.transform);
+        UIManager.Instance.RemoveCellInventory(currentBag.currentBagInventory, currentBag.transform);
         currentBag = null;
     }
 
@@ -141,7 +141,7 @@ public class PlayerEquipManagment : MonoBehaviour
 
         currentArmor = armor;
         armor.transform.SetParent(body, false);
-        UIManager.Instance.ShowInventory(armor.currentRigInventory, UIManager.Instance.rig_transform);
+        UIManager.Instance.InsertCellInventory(armor.currentRigInventory, UIManager.Instance.rig_transform);
 
         armor.transform.localPosition = armor.armorPosition;
         armor.transform.localRotation = Quaternion.Euler(armor.armorRotation);
@@ -149,7 +149,7 @@ public class PlayerEquipManagment : MonoBehaviour
 
     public void RemoveArmor()
     {
-        UIManager.Instance.HideInventory(currentArmor.currentRigInventory, currentArmor.transform);
+        UIManager.Instance.RemoveCellInventory(currentArmor.currentRigInventory, currentArmor.transform);
         currentArmor = null;
     }
     #endregion

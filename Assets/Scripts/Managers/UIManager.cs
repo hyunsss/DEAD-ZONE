@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -25,7 +26,6 @@ public class UIManager : MonoBehaviour
     public Cell[] AllCells;
     private EquipmentCell[] equipmentCells;
     public Dictionary<EquipmentType, EquipmentCell> equipCell_Dic = new Dictionary<EquipmentType, EquipmentCell>();
-
     public UIElementClickHandler current_MoveItem;
 
     [Space]
@@ -39,13 +39,26 @@ public class UIManager : MonoBehaviour
     public RectTransform pocket_transform;
     public RectTransform belt_transform;
 
+    public RectTransform rooting_transform;
+    [Space]
+    [Header("ItemCellPanel")]
+    public ItemCellPanel _6by6Panel;
+
+    [Space]
+    [Header("Player Input Action")]
+    public InputActionAsset inputActions;
+    private InputActionMap uiActionMap;
+    private InputActionMap playerActionMap;
+
+
     [HideInInspector] public GameObject Inventory;
     public List<ItemCellPanel> player_Inven = new List<ItemCellPanel>();
+    public List<ItemCellPanel> target_Inven = new List<ItemCellPanel>();
 
     bool firstInit = false;
     float startTime;
 
-    public void ShowInventory(GameObject target, RectTransform parent)
+    public void InsertCellInventory(GameObject target, RectTransform parent)
     {
         target.transform.SetParent(parent, false);
         target.SetActive(true);
@@ -60,7 +73,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void HideInventory(GameObject target, Transform parent)
+    public void RemoveCellInventory(GameObject target, Transform parent)
     {
         target.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(180f, 180f);
         target.transform.SetParent(parent, false);
@@ -70,6 +83,31 @@ public class UIManager : MonoBehaviour
         foreach (ItemCellPanel itemCell in itemCellPanels)
         {
             player_Inven.Remove(itemCell);
+        }
+    }
+
+    public void ShowPlayerInventory() {
+        bool isActive = Inventory.activeSelf;
+        CameraManager.Instance.CursorVisible(!isActive);
+        Inventory.SetActive(!isActive);
+        rooting_transform.gameObject.SetActive(false);
+        CellRayCastTarget(false);
+        ChangeActionMap();
+    }
+
+    private void ChangeActionMap()
+    {
+        bool isInventoryActive = Inventory.activeSelf;
+
+        if (isInventoryActive == true)
+        {
+            playerActionMap.Disable();
+            uiActionMap.Enable();
+        }
+        else
+        {
+            playerActionMap.Enable();
+            uiActionMap.Disable();
         }
     }
 
@@ -86,15 +124,13 @@ public class UIManager : MonoBehaviour
 
 
         Inventory = GameObject.Find("Inventory Canvas").gameObject;
-        // player_Inven = GameObject.Find("BackPack Panel/Inventory").GetComponent<ItemCellPanel>();
-        // inven_transform = GameObject.Find("BackPack Panel");
     }
     // Start is called before the first frame update
     void Start()
     {
-
         startTime = Time.time;
-
+        uiActionMap = inputActions.FindActionMap("UI");
+        playerActionMap = inputActions.FindActionMap("Player");
     }
 
     private void InventoryInit()

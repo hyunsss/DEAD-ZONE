@@ -11,8 +11,9 @@ public class Armor : Item {
     public Vector3 armorPosition;
     public Vector3 armorRotation;
     
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         currentRigInventory = LeanPool.Spawn(rigInventory_prefab, transform.position, Quaternion.identity, transform);
     }
 

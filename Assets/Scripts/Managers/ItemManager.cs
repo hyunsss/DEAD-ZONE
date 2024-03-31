@@ -38,10 +38,10 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        SetItemDictionary();
     }
     private void Start()
     {
-        SetItemDictionary();
     }
 
     public void SetItemDictionary()
@@ -54,6 +54,18 @@ public class ItemManager : MonoBehaviour
             }
             itemDic[item.type].Add(item);
         }
+    }
+
+    public List<Item> SearchListbyKey(ItemKey itemkey) {
+        List<Item> tempItems = new List<Item>();
+
+        foreach(var pair in itemDic) {
+            if((pair.Key & itemkey) != 0) {
+                tempItems.AddRange(pair.Value);
+            }
+        }
+        Debug.Log(tempItems.Count);
+        return tempItems;
     }
 
     public List<Item> GetItemsOfKey(ItemKey key)
@@ -202,7 +214,7 @@ public class ItemManager : MonoBehaviour
     {
         item.gameObject.SetActive(true);
         item.transform.SetParent(itemParent);
-        item.transform.position = Data.Instance.Player.transform.localPosition + new Vector3(0, 1.2f, 1.2f);
+        item.transform.position = Data.Instance.Player.transform.localPosition + new Vector3(0, 1.2f, 0);
         item.transform.rotation = Quaternion.identity;
         item.rigid.isKinematic = false;
         item.rigid.AddForce(Data.Instance.Player.transform.forward * 5f, ForceMode.Impulse);

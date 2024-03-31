@@ -30,6 +30,8 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
         rigid = GetComponent<Rigidbody>();
     }
 
+    public virtual void ItemInit() {}
+
     public void Interact()
     {
         // 아이템 타입이 웨폰이나 장착가능한 아이템일 때 주웠을 경우 바로 장착할 수 있게끔 기능 만들기 먼저 타입과 equipment셀이 비었는지 체크한 후 들어가도록 세팅해주면 될 듯.
