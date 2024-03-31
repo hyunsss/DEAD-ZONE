@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Steamworks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -19,6 +21,11 @@ public class UIManager : MonoBehaviour
     [Space]
     [Header("상호작용 패널")]
     public UserInteractionPanel interactionPanel;
+
+    [Space]
+    [Header("루팅 박스 패널")]
+    public RootingBox currentRootBox;
+
 
 
     [Space]
@@ -69,6 +76,7 @@ public class UIManager : MonoBehaviour
         ItemCellPanel[] itemCellPanels = target.GetComponentsInChildren<ItemCellPanel>();
         foreach (ItemCellPanel itemCell in itemCellPanels)
         {
+            itemCell.boxType = BoxType.PlayerBox;
             player_Inven.Add(itemCell);
         }
     }
@@ -82,17 +90,27 @@ public class UIManager : MonoBehaviour
         ItemCellPanel[] itemCellPanels = target.GetComponentsInChildren<ItemCellPanel>();
         foreach (ItemCellPanel itemCell in itemCellPanels)
         {
+            itemCell.boxType = BoxType.None;
             player_Inven.Remove(itemCell);
         }
     }
 
-    public void ShowPlayerInventory() {
+    public void ShowPlayerInventory()
+    {
         bool isActive = Inventory.activeSelf;
         CameraManager.Instance.CursorVisible(!isActive);
         Inventory.SetActive(!isActive);
-        rooting_transform.gameObject.SetActive(false);
+
+        if (isActive == true && currentRootBox != null)
+        {
+            rooting_transform.gameObject.SetActive(false);
+            currentRootBox.currentItemCellPanel.transform.SetParent(currentRootBox.transform, false);
+            currentRootBox = null;
+        }
+
         CellRayCastTarget(false);
         ChangeActionMap();
+
     }
 
     private void ChangeActionMap()
@@ -184,6 +202,37 @@ public class UIManager : MonoBehaviour
         {
             cell.GetComponent<Image>().raycastTarget = isallow;
         }
+    }
+
+    public void ShiftQuickMoveItem(ItemCellPanel currentItemCell, Item item, out bool Finish)
+    {
+        switch (currentItemCell.boxType)
+        {
+            case BoxType.PlayerBox:
+                if (currentRootBox != null)
+                {
+                    ItemManager.Instance.MoveToInventoryFindCell(currentRootBox.currentItemCellPanel.grid, item, out Finish);
+                    if (Finish == true) return;
+                }
+
+                break;
+            case BoxType.RootBox:
+                if (player_Inven.Count > 0)
+                {
+                    foreach (ItemCellPanel itemCell in player_Inven)
+                    {
+                        Debug.Log(itemCell);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
+
+                        if (Finish == true) return;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        Finish = false;
     }
 
     public Color GetItemTypeColor(ItemKey key = ItemKey.Not)

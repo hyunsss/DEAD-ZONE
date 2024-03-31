@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Item
+  - PlayerInven
+  - RootInven
   layers:
   - Default
   - TransparentFX

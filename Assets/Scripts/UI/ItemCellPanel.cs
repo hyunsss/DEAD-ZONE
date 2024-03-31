@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum BoxType { PlayerBox, RootBox, None }
+
 public class ItemCellPanel : MonoBehaviour
 {
     public int width;
     public int height;
 
+    public BoxType boxType;
     RectTransform rect;
     GridLayoutGroup gridLayoutGroup;
 

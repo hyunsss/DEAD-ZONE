@@ -66,9 +66,11 @@ public class PlayerInput : MonoBehaviour
     {
         UIManager.Instance.ShowPlayerInventory();
 
-        if(UIManager.Instance.Inventory.activeSelf == false) {
-            if(UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0) {
-                UIManager.Instance.handler_focus.transform.GetChild(0).GetComponent<Image>().color = 
+        if (UIManager.Instance.Inventory.activeSelf == false)
+        {
+            if (UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0)
+            {
+                UIManager.Instance.handler_focus.transform.GetChild(0).GetComponent<Image>().color =
                     UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.type);
             }
         }
@@ -90,10 +92,6 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public void OnShift(InputValue value) {
-        isOnShift_UI = value.isPressed;
-        Debug.Log("isOnShift" + isOnShift_UI);
-    }
 
     public void OnWeapon2(InputValue value)
     {
@@ -145,5 +143,33 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    
+    public void OnShift(InputValue value)
+    {
+        isOnShift_UI = value.isPressed;
+        Debug.Log("isOnShift" + isOnShift_UI);
+    }
+
+    public void OnClick(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            if (isOnShift_UI == true && UIManager.Instance.handler_focus != null)
+            {
+                Cell focus_cell = UIManager.Instance.handler_focus.GetComponent<Cell>();
+
+                if (focus_cell.slotcurrentItem != null)
+                {
+                    UIElementClickHandler clickHandler = focus_cell.GetComponentInChildren<UIElementClickHandler>();
+                    UIManager.Instance.ShiftQuickMoveItem(focus_cell.GetComponentInParent<ItemCellPanel>(), focus_cell.slotcurrentItem, out bool Finish);
+                    if (Finish == true)
+                    {
+                        focus_cell.DestoryChild();
+                        clickHandler.RemoveCellItem();
+                    }
+                }
+            }
+        }
+
+    }
+
 }

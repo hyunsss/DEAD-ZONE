@@ -96,6 +96,11 @@ public class EquipmentCell : Cell
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
         slotcurrentItem = null;
+        DestoryChild();
+    }
+
+    public override void DestoryChild()
+    {
         LeanPool.Despawn(transform.GetChild(0).gameObject);
         LeanPool.Despawn(transform.GetChild(0).gameObject);
     }

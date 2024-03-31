@@ -121,7 +121,7 @@ public class PlayerEquipManagment : MonoBehaviour
         bag.gameObject.SetActive(true);
         bag.rigid.isKinematic = true;
 
-        bag.transform.SetParent(spine_03, false);
+        bag.transform.SetParent(spine_03, false); 
         bag.transform.localPosition = bag.bagPosition;
         bag.transform.localRotation = Quaternion.Euler(bag.bagRotation);
     }
