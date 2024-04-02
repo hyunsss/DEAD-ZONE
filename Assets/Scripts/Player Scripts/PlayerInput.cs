@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using Sirenix.OdinInspector;
+using Lean.Pool;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -14,6 +16,12 @@ public class PlayerInput : MonoBehaviour
     private InputActionMap playerActionMap;
 
     private bool isOnShift_UI;
+
+
+    #region double click properties
+    float doubleClickTimeLimit = 0.3f;
+    float lastClickTime;
+    #endregion
 
     void Awake()
     {
@@ -153,6 +161,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (value.isPressed)
         {
+            //쉬프트를 눌렀을 때 현재 마우스 위치에 있는 오브젝트가 아이템이 존재하는 셀 일경우 아이템 이동
             if (isOnShift_UI == true && UIManager.Instance.handler_focus != null)
             {
                 Cell focus_cell = UIManager.Instance.handler_focus.GetComponent<Cell>();
@@ -168,8 +177,43 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
             }
+
+            float clickTime = Time.time - lastClickTime;
+            if(clickTime <= doubleClickTimeLimit) {
+                //더블 클릭 함수 실행
+                DoubleClick();
+                lastClickTime = 0;
+            } else {
+                lastClickTime = Time.time;
+            }
         }
 
+    }
+
+    public void DoubleClick() {
+        if (UIManager.Instance.handler_focus != null && 
+                                UIManager.Instance.handler_focus.TryGetComponent(out EquipmentCell equipmentCell) == false)
+        {
+            Cell focus_cell = UIManager.Instance.handler_focus.GetComponent<Cell>();
+
+            //딕셔너리에 등록되어있지 않다면 
+            if(UIManager.Instance.popUp_dic.ContainsKey(focus_cell.slotcurrentItem.gameObject)) {
+                UIManager.Instance.popUp_dic[focus_cell.slotcurrentItem.gameObject].transform.SetAsLastSibling();
+            } else {
+                PopUpUI popup = LeanPool.Spawn(UIManager.Instance.popUpUI_prefab, UIManager.Instance.PopUpTransform, false);
+
+                if((focus_cell.slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not) {
+                    if(focus_cell.slotcurrentItem is Bag bag) {
+                        popup.PopupInit(focus_cell.slotcurrentItem, bag.currentBagInventory);
+                    } else if(focus_cell.slotcurrentItem is Armor armor) {
+                        popup.PopupInit(focus_cell.slotcurrentItem, armor.currentRigInventory);
+                    }
+                } else {
+                    popup.PopupInit(focus_cell.slotcurrentItem);
+                }
+            }
+            
+        }
     }
 
 }

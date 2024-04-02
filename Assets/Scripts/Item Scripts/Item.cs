@@ -50,13 +50,10 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
         {
             foreach (ItemCellPanel itemCell in UIManager.Instance.player_Inven)
             {
-                Debug.Log(itemCell);
                 ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, this, out bool Finish);
 
                 if (Finish == true) return;
             }
-
-
         }
     }
 

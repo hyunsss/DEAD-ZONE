@@ -31,6 +31,27 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             component.dropCell = this;
             component.image.preserveAspect = false;
         }
+        else if (slotcurrentItem != null && dropped.TryGetComponent(out component))
+        {
+            if ((slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
+            {
+                if (slotcurrentItem is Bag bag)
+                {  
+                    ItemCellPanel itemcell = bag.currentBagInventory.GetComponentInChildren<ItemCellPanel>();
+                    ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, component.myItem, out bool Finish);
+                    if (Finish == true) return;
+                }
+                else if (slotcurrentItem is Armor armor)
+                {
+                    ItemCellPanel[] itemcells = armor.currentRigInventory.GetComponentsInChildren<ItemCellPanel>();
+                    foreach (ItemCellPanel itemcell in itemcells)
+                    {
+                        ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, component.myItem, out bool Finish);
+                        if (Finish == true) return;
+                    }
+                }
+            }
+        }
 
     }
 

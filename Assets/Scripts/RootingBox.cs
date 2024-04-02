@@ -46,7 +46,7 @@ public class RootingBox : MonoBehaviour, IInteractable
     public void BoxInItem(Item item, out bool success)
     {
         GameObject item_obj = LeanPool.Spawn(item, Vector3.zero, Quaternion.identity, ItemManager.Instance.itemParent).gameObject;
-        item_obj.SetActive(false);
+        // StartCoroutine(UIManager.Instance.GameObjectActiveOper(item_obj, false));
 
         ItemManager.Instance.MoveToInventoryFindCell(currentItemCellPanel.grid, item_obj.GetComponent<Item>(), out bool Finish);
 
@@ -59,7 +59,7 @@ public class RootingBox : MonoBehaviour, IInteractable
         {
             success = true;
         }
-    }
+    } 
 
     public void Interact()
     {

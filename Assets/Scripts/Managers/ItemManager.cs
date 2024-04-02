@@ -34,14 +34,12 @@ public class ItemManager : MonoBehaviour
     public GameObject ItemImage;
     public GameObject ItemBackgroundImage;
 
+    // public List<RootingBox> rootingBoxes = new List<RootingBox>();
 
     private void Awake()
     {
         Instance = this;
         SetItemDictionary();
-    }
-    private void Start()
-    {
     }
 
     public void SetItemDictionary()
@@ -186,7 +184,7 @@ public class ItemManager : MonoBehaviour
             handler.parentAfterCell = cell;
             handler.HanlderInit(tempCells, item, isRotation);
 
-            if (cell is EquipmentCell == false) item.gameObject.SetActive(false);
+            if (cell is EquipmentCell == false) UIManager.Instance.GameObjectActiveOper(item.gameObject, false);
             isInInventory = true;
         }
         else

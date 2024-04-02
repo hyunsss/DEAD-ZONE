@@ -57,6 +57,11 @@ public class UIManager : MonoBehaviour
     private InputActionMap uiActionMap;
     private InputActionMap playerActionMap;
 
+    [Space]
+    [Header("UIPopup")]
+    public RectTransform PopUpTransform;
+    public PopUpUI popUpUI_prefab;
+    public Dictionary<GameObject, PopUpUI> popUp_dic = new Dictionary<GameObject, PopUpUI>();
 
     [HideInInspector] public GameObject Inventory;
     public List<ItemCellPanel> player_Inven = new List<ItemCellPanel>();
@@ -110,7 +115,19 @@ public class UIManager : MonoBehaviour
 
         CellRayCastTarget(false);
         ChangeActionMap();
+        CloseAllPopup();
+    }
 
+    private void CloseAllPopup() {
+        List<PopUpUI> popup_list = new List<PopUpUI>(popUp_dic.Values);
+        foreach(var popup in popup_list) {
+            popup.CloseUI();
+        }
+    }
+
+    public IEnumerator GameObjectActiveOper(GameObject gameObject, bool active) {  
+        yield return new WaitForSeconds(0.1f);
+        gameObject.SetActive(active);
     }
 
     private void ChangeActionMap()
@@ -170,7 +187,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void LateStart()
+    public void LateStart()
     {
         equipmentCells = FindObjectsOfType<EquipmentCell>();
         AllCells = FindObjectsOfType<Cell>();
