@@ -30,26 +30,20 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         {
             component.dropCell = this;
             component.image.preserveAspect = false;
+            component.isItemDrop = false;
         }
         else if (slotcurrentItem != null && dropped.TryGetComponent(out component))
         {
             if ((slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
             {
-                if (slotcurrentItem is Bag bag)
-                {  
-                    ItemCellPanel itemcell = bag.currentBagInventory.GetComponentInChildren<ItemCellPanel>();
-                    ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, component.myItem, out bool Finish);
-                    if (Finish == true) return;
-                }
-                else if (slotcurrentItem is Armor armor)
-                {
-                    ItemCellPanel[] itemcells = armor.currentRigInventory.GetComponentsInChildren<ItemCellPanel>();
-                    foreach (ItemCellPanel itemcell in itemcells)
-                    {
-                        ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, component.myItem, out bool Finish);
-                        if (Finish == true) return;
-                    }
-                }
+                component.isItemDrop = true;
+                component.image.preserveAspect = false;
+                component.dropCell = this;
+            } else {
+                Debug.Log("아이템에 드랍은 했지만 가방이나 아머가 아님");
+                component.isItemDrop = false;
+                component.image.preserveAspect = false;
+                component.dropCell = null;
             }
         }
 
@@ -57,6 +51,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public virtual void RemoveItem()
     {
+        GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         ItemManager.Instance.DropItem(slotcurrentItem);
         DestoryChild();
     }
@@ -73,7 +68,8 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
         if (item_ParentCell != null)
         {
-            item_ParentCell.transform.GetChild(0).GetComponent<Image>().color = UIManager.Instance.focusColor;
+            item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
+            if(image != null) image.color = UIManager.Instance.focusColor;
         }
 
     }
@@ -86,7 +82,8 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
             if (item_ParentCell != null)
             {
-                item_ParentCell.transform.GetChild(0).GetComponent<Image>().color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
+                item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
+                if(image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
             }
         }
     }

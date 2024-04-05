@@ -78,7 +78,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0)
             {
-                UIManager.Instance.handler_focus.transform.GetChild(0).GetComponent<Image>().color =
+                UIManager.Instance.handler_focus.transform.Find("ItemBackgroundImage").GetComponent<Image>().color =
                     UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.type);
             }
         }
@@ -197,7 +197,7 @@ public class PlayerInput : MonoBehaviour
             Cell focus_cell = UIManager.Instance.handler_focus.GetComponent<Cell>();
 
             //딕셔너리에 등록되어있지 않다면 
-            if(UIManager.Instance.popUp_dic.ContainsKey(focus_cell.slotcurrentItem.gameObject)) {
+            if(focus_cell.slotcurrentItem != null && UIManager.Instance.popUp_dic.ContainsKey(focus_cell.slotcurrentItem.gameObject)) {
                 UIManager.Instance.popUp_dic[focus_cell.slotcurrentItem.gameObject].transform.SetAsLastSibling();
             } else {
                 PopUpUI popup = LeanPool.Spawn(UIManager.Instance.popUpUI_prefab, UIManager.Instance.PopUpTransform, false);

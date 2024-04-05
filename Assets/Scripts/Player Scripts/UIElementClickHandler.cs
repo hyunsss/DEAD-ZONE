@@ -12,12 +12,19 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public Cell parentAfterCell;
     public Cell dropCell;
+    public bool isItemDrop;
 
+    public GameObject myBackground;
     private RectTransform rect;
     public Image image;
     private bool current_Rotation;
     public bool isRotation;
     public List<Cell> itemCells = new List<Cell>();
+
+    private void Awake()
+    {
+        myBackground = null;
+    }
 
     public void HanlderInit(List<Cell> itemcells, Item item, bool isRotation = false)
     {
@@ -33,7 +40,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         this.isRotation = isRotation;
         current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
-        ItemManager.Instance.CreateItemBackGround(this);
+        if (myBackground == null) ItemManager.Instance.CreateItemBackGround(this);
     }
 
     private void SetDefaultImageSize(RectTransform rect)
@@ -66,7 +73,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         }
         else
         {
-            Debug.Log("false");
             SetDefaultImageSize(rect);
         }
     }
@@ -85,18 +91,30 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         else { rect.eulerAngles = new Vector3(0, 0, 0); }
     }
 
+    public void ClosePopup()
+    {
+        if (UIManager.Instance.popUp_dic.ContainsKey(myItem.gameObject))
+        {
+            LeanPool.Despawn(UIManager.Instance.popUp_dic[myItem.gameObject]);
+            UIManager.Instance.popUp_dic.Remove(myItem.gameObject);
+        }
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         RemoveCellItem();
         UIManager.Instance.current_MoveItem = this;
         parentAfterCell = transform.parent.GetComponent<Cell>();
-        // myItem = parentAfterCell.GetComponent<Cell>().slotcurrentItem;
         parentAfterCell.slotcurrentItem = null;
         transform.SetParent(UIManager.Instance.topCanvas.transform, false);
         SetDefaultImageSize(rect);
-        LeanPool.Despawn(parentAfterCell.transform.Find("ItemBackgroundImage").gameObject);
+        LeanPool.Despawn(myBackground);
+        myBackground = null;
+        dropCell = null;
+
         transform.SetAsLastSibling();
+        ClosePopup();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -108,30 +126,65 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (dropCell == null)
+        
+        //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
+        //만약 true라면 다른 로직을 수행하게 되는데 
+        //자식에 있는 모든 패널들을 조사하고 그 패널안에 직접 들어갈 수 있도록함
+        //cell에 있는 drop 메시지 함수에서는 해당 셀의 아이템과 트랜스폼 값만 넘겨주기로 할 것. 
+        //onenddrag 함수에서 조건 체크를 한 후 해당하는 곳에 넣어주면 해결 될 것 같음.
+        if (dropCell != null && dropCell.TryGetComponent(out EquipmentCell equipmentCell))
         {
-            print("drop cell null");
-            dropCell = parentAfterCell;
-            if (dropCell is EquipmentCell equipmentcell)
-            {
-                equipmentcell.EquipItem(equipmentcell.equiptype, myItem);
-                print("parentaftercell == equpment");
-            }
-            //Todo Drop되는 셀의 타입에 따라 rect를 설정해주는 함수가 필요할 것 같음.
-        }
-        else if (dropCell.TryGetComponent(out EquipmentCell equipmentCell))
-        {
+            Debug.Log("equip cell");
             ItemRotation(false);
             parentAfterCell = dropCell;
             itemCells.Clear();
             itemCells.Add(parentAfterCell);
+            CompleteMoveCell(parentAfterCell);
+            EndDropReset();
         }
-        else if (dropCell.TryGetComponent(out Cell cell))
+        else if (dropCell != null && isItemDrop == false)
         {
+            Debug.Log("cell");
             InsertCellItem(dropCell);
+            CompleteMoveCell(parentAfterCell);
+            EndDropReset();
+        }
+        else if (dropCell != null && isItemDrop == true)
+        {
+            Debug.Log(" 아이템에 드랍 됨");
+            if (dropCell.slotcurrentItem is Bag bag)
+            {
+                ItemCellPanel itemcell = bag.currentBagInventory.GetComponentInChildren<ItemCellPanel>();
+                ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, myItem, out bool Finish, this);
+                if (Finish == true) {
+                    EndDropReset();
+                    return;
+                }
+            }
+            else if (dropCell.slotcurrentItem is Armor armor)
+            {
+                ItemCellPanel[] itemcells = armor.currentRigInventory.GetComponentsInChildren<ItemCellPanel>();
+                Debug.Log(itemcells.Length);
+                foreach (ItemCellPanel itemcell in itemcells)
+                {
+                    ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, myItem, out bool Finish, this);
+                    if (Finish == true) {
+                        EndDropReset();
+                        return;
+                    }
+                }
+            }
+        } else {
+            InsertCellItem(parentAfterCell);
+            CompleteMoveCell(parentAfterCell);
+            EndDropReset();
         }
 
-        CompleteMoveCell(parentAfterCell);
+        
+
+    }
+
+    private void EndDropReset() {
         dropCell = null;
         UIManager.Instance.CellRayCastTarget(false);
         UIManager.Instance.current_MoveItem = null;
@@ -214,19 +267,16 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     }
 
-    private void CompleteMoveCell(Cell parentCell)
+    public void CompleteMoveCell(Cell parentCell)
     {
-        transform.SetParent(parentCell.transform, false);
-        transform.position = Vector3.zero;
+        transform.SetParent(parentCell.transform, false); // 1q
 
-        ImagePropertyCellType(parentCell, rect, image);
-        ItemManager.Instance.CreateItemBackGround(this);
+        ImagePropertyCellType(parentCell, rect, image); //init 
+        if (myBackground == null) ItemManager.Instance.CreateItemBackGround(this);
         // rect.localPosition = Vector3.zero;
-        parentCell.slotcurrentItem = myItem;
+        parentCell.slotcurrentItem = myItem; //2
         GetComponent<Image>().raycastTarget = true;
-
-
-
+        isItemDrop = false;
     }
 
 

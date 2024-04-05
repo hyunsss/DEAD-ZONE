@@ -25,11 +25,12 @@ public class ItemCellPanel : MonoBehaviour
         rect.sizeDelta = new Vector2(width * gridLayoutGroup.cellSize.x + 10, height * gridLayoutGroup.cellSize.y + 10);
         gridLayoutGroup.padding.left = 5;
         gridLayoutGroup.padding.top = 5;
+        grid = new GridXY(width, height, transform);
     }
     // Start is called before the first frame update
     void Start()
     {
-        grid = new GridXY(width, height, transform);
+        if(grid.isInit == false) grid.GenerateGrid();
     }
 
 }

@@ -126,8 +126,9 @@ public class UIManager : MonoBehaviour
     }
 
     public IEnumerator GameObjectActiveOper(GameObject gameObject, bool active) {  
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         gameObject.SetActive(active);
+        yield return new WaitForSeconds(0.3f);
     }
 
     private void ChangeActionMap()
@@ -180,7 +181,6 @@ public class UIManager : MonoBehaviour
             {
                 foreach (ItemCellPanel itemcell in itemcells)
                 {
-                    Debug.Log(itemcell);
                     player_Inven.Add(itemcell);
                 }
             }
@@ -189,9 +189,8 @@ public class UIManager : MonoBehaviour
 
     public void LateStart()
     {
-        equipmentCells = FindObjectsOfType<EquipmentCell>();
-        AllCells = FindObjectsOfType<Cell>();
-        Debug.Log(equipmentCells.Length);
+        equipmentCells = FindObjectsOfType<EquipmentCell>(true);
+        AllCells = FindObjectsOfType<Cell>(true);
 
         foreach (EquipmentCell cell in equipmentCells)
         {
@@ -204,9 +203,8 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (firstInit == false && 0.1f < Time.time - startTime)
+        if (firstInit == false && 0.2f < Time.time - startTime)
         {
-            Debug.Log("eanble latestart");
             LateStart();
             firstInit = true;
         }

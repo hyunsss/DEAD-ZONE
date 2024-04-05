@@ -11,6 +11,7 @@ public class GridXY
     private float cellSize;
     private Cell[,] gridArray;
     private Transform trans_parent;
+    public bool isInit;
 
     public int Width => width;
     public int Height => height;
@@ -18,12 +19,11 @@ public class GridXY
     public Cell[,] GridArray => gridArray;
     public Transform Trans_parent => trans_parent;
 
-
-
     public int MaxSize { get => width * height; }
 
     public GridXY(int width, int height, Transform trans_parent)
     {
+        isInit = false;
         this.width = width;
         this.height = height;
         this.trans_parent = trans_parent;
@@ -31,7 +31,7 @@ public class GridXY
         //각 cell 위치를 저장하는 배열
         gridArray = new Cell[width, height];
 
-        GenerateGrid();
+        
         //위치에 따라 이미지가 들어갈 수 있게끔 변경
     }
 
@@ -48,6 +48,8 @@ public class GridXY
                 cell.name = UIManager.Instance.cell.name;
             }
         }
+
+        isInit = true;
     }
 
     public Cell GetCell(int x, int y) {

@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PopUpUI : MonoBehaviour, IDragHandler
-{
+public class PopUpUI : MonoBehaviour {
     public Item currentItem;
 
     private TextMeshProUGUI header_text;
@@ -33,6 +32,8 @@ public class PopUpUI : MonoBehaviour, IDragHandler
             // content_rect.sizeDelta = new Vector2(item.cellwidth * 70 + 10f, item.cellheight * 70 + 10f);
             cellPanel.transform.SetParent(content_rect, false);
             cellPanel.gameObject.SetActive(true);
+        } else {
+            cellPanel = null;
         }
     }
 
@@ -48,8 +49,4 @@ public class PopUpUI : MonoBehaviour, IDragHandler
         LeanPool.Despawn(this);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        GetComponent<RectTransform>().position = eventData.position;
-    }
 }

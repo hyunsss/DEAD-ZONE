@@ -62,7 +62,6 @@ public class ItemManager : MonoBehaviour
                 tempItems.AddRange(pair.Value);
             }
         }
-        Debug.Log(tempItems.Count);
         return tempItems;
     }
 
@@ -98,11 +97,9 @@ public class ItemManager : MonoBehaviour
         tempCells = cell.ParentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
         if (isComplete == true && cell.ParentPanel.grid.IsCellInItemPossible(tempCells) == true)
         {
-            Debug.Log("rotation false rosics");
             foreach (Cell list_cell in tempCells)
             {
                 list_cell.slotcurrentItem = cloneitem;
-                Debug.Log(list_cell + "," + cell);
                 list_cell.Item_ParentCell = cell;
             }
             Finish = true;
@@ -114,7 +111,6 @@ public class ItemManager : MonoBehaviour
             tempCells = cell.ParentPanel.grid.SizeofItemCellList(cloneitem, cell, out isComplete, isRotation);
             if (isComplete == true && cell.ParentPanel.grid.IsCellInItemPossible(tempCells) == true)
             {
-                Debug.Log("rotation true rosics");
                 foreach (Cell list_cell in tempCells)
                 {
                     list_cell.slotcurrentItem = cloneitem;
@@ -132,7 +128,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void MoveToInventoryFindCell(GridXY grid, Item item, out bool Finish)
+    public void MoveToInventoryFindCell(GridXY grid, Item item, out bool Finish, UIElementClickHandler uiImage = null)
     {
         for (int y = grid.GridArray.GetLength(1) - 1; y >= 0; y--)
         {
@@ -140,7 +136,7 @@ public class ItemManager : MonoBehaviour
             {
                 if (grid.GridArray[x, y].slotcurrentItem == null)
                 {
-                    MoveToInventory(grid.GridArray[x, y], item, out bool isInInventory);
+                    MoveToInventory(grid.GridArray[x, y], item, out bool isInInventory, uiImage);
 
                     if (isInInventory == true)
                     {
@@ -154,7 +150,7 @@ public class ItemManager : MonoBehaviour
         Finish = false;
     }
 
-    public void MoveToInventory(Cell cell, Item item, out bool isInInventory)
+    public void MoveToInventory(Cell cell, Item item, out bool isInInventory, UIElementClickHandler uiImage = null)
     {
         List<Cell> tempCells = new List<Cell>();
         bool Finish, isRotation;
@@ -172,19 +168,22 @@ public class ItemManager : MonoBehaviour
 
         if (Finish == true)
         {
-            GameObject imageObj = LeanPool.Spawn(ItemImage);
-            imageObj.name = $"{item.name}_Icon";
+            if(uiImage == null) {
+                GameObject imageObj = LeanPool.Spawn(ItemImage);
+                imageObj.name = $"{item.name}_Icon";
+                uiImage = imageObj.GetComponent<UIElementClickHandler>();
+                imageObj.GetComponent<Image>();
+            }
 
-            cell.slotcurrentItem = item;
-            imageObj.transform.SetParent(cell.transform, false);
+            foreach(Cell listcell in tempCells) {
+                listcell.Item_ParentCell = cell;
+            }
 
-            UIElementClickHandler handler = imageObj.GetComponent<UIElementClickHandler>();
-            imageObj.GetComponent<Image>();
-
-            handler.parentAfterCell = cell;
-            handler.HanlderInit(tempCells, item, isRotation);
-
-            if (cell is EquipmentCell == false) UIManager.Instance.GameObjectActiveOper(item.gameObject, false);
+            uiImage.transform.SetParent(cell.transform, false);
+            uiImage.parentAfterCell = cell;
+            uiImage.HanlderInit(tempCells, item, isRotation);
+            uiImage.CompleteMoveCell(cell);
+            if(cell is EquipmentCell == false) item.gameObject.SetActive(false);
             isInInventory = true;
         }
         else
@@ -196,14 +195,14 @@ public class ItemManager : MonoBehaviour
     public void CreateItemBackGround(UIElementClickHandler uIElement)
     {
         GameObject gameObject = LeanPool.Spawn(ItemBackgroundImage);
-        gameObject.transform.SetParent(uIElement.transform.parent);
+        gameObject.transform.SetParent(uIElement.transform.parent, false);
         gameObject.transform.SetAsFirstSibling();
         Image image = gameObject.GetComponent<Image>();
         RectTransform rect = gameObject.GetComponent<RectTransform>();
 
         image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.type);
         uIElement.ImagePropertyCellType(uIElement.parentAfterCell, rect, image);
-
+        uIElement.myBackground = gameObject;
         if (uIElement.isRotation == true) rect.Rotate(new Vector3(0, 0, 90));
         else rect.Rotate(new Vector3(0, 0, 0));
     }

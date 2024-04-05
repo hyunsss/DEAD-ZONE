@@ -44,7 +44,6 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
                 return;
             }
         }
-        Debug.Log("movetoinventoryfindcell");
 
         if (UIManager.Instance.player_Inven.Count > 0)
         {
