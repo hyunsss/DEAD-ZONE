@@ -57,7 +57,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     {
         if (cell is EquipmentCell == true)
         {
-            Debug.Log("true");
             // 부모 컴포넌트의 전체를 채우도록 앵커 설정
             rect.anchorMin = new Vector2(0, 0); // 왼쪽 하단 앵커
             rect.anchorMax = new Vector2(1, 1); // 오른쪽 상단 앵커
@@ -134,7 +133,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         //onenddrag 함수에서 조건 체크를 한 후 해당하는 곳에 넣어주면 해결 될 것 같음.
         if (dropCell != null && dropCell.TryGetComponent(out EquipmentCell equipmentCell))
         {
-            Debug.Log("equip cell");
             ItemRotation(false);
             parentAfterCell = dropCell;
             itemCells.Clear();
@@ -144,14 +142,12 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         }
         else if (dropCell != null && isItemDrop == false)
         {
-            Debug.Log("cell");
             InsertCellItem(dropCell);
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
         else if (dropCell != null && isItemDrop == true)
         {
-            Debug.Log(" 아이템에 드랍 됨");
             if (dropCell.slotcurrentItem is Bag bag)
             {
                 ItemCellPanel itemcell = bag.currentBagInventory.GetComponentInChildren<ItemCellPanel>();
@@ -164,7 +160,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             else if (dropCell.slotcurrentItem is Armor armor)
             {
                 ItemCellPanel[] itemcells = armor.currentRigInventory.GetComponentsInChildren<ItemCellPanel>();
-                Debug.Log(itemcells.Length);
                 foreach (ItemCellPanel itemcell in itemcells)
                 {
                     ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, myItem, out bool Finish, this);
@@ -179,8 +174,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
-
-        
 
     }
 

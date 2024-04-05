@@ -16,7 +16,6 @@ public class PopUpUI : MonoBehaviour {
 
     public void PopupInit(Item item, GameObject itemcellPanel = null)
     {
-        Debug.Log("PopupInit");
         currentItem = item;
         header_text = transform.Find("Header/Item Title").GetComponent<TextMeshProUGUI>();
         closeButton = transform.Find("Header/Close Button").GetComponent<Button>();
