@@ -19,6 +19,8 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
     public string item_desc;
     public int prize;
 
+    public bool isSearchable;
+
     [HideInInspector] public MeshCollider meshCollider;
     [HideInInspector] public MeshRenderer meshRenderer;
     [HideInInspector] public Rigidbody rigid;
@@ -30,7 +32,7 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
         rigid = GetComponent<Rigidbody>();
     }
 
-    public virtual void ItemInit() {}
+    public virtual void ItemInit() { }
 
     public void Interact()
     {

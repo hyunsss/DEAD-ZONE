@@ -114,6 +114,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
         transform.SetAsLastSibling();
         ClosePopup();
+
+        UIManager.Instance.isfocusEnable = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -125,7 +127,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+
         //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
         //만약 true라면 다른 로직을 수행하게 되는데 
         //자식에 있는 모든 패널들을 조사하고 그 패널안에 직접 들어갈 수 있도록함
@@ -152,7 +154,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             {
                 ItemCellPanel itemcell = bag.currentBagInventory.GetComponentInChildren<ItemCellPanel>();
                 ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, myItem, out bool Finish, this);
-                if (Finish == true) {
+                if (Finish == true)
+                {
                     EndDropReset();
                     return;
                 }
@@ -163,21 +166,28 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
                 foreach (ItemCellPanel itemcell in itemcells)
                 {
                     ItemManager.Instance.MoveToInventoryFindCell(itemcell.grid, myItem, out bool Finish, this);
-                    if (Finish == true) {
+                    if (Finish == true)
+                    {
                         EndDropReset();
                         return;
                     }
                 }
             }
-        } else {
+        }
+        else
+        {
             InsertCellItem(parentAfterCell);
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
 
+
+
+        UIManager.Instance.isfocusEnable = true;
     }
 
-    private void EndDropReset() {
+    private void EndDropReset()
+    {
         dropCell = null;
         UIManager.Instance.CellRayCastTarget(false);
         UIManager.Instance.current_MoveItem = null;

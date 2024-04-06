@@ -39,7 +39,9 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 component.isItemDrop = true;
                 component.image.preserveAspect = false;
                 component.dropCell = this;
-            } else {
+            }
+            else
+            {
                 Debug.Log("아이템에 드랍은 했지만 가방이나 아머가 아님");
                 component.isItemDrop = false;
                 component.image.preserveAspect = false;
@@ -64,26 +66,28 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UIManager.Instance.handler_focus = gameObject;
-
-        if (item_ParentCell != null)
+        if (UIManager.Instance.isfocusEnable == true)
         {
-            item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
-            if(image != null) image.color = UIManager.Instance.focusColor;
-        }
+            UIManager.Instance.handler_focus = gameObject;
 
+            if (item_ParentCell != null)
+            {
+                item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
+                if (image != null) image.color = UIManager.Instance.focusColor;
+            }
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (UIManager.Instance.handler_focus == gameObject)
+        if (UIManager.Instance.isfocusEnable == true && UIManager.Instance.handler_focus == gameObject)
         {
             UIManager.Instance.handler_focus = null;
 
             if (item_ParentCell != null)
             {
                 item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
-                if(image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
+                if (image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
             }
         }
     }

@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
 
     [Space(30f)]
     [Header("Focus Properties")]
+    public bool isfocusEnable;
     public GameObject handler_focus;
     public Color defaultColor = new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
     public Color focusColor = new Color(226f / 255f, 226f / 255f, 226f / 255f, 125f / 255f);
@@ -25,7 +26,8 @@ public class UIManager : MonoBehaviour
     [Space]
     [Header("루팅 박스 패널")]
     public RootingBox currentRootBox;
-
+    public Button searchButton;
+    public LoadingUI loadingUI_prefab;
 
 
     [Space]
@@ -118,14 +120,17 @@ public class UIManager : MonoBehaviour
         CloseAllPopup();
     }
 
-    private void CloseAllPopup() {
+    private void CloseAllPopup()
+    {
         List<PopUpUI> popup_list = new List<PopUpUI>(popUp_dic.Values);
-        foreach(var popup in popup_list) {
+        foreach (var popup in popup_list)
+        {
             popup.CloseUI();
         }
     }
 
-    public IEnumerator GameObjectActiveOper(GameObject gameObject, bool active) {  
+    public IEnumerator GameObjectActiveOper(GameObject gameObject, bool active)
+    {
         yield return new WaitForSeconds(0.3f);
         gameObject.SetActive(active);
         yield return new WaitForSeconds(0.3f);
