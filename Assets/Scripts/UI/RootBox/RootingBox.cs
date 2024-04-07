@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class RootingBox : MonoBehaviour, IInteractable
 {
     public List<Item> keyMatchItemList = new List<Item>();
+    UIElementClickHandler[] currentBoxItems;
     public int itemCount;
     public ItemCellPanel currentItemCellPanel;
     public GameObject cellPanelPrefab;
@@ -51,16 +52,23 @@ public class RootingBox : MonoBehaviour, IInteractable
 
     IEnumerator SearchItem()
     {
-        UIElementClickHandler[] currentBoxItems = currentItemCellPanel.GetComponentsInChildren<UIElementClickHandler>();
+
         int i = 0;
-        while (currentBoxItems.Length > 0)
+        while (currentBoxItems.Length > i)
         {
             if (currentBoxItems[i].myItem.isSearchable == false)
             {
+                float delay = Random.Range(2f, 3.3f);
+                LoadingUI loadingUI = LeanPool.Spawn(UIManager.Instance.loadingUI_prefab, currentBoxItems[i].transform, false).GetComponent<LoadingUI>();
+                loadingUI.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
 
-                //애니메이션 실행
-                yield return new WaitForSeconds(3f);
+
+                yield return new WaitForSeconds(delay);
                 currentBoxItems[i].myItem.isSearchable = true;
+                Image item_image = currentBoxItems[i].GetComponent<Image>();
+                item_image.enabled = true;
+                item_image.raycastTarget = true;
+                loadingUI.Destroy();
                 i++;
             }
             else
@@ -117,7 +125,7 @@ public class RootingBox : MonoBehaviour, IInteractable
         else
         {
             success = true;
-
+            item_obj.GetComponent<Item>().isSearchable = false;
         }
     }
 
@@ -127,28 +135,34 @@ public class RootingBox : MonoBehaviour, IInteractable
         2. 드랍 불가능, 드래그 불가능 
         3. isSearchable == true일 경우는 원래 상태대로 진행
         4. 찾기 버튼을 누를 경우 해당 CellPanel에 있는 아이템들의 리스트를 받고 순차적으로 아이템 찾기를 진행하며 일정 시간이 지날경우 아이템의 이미지, 타겟레이캐스트를 활성해 해준다. 
-    
-    
     */
 
     public void Interact()
     {
-        if (isSearch == false)
+
+        currentItemCellPanel.transform.SetParent(UIManager.Instance.rooting_transform, false);
+        currentBoxItems = currentItemCellPanel.GetComponentsInChildren<UIElementClickHandler>();
+
+        UIManager.Instance.rooting_transform.gameObject.SetActive(true);
+
+        UIManager.Instance.currentRootBox = this;
+        UIManager.Instance.ShowPlayerInventory();
+        SetSearchableItem();
+
+        UIManager.Instance.searchButton.onClick.RemoveAllListeners();
+        UIManager.Instance.searchButton.onClick.AddListener(() => StartCoroutine(SearchItem()));
+    }
+
+    void SetSearchableItem()
+    {
+        foreach (var item_icon in currentBoxItems)
         {
-            currentItemCellPanel.transform.SetParent(UIManager.Instance.rooting_transform, false);
-            UIManager.Instance.rooting_transform.gameObject.SetActive(true);
-            UIManager.Instance.currentRootBox = this;
-            UIManager.Instance.ShowPlayerInventory();
-            // UIManager.Instance.searchButton.onClick.RemoveAllListeners();
-            // UIManager.Instance.searchButton.onClick.AddListener(() => StartCoroutine(SearchItem()));
-            isSearch = true;
-        }
-        else
-        {
-            currentItemCellPanel.transform.SetParent(UIManager.Instance.rooting_transform, false);
-            UIManager.Instance.rooting_transform.gameObject.SetActive(true);
-            UIManager.Instance.currentRootBox = this;
-            UIManager.Instance.ShowPlayerInventory();
+            if (item_icon.myItem.isSearchable == false)
+            {
+                Image item_image = item_icon.GetComponent<Image>();
+                item_image.raycastTarget = false;
+                item_image.enabled = false;
+            }
         }
     }
 }

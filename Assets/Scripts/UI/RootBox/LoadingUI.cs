@@ -5,22 +5,15 @@ using UnityEngine;
 
 public class LoadingUI : MonoBehaviour
 {
-    Animation animation;
+    Animator loading_animation;
 
     void Awake()
     {
-        animation = GetComponent<Animation>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        animation.Play();
+        loading_animation = GetComponent<Animator>();
     }
 
     public void Destroy()
     {
-        animation.Stop();
         LeanPool.Despawn(this);
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6034825869183584486}
   - component: {fileID: 5544109426332280362}
   - component: {fileID: 5113186715936246878}
-  - component: {fileID: 7740784212842589705}
+  - component: {fileID: 1531095752431618185}
   m_Layer: 5
   m_Name: LoadingUI
   m_TagString: Untagged
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -89,18 +89,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd857278c2dd50541afb26d58b418d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!111 &7740784212842589705
-Animation:
+--- !u!95 &1531095752431618185
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8038039173186822986}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 7b2efa15b73e0ec439088fad3b300214, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c58f752069098ef4bb54f987269f7f75, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -27,6 +27,7 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
 
     protected virtual void Awake()
     {
+        isSearchable = true;
         meshCollider = GetComponentInChildren<MeshCollider>();
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         rigid = GetComponent<Rigidbody>();

@@ -102,6 +102,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        print("begindrag");
         RemoveCellItem();
         UIManager.Instance.current_MoveItem = this;
         parentAfterCell = transform.parent.GetComponent<Cell>();
@@ -120,14 +121,16 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
+        print("drag");
         UIManager.Instance.CellRayCastTarget(true);
-        GetComponent<Image>().raycastTarget = false;
+        image.raycastTarget = false;
         rect.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-
+        bool isSuccess = false;
+        print("enddrag");
         //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
         //만약 true라면 다른 로직을 수행하게 되는데 
         //자식에 있는 모든 패널들을 조사하고 그 패널안에 직접 들어갈 수 있도록함
@@ -157,7 +160,18 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
                 if (Finish == true)
                 {
                     EndDropReset();
+                    isSuccess = true;
                     return;
+                }
+
+                if (isSuccess == false)
+                {
+                    if (parentAfterCell is EquipmentCell equipment)
+                    {
+                        equipment.EquipItem(equipment.equiptype, myItem);
+                    }
+                    CompleteMoveCell(parentAfterCell);
+                    EndDropReset();
                 }
             }
             else if (dropCell.slotcurrentItem is Armor armor)
@@ -169,14 +183,28 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
                     if (Finish == true)
                     {
                         EndDropReset();
+                        isSuccess = true;
                         return;
                     }
+                }
+
+                if (isSuccess == false)
+                {
+                    if (parentAfterCell is EquipmentCell equipment)
+                    {
+                        equipment.EquipItem(equipment.equiptype, myItem);
+                    }
+                    CompleteMoveCell(parentAfterCell);
+                    EndDropReset();
                 }
             }
         }
         else
         {
-            InsertCellItem(parentAfterCell);
+            if (parentAfterCell is EquipmentCell equipment)
+            {
+                equipment.EquipItem(equipment.equiptype, myItem);
+            }
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
@@ -272,13 +300,13 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void CompleteMoveCell(Cell parentCell)
     {
-        transform.SetParent(parentCell.transform, false); // 1q
+        transform.SetParent(parentCell.transform, false);
 
-        ImagePropertyCellType(parentCell, rect, image); //init 
+        ImagePropertyCellType(parentCell, rect, image);
         if (myBackground == null) ItemManager.Instance.CreateItemBackGround(this);
         // rect.localPosition = Vector3.zero;
-        parentCell.slotcurrentItem = myItem; //2
-        GetComponent<Image>().raycastTarget = true;
+        parentCell.slotcurrentItem = myItem;
+        image.raycastTarget = true;
         isItemDrop = false;
     }
 
