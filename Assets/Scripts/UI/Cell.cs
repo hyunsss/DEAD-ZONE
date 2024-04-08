@@ -53,13 +53,13 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     public virtual void RemoveItem()
     {
-        GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         ItemManager.Instance.DropItem(slotcurrentItem);
         DestoryChild();
     }
 
     public virtual void DestoryChild()
     {
+        GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
     }

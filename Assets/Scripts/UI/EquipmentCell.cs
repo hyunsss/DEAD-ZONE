@@ -102,6 +102,7 @@ public class EquipmentCell : Cell
 
     public override void DestoryChild()
     {
+        GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         LeanPool.Despawn(transform.GetChild(0).gameObject);
         LeanPool.Despawn(transform.GetChild(0).gameObject);
     }

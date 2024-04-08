@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BoxType { PlayerBox, RootBox, None }
+public enum BoxType { PlayerBox, RootBox, EquipCell, None }
 
 public class ItemCellPanel : MonoBehaviour
 {
@@ -30,7 +30,7 @@ public class ItemCellPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(grid.isInit == false) grid.GenerateGrid();
+        if (grid.isInit == false) grid.GenerateGrid();
     }
 
 }

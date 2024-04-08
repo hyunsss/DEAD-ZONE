@@ -166,10 +166,20 @@ public class PlayerInput : MonoBehaviour
             {
                 Cell focus_cell = UIManager.Instance.handler_focus.GetComponent<Cell>();
 
-                if (focus_cell.slotcurrentItem != null)
+                if (focus_cell.slotcurrentItem != null && focus_cell is EquipmentCell equipmentCell)
                 {
                     UIElementClickHandler clickHandler = focus_cell.GetComponentInChildren<UIElementClickHandler>();
-                    UIManager.Instance.ShiftQuickMoveItem(focus_cell.GetComponentInParent<ItemCellPanel>(), focus_cell.slotcurrentItem, out bool Finish);
+                    UIManager.Instance.ShiftQuickMoveItem(BoxType.EquipCell, focus_cell.slotcurrentItem, out bool Finish);
+                    if (Finish == true)
+                    {
+                        focus_cell.DestoryChild();
+                        clickHandler.RemoveCellItem();
+                    }
+                }
+                else if (focus_cell.slotcurrentItem != null)
+                {
+                    UIElementClickHandler clickHandler = focus_cell.GetComponentInChildren<UIElementClickHandler>();
+                    UIManager.Instance.ShiftQuickMoveItem(focus_cell.GetComponentInParent<ItemCellPanel>().boxType, focus_cell.slotcurrentItem, out bool Finish);
                     if (Finish == true)
                     {
                         focus_cell.DestoryChild();
@@ -200,15 +210,14 @@ public class PlayerInput : MonoBehaviour
         {
             UIManager.Instance.handler_focus.TryGetComponent(out Cell focus_cell);
 
-            //딕셔너리에 등록되어있지 않다면 
+            //딕셔너리에 등록되어있으면 상단 없으면 하단 (새로 생성후 추가)
             if (focus_cell.slotcurrentItem != null && UIManager.Instance.popUp_dic.ContainsKey(focus_cell.slotcurrentItem.gameObject))
             {
                 UIManager.Instance.popUp_dic[focus_cell.slotcurrentItem.gameObject].transform.SetAsLastSibling();
             }
-            else
+            else if (focus_cell.slotcurrentItem.isSearchable == true)
             {
                 PopUpUI popup = LeanPool.Spawn(UIManager.Instance.popUpUI_prefab, UIManager.Instance.PopUpTransform, false);
-                //드래그의 타이밍에 따른 null 오류 handler focus를 수정해주는 부분에서 확인해야할 필요
                 if (focus_cell != null && (focus_cell.slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
                 {
                     if (focus_cell.slotcurrentItem is Bag bag)

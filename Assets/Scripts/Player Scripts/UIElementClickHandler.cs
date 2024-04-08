@@ -19,6 +19,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public Image image;
     private bool current_Rotation;
     public bool isRotation;
+    private bool isBeginRotation;
     public List<Cell> itemCells = new List<Cell>();
 
     private void Awake()
@@ -102,6 +103,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        isBeginRotation = isRotation;
         print("begindrag");
         RemoveCellItem();
         UIManager.Instance.current_MoveItem = this;
@@ -116,7 +118,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         transform.SetAsLastSibling();
         ClosePopup();
 
-        UIManager.Instance.isfocusEnable = false;
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -125,12 +127,15 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         UIManager.Instance.CellRayCastTarget(true);
         image.raycastTarget = false;
         rect.position = eventData.position;
+        UIManager.Instance.isfocusEnable = false;
+        UIManager.Instance.handler_focus = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         bool isSuccess = false;
         print("enddrag");
+        print(dropCell);
         //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
         //만약 true라면 다른 로직을 수행하게 되는데 
         //자식에 있는 모든 패널들을 조사하고 그 패널안에 직접 들어갈 수 있도록함
@@ -205,6 +210,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             {
                 equipment.EquipItem(equipment.equiptype, myItem);
             }
+            InsertCellItem(parentAfterCell);
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
@@ -228,8 +234,10 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public void InsertCellItem(Cell currentcell)
     {
         List<Cell> tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete, isRotation);
+        print("templist count " + tempList?.Count);
         if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
         {
+            print("isRotation");
             foreach (Cell cell in tempList)
             {
                 cell.slotcurrentItem = myItem;
@@ -246,6 +254,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out isComplete, isRotation);
             if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
             {
+                print("!isRotation");
                 foreach (Cell cell in tempList)
                 {
                     cell.slotcurrentItem = myItem;
@@ -260,6 +269,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             {
                 if (parentAfterCell is EquipmentCell equipmentCell == false)
                 {
+                    print("재귀 실행");
+                    ItemRotation(isBeginRotation);
                     InsertCellItem(parentAfterCell);
                 }
                 else

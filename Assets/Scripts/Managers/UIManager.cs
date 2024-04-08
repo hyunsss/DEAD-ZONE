@@ -163,7 +163,7 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
 
-
+        isfocusEnable = true;
         Inventory = GameObject.Find("Inventory Canvas").gameObject;
     }
     // Start is called before the first frame update
@@ -224,9 +224,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShiftQuickMoveItem(ItemCellPanel currentItemCell, Item item, out bool Finish)
+    public void ShiftQuickMoveItem(BoxType boxType, Item item, out bool Finish)
     {
-        switch (currentItemCell.boxType)
+        switch (boxType)
         {
             case BoxType.PlayerBox:
                 if (currentRootBox != null)
@@ -248,6 +248,19 @@ public class UIManager : MonoBehaviour
                     }
                 }
                 break;
+            case BoxType.EquipCell:
+                if (player_Inven.Count > 0)
+                {
+                    foreach (ItemCellPanel itemCell in player_Inven)
+                    {
+                        Debug.Log(itemCell);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
+
+                        if (Finish == true) return;
+                    }
+                }
+                break;
+
             default:
                 break;
         }
