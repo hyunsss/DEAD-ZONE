@@ -154,9 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item1by2button: {fileID: 1080343773}
   item1by2Snapshot:
-  - {fileID: 1629135495575592, guid: 45658b4a751454a409fe8b517cd36b00, type: 3}
-  - {fileID: 1012101131386314, guid: 4ea5bbc63806649029eaa89681709172, type: 3}
-  - {fileID: 239199593448319390, guid: 0811a7ea1ddf6d144b77621273dd3896, type: 3}
+  - {fileID: 3790975619657679209, guid: f89f5ff96e21f79439108025800251a3, type: 3}
 --- !u!4 &292414093
 Transform:
   m_ObjectHideFlags: 0
@@ -508,8 +506,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultPositionOffset: {x: 0, y: -0.2, z: 1}
-  defaultRotation: {x: 315.8529, y: 300.8297, z: 37.28433}
-  defaultScale: {x: 5.2, y: 5.2, z: 5.2}
+  defaultRotation: {x: -45, y: 30, z: 0}
+  defaultScale: {x: 2.3, y: 2.3, z: 2.3}
 --- !u!1 &1552316215
 GameObject:
   m_ObjectHideFlags: 0
