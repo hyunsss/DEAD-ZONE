@@ -154,7 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item1by2button: {fileID: 1080343773}
   item1by2Snapshot:
-  - {fileID: 3790975619657679209, guid: f89f5ff96e21f79439108025800251a3, type: 3}
+  - {fileID: 3657714008947660563, guid: 4c3582a8d7fb1b14b95a0c74128f59c5, type: 3}
+  - {fileID: 8279865567936956373, guid: 836c707dffb80ac41a6d3b61adc9a4a6, type: 3}
+  - {fileID: 7662334043583061976, guid: 12dd56692ad28ca43955ebe88e4fe80d, type: 3}
 --- !u!4 &292414093
 Transform:
   m_ObjectHideFlags: 0
