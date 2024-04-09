@@ -215,7 +215,7 @@ public class PlayerInput : MonoBehaviour
             {
                 UIManager.Instance.popUp_dic[focus_cell.slotcurrentItem.gameObject].transform.SetAsLastSibling();
             }
-            else if (focus_cell.slotcurrentItem.isSearchable == true)
+            else if (focus_cell.slotcurrentItem != null && focus_cell.slotcurrentItem.isSearchable == true)
             {
                 PopUpUI popup = LeanPool.Spawn(UIManager.Instance.popUpUI_prefab, UIManager.Instance.PopUpTransform, false);
                 if (focus_cell != null && (focus_cell.slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
