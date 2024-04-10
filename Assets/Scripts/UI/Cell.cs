@@ -34,7 +34,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         }
         else if (slotcurrentItem != null && dropped.TryGetComponent(out component))
         {
-            if ((slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
+            if ((slotcurrentItem.item_Key & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
             {
                 component.isItemDrop = true;
                 component.image.preserveAspect = false;
@@ -87,7 +87,7 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
             if (item_ParentCell != null)
             {
                 item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
-                if (image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.type);
+                if (image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.item_Key);
             }
         }
     }

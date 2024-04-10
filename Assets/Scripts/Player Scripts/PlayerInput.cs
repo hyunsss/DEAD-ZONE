@@ -79,7 +79,7 @@ public class PlayerInput : MonoBehaviour
             if (UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.transform.childCount > 0)
             {
                 UIManager.Instance.handler_focus.transform.Find("ItemBackgroundImage").GetComponent<Image>().color =
-                    UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.type);
+                    UIManager.Instance.GetItemTypeColor(UIManager.Instance.handler_focus.GetComponent<Cell>().slotcurrentItem.item_Key);
             }
         }
     }
@@ -218,7 +218,7 @@ public class PlayerInput : MonoBehaviour
             else if (focus_cell.slotcurrentItem != null && focus_cell.slotcurrentItem.isSearchable == true)
             {
                 PopUpUI popup = LeanPool.Spawn(UIManager.Instance.popUpUI_prefab, UIManager.Instance.PopUpTransform, false);
-                if (focus_cell != null && (focus_cell.slotcurrentItem.type & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
+                if (focus_cell != null && (focus_cell.slotcurrentItem.item_Key & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
                 {
                     if (focus_cell.slotcurrentItem is Bag bag)
                     {

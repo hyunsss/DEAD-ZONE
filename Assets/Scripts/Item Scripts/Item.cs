@@ -9,7 +9,8 @@ using Lean.Pool;
 public abstract class Item : SerializedMonoBehaviour, IInteractable
 {
     [Header("Cell Parameter")]
-    public ItemKey type;
+    public ItemKey item_Key;
+    public ItemType item_Type;
     public Sprite inventorySprite;
     public int cellwidth;
     public int cellheight;
@@ -40,7 +41,7 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
         // 아이템 타입이 웨폰이나 장착가능한 아이템일 때 주웠을 경우 바로 장착할 수 있게끔 기능 만들기 먼저 타입과 equipment셀이 비었는지 체크한 후 들어가도록 세팅해주면 될 듯.
         foreach (var equipmentCell in UIManager.Instance.equipCell_Dic.Values)
         {
-            if (equipmentCell.slotcurrentItem == null && equipmentCell.IsItemAllowed(equipmentCell.equiptype, type) == true)
+            if (equipmentCell.slotcurrentItem == null && equipmentCell.IsItemAllowed(equipmentCell.equiptype, item_Key) == true)
             {
                 equipmentCell.EquipItem(equipmentCell.equiptype, this);
                 ItemManager.Instance.MoveToInventory(equipmentCell, this, out bool isInInventory);

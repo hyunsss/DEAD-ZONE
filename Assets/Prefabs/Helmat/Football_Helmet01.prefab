@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -161,13 +161,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  type: 256
+  item_Key: 256
+  item_Type: 0
   inventorySprite: {fileID: 21300000, guid: bc3382f5044854bfb9c8d35883764907, type: 3}
   cellwidth: 2
   cellheight: 2
   item_name: 
   item_desc: 
   prize: 0
+  isSearchable: 0
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}

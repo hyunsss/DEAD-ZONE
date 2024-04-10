@@ -24,6 +24,13 @@ public enum ItemKey
     None = Ammo | AmmoBox | Magazine | Weapon | Medical | Food | Money | Etc | Helmat | Accesary | Armor | Bag
 }
 
+public enum ItemType
+{
+    None = 0,
+    StackableItem = 1,
+    DurableItem = 2,
+}
+
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
@@ -46,19 +53,22 @@ public class ItemManager : MonoBehaviour
     {
         foreach (Item item in ItemList)
         {
-            if (!itemDic.ContainsKey(item.type))
+            if (!itemDic.ContainsKey(item.item_Key))
             {
-                itemDic[item.type] = new List<Item>();
+                itemDic[item.item_Key] = new List<Item>();
             }
-            itemDic[item.type].Add(item);
+            itemDic[item.item_Key].Add(item);
         }
     }
 
-    public List<Item> SearchListbyKey(ItemKey itemkey) {
+    public List<Item> SearchListbyKey(ItemKey itemkey)
+    {
         List<Item> tempItems = new List<Item>();
 
-        foreach(var pair in itemDic) {
-            if((pair.Key & itemkey) != 0) {
+        foreach (var pair in itemDic)
+        {
+            if ((pair.Key & itemkey) != 0)
+            {
                 tempItems.AddRange(pair.Value);
             }
         }
@@ -168,14 +178,28 @@ public class ItemManager : MonoBehaviour
 
         if (Finish == true)
         {
-            if(uiImage == null) {
+            if (uiImage == null)
+            {
                 GameObject imageObj = LeanPool.Spawn(ItemImage);
                 imageObj.name = $"{item.name}_Icon";
                 uiImage = imageObj.GetComponent<UIElementClickHandler>();
                 imageObj.GetComponent<Image>();
+
+                ///Todo -> 아이템 스택 또는 내구도가 있는 아이템은 추가적인 로직이 필요
+                ///1. 동일한 아이템이 해당 아이템에 드랍될 경우 stackable이면 갯수를 겹치고 드래그 했던 아이템은 삭제
+                ///2. 사용 할 경우 갯수에서 차감하고 갯수가 0이면 아이템을 삭제해줄 것.
+                if (item.item_Type == ItemType.DurableItem)
+                {
+                    imageObj.AddComponent<DurableItem>();
+                }
+                else if (item.item_Type == ItemType.StackableItem)
+                {
+                    imageObj.AddComponent<StackableItem>();
+                }
             }
 
-            foreach(Cell listcell in tempCells) {
+            foreach (Cell listcell in tempCells)
+            {
                 listcell.Item_ParentCell = cell;
             }
 
@@ -183,7 +207,7 @@ public class ItemManager : MonoBehaviour
             uiImage.parentAfterCell = cell;
             uiImage.HanlderInit(tempCells, item, isRotation);
             uiImage.CompleteMoveCell(cell);
-            if(cell is EquipmentCell == false) item.gameObject.SetActive(false);
+            if (cell is EquipmentCell == false) item.gameObject.SetActive(false);
             isInInventory = true;
         }
         else
@@ -200,7 +224,7 @@ public class ItemManager : MonoBehaviour
         Image image = gameObject.GetComponent<Image>();
         RectTransform rect = gameObject.GetComponent<RectTransform>();
 
-        image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.type);
+        image.color = UIManager.Instance.GetItemTypeColor(uIElement.myItem.item_Key);
         uIElement.ImagePropertyCellType(uIElement.parentAfterCell, rect, image);
         uIElement.myBackground = gameObject;
         if (uIElement.isRotation == true) rect.Rotate(new Vector3(0, 0, 90));

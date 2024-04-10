@@ -356,24 +356,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d010900000063006f0072006f007500740069006e006500
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: coroutine
-      Entry: 6
-      Data: 
-  type: 8
+    SerializationNodes: []
+  item_Key: 8
+  item_Type: 0
   inventorySprite: {fileID: 21300000, guid: 52553bcc9d90c47e1a6c8ad4bc9d1d49, type: 3}
   cellwidth: 4
   cellheight: 2
   item_name: 
   item_desc: 
   prize: 0
+  isSearchable: 0
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
@@ -524,7 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -532,20 +531,21 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  type: 0
+  item_Key: 0
+  item_Type: 0
   inventorySprite: {fileID: 0}
   cellwidth: 0
   cellheight: 0
   item_name: 
   item_desc: 
   prize: 0
+  isSearchable: 0
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
   maxAmmoCount: 30
   currentAmmoCount: 1000
-  thisAmmo: {fileID: 1547283880881145535, guid: abe652795a5324885bb9a9442bf55f13,
-    type: 3}
+  thisAmmo: {fileID: 0}
 --- !u!33 &1892012595958731776
 MeshFilter:
   m_ObjectHideFlags: 0

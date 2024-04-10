@@ -22,7 +22,7 @@ public class EquipmentCell : Cell
 
         if (slotcurrentItem == null && dropped.TryGetComponent(out UIElementClickHandler component))
         {
-            if (IsItemAllowed(this.equiptype, component.myItem.type) == true)
+            if (IsItemAllowed(this.equiptype, component.myItem.item_Key) == true)
             {
                 component.dropCell = this;
                 component.image.preserveAspect = true;
