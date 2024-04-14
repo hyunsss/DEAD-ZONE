@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18169281, g: 0.22735152, b: 0.30741936, a: 1}
+  m_IndirectSpecularColor: {r: 0.18169259, g: 0.22735094, b: 0.30741817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14518,6 +14518,8 @@ MonoBehaviour:
   AllCells: []
   current_MoveItem: {fileID: 0}
   cell: {fileID: -5813776784782365721, guid: 9142e1737815e48ab98497e0cf2e9364, type: 3}
+  itemtext_prefab: {fileID: 1960581126071238146, guid: 4a9bd7f4b7713f247bf7d7ebaca1fc30,
+    type: 3}
   inven_transform: {fileID: 622580621}
   rig_transform: {fileID: 490498351}
   pocket_transform: {fileID: 681377546}

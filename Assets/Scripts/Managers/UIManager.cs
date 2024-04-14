@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Steamworks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,6 +41,10 @@ public class UIManager : MonoBehaviour
     [Space]
     [Header("Cell Prefab")]
     public Cell cell;
+
+    [Space]
+    [Header("Cell Prefab")]
+    public TextMeshProUGUI itemtext_prefab;
 
     [Space]
     [Header("Transform")]

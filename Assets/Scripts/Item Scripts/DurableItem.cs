@@ -23,7 +23,11 @@ public class DurableItem : MonoBehaviour
 
     void Start()
     {
+        text_Prefab = UIManager.Instance.itemtext_prefab.gameObject;
         count_Text = LeanPool.Spawn(text_Prefab, transform).GetComponent<TextMeshProUGUI>();
+        
+        count_Text.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+
     }
 
     public void UpdateCountText()

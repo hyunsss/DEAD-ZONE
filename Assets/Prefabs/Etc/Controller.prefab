@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
+    SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -56,7 +56,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   item_Key: 128
-  item_Type: 0
+  item_Type: 1
   inventorySprite: {fileID: 21300000, guid: 7d6a55205087a384c85091cfe4d02cff, type: 3}
   cellwidth: 1
   cellheight: 1

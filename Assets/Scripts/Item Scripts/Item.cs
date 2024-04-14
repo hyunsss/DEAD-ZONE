@@ -8,9 +8,12 @@ using Lean.Pool;
 
 public abstract class Item : SerializedMonoBehaviour, IInteractable
 {
-    [Header("Cell Parameter")]
+    [Header("ItemKeys")]
+    [Space(5f)]
     public ItemKey item_Key;
     public ItemType item_Type;
+
+    [Header("Cell Parameter")]
     public Sprite inventorySprite;
     public int cellwidth;
     public int cellheight;

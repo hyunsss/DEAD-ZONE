@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Magazine : Item
+public class Magazine : Item, IStackable
 {
     [SerializeField] private int maxAmmoCount;
     public int currentAmmoCount;
 
     public Ammo thisAmmo;
+
+    public int Count { get => currentAmmoCount; set { currentAmmoCount = value; } }
 
     public void UseMagazine(out bool isEnough)
     {
@@ -19,14 +21,13 @@ public class Magazine : Item
         }
     }
 
-    public void InsertAmmo(Ammo ammo, out bool isSuccess) {
-        if(currentAmmoCount <= maxAmmoCount) {
+    public IEnumerator InsertAmmo(Ammo ammo, int ammoCount) {
+        while(currentAmmoCount <= maxAmmoCount || ammoCount != 0) {
             currentAmmoCount++;
-            isSuccess = true;
-        } else {
-            isSuccess = false;
-            return;
+            yield return new WaitForSeconds(0.7f);
+
         }
+
     }
 
     public Ammo RemoveAmmo() {

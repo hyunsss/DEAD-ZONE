@@ -9,3 +9,11 @@ public interface IUseable {
 public interface IInteractable {
     public void Interact();
 }
+
+public interface IDurable {
+    int Durability { get; set;}
+}
+
+public interface IStackable {
+    int Count { get; set;}
+}
