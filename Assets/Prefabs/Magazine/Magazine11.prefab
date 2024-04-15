@@ -257,9 +257,11 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
-  maxAmmoCount: 100
+  ammoType: 3
+  maxAmmoCount: 20
   currentAmmoCount: 0
   thisAmmo: {fileID: 0}
+  loadingUI: {fileID: 0}
 --- !u!54 &2970324282526676832
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -385,11 +385,13 @@ MonoBehaviour:
   subRotation: {x: 0, y: -88, z: 180}
   subHandIK_target: {fileID: 5396313321251386576}
   subHandIK_hint: {fileID: 7242379498490786492}
+  ammoType: 1
   mode: 0
   currentMagazine: {fileID: 5217037342252886352}
   shotPoint: {fileID: 4654940216389232221}
   shotDelay: 0
   isShot: 0
+  magazine_Pos: {x: -0.00005700117, y: -0.00005700117, z: 0.1678172}
 --- !u!54 &1867254331982708312
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -546,10 +548,12 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
+  ammoType: 0
   maxAmmoCount: 30
   currentAmmoCount: 1000
   thisAmmo: {fileID: 4080324611002506034, guid: abe652795a5324885bb9a9442bf55f13,
     type: 3}
+  loadingUI: {fileID: 0}
 --- !u!33 &1892012595958731776
 MeshFilter:
   m_ObjectHideFlags: 0

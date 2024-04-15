@@ -59,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (WeaponType<Gun>(currentWeapon) == true)
         {
-            animator.SetTrigger("Reload");
+            Reload();
         }
     }
 
@@ -76,8 +76,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if (WeaponType<Gun>(currentWeapon) == true)
         {
-            currentWeapon.TryGetComponent(out Gun gun);
-            gun.Reload();
+            if(currentWeapon is Gun gun && gun.IsHaveMagazine() == true) {
+                animator.SetTrigger("Reload");
+                gun.Reload();
+            }
         }
     }
 

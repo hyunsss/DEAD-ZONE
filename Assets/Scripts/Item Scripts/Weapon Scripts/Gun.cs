@@ -9,12 +9,25 @@ public enum FireMode { Single, Burst, Auto }
 
 public class Gun : Weapon
 {
+    [Header("AmmoType")]
+    public AmmoType ammoType;
+
+    [Header("Firemode")]
     public FireMode mode;
+
+    [Space(20f)]
+    [Header("Current Magazine")]
     [SerializeField] private Magazine currentMagazine;
+
+    [Space(20f)]
+    [Header("Gun Properties")]
     public Transform shotPoint;
     public float shotDelay;
     public Coroutine coroutine;
     public bool isShot;
+
+    [Header("MagazineTransform")]
+    public Vector3 magazine_Pos;
     protected override void Awake()
     {
         base.Awake();
@@ -102,10 +115,54 @@ public class Gun : Weapon
             }
         }
     }
-
+    //Todo List 탄창 교체 잘 되는지 체크하기
     public void Reload()
     {
-        currentMagazine.currentAmmoCount = 30;
+        UIElementClickHandler itemHandler = FindAmmo(ammoType);
+        if(itemHandler != null) {
+            ItemCellPanel[] itemCellPanels = UIManager.Instance.rig_transform.GetComponentsInChildren<ItemCellPanel>();
+
+            foreach(ItemCellPanel cellPanel in itemCellPanels) {
+                ItemManager.Instance.MoveToInventoryFindCell(cellPanel.grid, currentMagazine, out bool Finish);
+
+                if(Finish == true) {
+                    currentMagazine.transform.SetParent(ItemManager.Instance.itemParent);
+                    itemHandler.parentAfterCell.RemoveItem();
+                    itemHandler.RemoveCellItem();
+                    
+                    currentMagazine = itemHandler.myItem as Magazine;
+                    currentMagazine.transform.SetParent(transform, false);
+                    currentMagazine.transform.localPosition = magazine_Pos;
+                } else {
+                    currentMagazine.transform.SetParent(ItemManager.Instance.itemParent);
+                    currentMagazine.rigid.isKinematic = false;
+                }
+            }
+        }
+    }
+
+    public UIElementClickHandler FindAmmo(AmmoType ammoType) {
+        ItemCellPanel[] itemCellPanels = UIManager.Instance.rig_transform.GetComponentsInChildren<ItemCellPanel>();
+
+        foreach(ItemCellPanel cellPanel in itemCellPanels) {
+            for(int x = 0; x < cellPanel.grid.GridArray.GetLength(0); x++) {
+                for (int y = 0; y < cellPanel.grid.GridArray.GetLength(1); y++) {
+                    if(cellPanel.grid.GridArray[x, y].slotcurrentItem is Magazine magazine && magazine.ammoType == ammoType) {
+                        return cellPanel.grid.GridArray[x, y].GetComponentInChildren<UIElementClickHandler>();
+                    } else {
+                        return null;
+                    }
+                    
+                }
+            }
+        }
+
+        return null;
+
+    }
+
+    public bool IsHaveMagazine() {
+        return FindAmmo(ammoType) == null ? false : true; 
     }
 
 }

@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
 using UnityEngine;
+
+public enum AmmoType { _9mm, _556mm, _762__, _12g, Grenade, RPG, Flare }
+
 public enum AmmoState { None, Shot }
 
 public class Ammo : Item, IStackable
 {
+    public AmmoType ammoType;
     public AmmoState state;
     public int damage;
     public int bulletSpeed;

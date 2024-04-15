@@ -33,4 +33,6 @@ public class ItemCellPanel : MonoBehaviour
         if (grid.isInit == false) grid.GenerateGrid();
     }
 
+    
+
 }

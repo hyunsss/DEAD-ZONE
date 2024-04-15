@@ -357,11 +357,13 @@ MonoBehaviour:
   subRotation: {x: 0, y: -88, z: 180}
   subHandIK_target: {fileID: 5230641816999401922}
   subHandIK_hint: {fileID: 562078088248835513}
+  ammoType: 0
   mode: 0
   currentMagazine: {fileID: 0}
   shotPoint: {fileID: 8870394081716890503}
   shotDelay: 0
   isShot: 0
+  magazine_Pos: {x: 0, y: -0.005287217, z: 0.1429947}
 --- !u!54 &2533618173200321764
 Rigidbody:
   m_ObjectHideFlags: 0

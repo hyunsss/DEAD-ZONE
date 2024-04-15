@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class Magazine : Item, IDurable
 {
+    [Header("Ammo Type")]
+    public AmmoType ammoType;
+
+    [Space(5f)]
+    [Header("Ammo Count")]
     [SerializeField] private int maxAmmoCount;
     public int currentAmmoCount;
+
+    
     public Ammo thisAmmo;
 
     public int Durability { get => currentAmmoCount; set { currentAmmoCount = value; } }
