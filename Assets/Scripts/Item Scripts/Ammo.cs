@@ -4,11 +4,17 @@ using Lean.Pool;
 using UnityEngine;
 public enum AmmoState { None, Shot }
 
-public class Ammo : Item
+public class Ammo : Item, IStackable
 {
     public AmmoState state;
     public int damage;
     public int bulletSpeed;
+
+    public int count = 1;
+    public int maxCount;
+
+    public int Count { get => count; set { count = value;} }
+    public int MaxCount { get => maxCount; }
 
     private void OnEnable() {
         rigid.useGravity = true;

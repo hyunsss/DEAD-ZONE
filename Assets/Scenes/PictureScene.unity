@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item1by2button: {fileID: 1080343773}
-  item1by2Snapshot: []
+  item1by2Snapshot:
+  - {fileID: 1124298168052284, guid: 11bdb897607d75f4395405fb55e8db6b, type: 3}
 --- !u!4 &292414093
 Transform:
   m_ObjectHideFlags: 0

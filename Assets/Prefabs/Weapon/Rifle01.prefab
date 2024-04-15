@@ -411,7 +411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &150504066731164010
 Transform:
   m_ObjectHideFlags: 0
@@ -444,14 +444,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 0
-    SerializedBytes: 2d010900000063006f0072006f007500740069006e006500
+    SerializedFormat: 2
+    SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: coroutine
+      Entry: 6
+      Data: 
   item_Key: 8
   item_Type: 0
   inventorySprite: {fileID: 21300000, guid: b1a7b9eeae5d6b441935da8ae8af27dd, type: 3}

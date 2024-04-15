@@ -104,7 +104,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public void OnBeginDrag(PointerEventData eventData)
     {
         isBeginRotation = isRotation;
-        print("begindrag");
         RemoveCellItem();
         UIManager.Instance.current_MoveItem = this;
         parentAfterCell = transform.parent.GetComponent<Cell>();
@@ -123,7 +122,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        print("drag");
         UIManager.Instance.CellRayCastTarget(true);
         image.raycastTarget = false;
         rect.position = eventData.position;
@@ -134,7 +132,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         bool isSuccess = false;
-        print("enddrag");
         print(dropCell);
         //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
         //만약 true라면 다른 로직을 수행하게 되는데 
@@ -234,10 +231,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public void InsertCellItem(Cell currentcell)
     {
         List<Cell> tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete, isRotation);
-        print("templist count " + tempList?.Count);
         if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
         {
-            print("isRotation");
             foreach (Cell cell in tempList)
             {
                 cell.slotcurrentItem = myItem;

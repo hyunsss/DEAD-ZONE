@@ -34,19 +34,26 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         }
         else if (slotcurrentItem != null && dropped.TryGetComponent(out component))
         {
+            //드랍된 아이템이 가방이나 아머라면 
             if ((slotcurrentItem.item_Key & (ItemKey.Bag | ItemKey.Armor)) != ItemKey.Not)
             {
                 component.isItemDrop = true;
                 component.image.preserveAspect = false;
                 component.dropCell = this;
+            //현재 나의 아이템이 탄약이고 드랍된 곳의 아이템이 탄창 이라면
+            } else if(((component.myItem.item_Key & ItemKey.Ammo) != ItemKey.Not) && (slotcurrentItem.item_Key & (ItemKey.Magazine)) != ItemKey.Not) {
+                if(slotcurrentItem is Magazine magazine && component.myItem is Ammo ammo) {
+                    StartCoroutine(magazine.InsertAmmo(component.myItem as Ammo));
+                }
             }
             else
             {
-                Debug.Log("아이템에 드랍은 했지만 가방이나 아머가 아님");
                 component.isItemDrop = false;
                 component.image.preserveAspect = false;
                 component.dropCell = null;
             }
+
+        
         }
 
     }

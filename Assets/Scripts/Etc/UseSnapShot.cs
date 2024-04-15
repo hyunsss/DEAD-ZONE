@@ -97,14 +97,14 @@ public class UseSanpShot : MonoBehaviour
     public GameObject[] item1by2Snapshot;
 
     // 파일 주소 설정
-    readonly string Path = Application.dataPath + "/Textures/Medical";
+    readonly string Path = Application.dataPath + "/Textures/Ammo";
     // 파일 이름
     string Name;
 
     void Start()
     {
         // 카메라 설정 128 256 384 512 640
-        GetPictureFunc(item1by2Snapshot, 256, 256);
+        GetPictureFunc(item1by2Snapshot, 128, 256);
 
     }
     //기본 128 x 128

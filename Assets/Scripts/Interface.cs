@@ -11,9 +11,12 @@ public interface IInteractable {
 }
 
 public interface IDurable {
-    int Durability { get; set;}
+    public int Durability { get; set;}
+    public int MaxDurability { get; }
 }
 
 public interface IStackable {
-    int Count { get; set;}
+    public int Count { get; set;}
+    public int MaxCount { get; }
 }
+

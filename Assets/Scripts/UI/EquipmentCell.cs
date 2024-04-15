@@ -59,7 +59,6 @@ public class EquipmentCell : Cell
 
     public void EquipItem(EquipmentType cellType, Item item)
     {
-        print("equipcell equpitem");
         //장착 로직
         /*
             1. 아이템마다 포지션을 정해서 장착해줄지는 모르겠으나 weapon의 경우 손에 장착되는 포지션이 있을테니 포지션을 설정해주는 로직을 작성해야한다. 

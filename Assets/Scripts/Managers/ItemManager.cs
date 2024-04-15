@@ -188,7 +188,7 @@ public class ItemManager : MonoBehaviour
                 ///Todo -> 아이템 스택 또는 내구도가 있는 아이템은 추가적인 로직이 필요
                 ///1. 동일한 아이템이 해당 아이템에 드랍될 경우 stackable이면 갯수를 겹치고 드래그 했던 아이템은 삭제
                 ///2. 사용 할 경우 갯수에서 차감하고 갯수가 0이면 아이템을 삭제해줄 것.
-                AddStackableComponent(item.item_Type, imageObj);
+                AddStackableComponent(item.item_Type, imageObj, item);
             }
 
             foreach (Cell listcell in tempCells)
@@ -224,15 +224,17 @@ public class ItemManager : MonoBehaviour
         else rect.Rotate(new Vector3(0, 0, 0));
     }
 
-    private void AddStackableComponent(ItemType itemType, GameObject targetObj) {
+    private void AddStackableComponent(ItemType itemType, GameObject targetObj, Item item) {
         switch (itemType) {
             case ItemType.None:
                 return;
             case ItemType.DurableItem:
-                targetObj.AddComponent<DurableItem>();
+                DurableItem durable = targetObj.AddComponent<DurableItem>();
+                durable.currentItem = item;
             break;
             case ItemType.StackableItem:
-                targetObj.AddComponent<StackableItem>();
+                StackableItem stackable = targetObj.AddComponent<StackableItem>();
+                stackable.currentItem = item;
             break;
         }
     }

@@ -10,9 +10,31 @@ public class StackableItem : MonoBehaviour
     TextMeshProUGUI count_Text;
     public GameObject text_Prefab;
 
-    private Item currentItem;
-    private uint item_Count = 1;
-    public uint ItemCount { get { return item_Count; } set { item_Count = value; UpdateCountText(); } }
+    public Item currentItem;
+    public int ItemCount { 
+        get { 
+            if(currentItem.TryGetComponent(out IStackable stackable)) {
+                return stackable.Count;
+            } else {
+                return 0;
+            }
+
+        } set { 
+            if(currentItem.TryGetComponent(out IStackable stackable)) {
+                stackable.Count = value;
+                UpdateCountText();
+            }
+        }}
+    
+     public int ItemMaxCount { 
+        get { 
+            if(currentItem.TryGetComponent(out IStackable stackable)) {
+                return stackable.MaxCount;
+            } else {
+                return 0;
+            }
+
+        }}
 
     void Awake()
     {
@@ -25,13 +47,35 @@ public class StackableItem : MonoBehaviour
         count_Text = LeanPool.Spawn(text_Prefab, transform).GetComponent<TextMeshProUGUI>();
 
         count_Text.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+        UpdateCountText();
+    }
+
+    public void Init() {
+        ItemCount = currentItem.GetComponent<IStackable>().Count;
+    }
+
+    private void Update() {
+        if(currentItem == null && TryGetComponent(out UIElementClickHandler component)) {
+            currentItem = component.myItem;
+        }
+
+        if(currentItem != null) {
+            ItemCount = currentItem.GetComponent<IStackable>().Count;
+            UpdateCountText();
+            if(ItemCount <= 0) {
+                ObjectDestroy();
+            }
+        }
     }
 
     public void UpdateCountText()
     {
-        count_Text.text = $"{item_Count}";
+        count_Text.text = $"{ItemCount}";
     }
 
+    void ObjectDestroy() {
+
+    }
 
 
 
