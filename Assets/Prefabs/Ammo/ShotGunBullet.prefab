@@ -176,6 +176,8 @@ MonoBehaviour:
   state: 0
   damage: 0
   bulletSpeed: 60
+  count: 1
+  maxCount: 1
 --- !u!54 &7069958531274408941
 Rigidbody:
   m_ObjectHideFlags: 0

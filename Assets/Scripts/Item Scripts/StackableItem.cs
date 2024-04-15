@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lean.Pool;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class StackableItem : MonoBehaviour
@@ -74,7 +75,10 @@ public class StackableItem : MonoBehaviour
     }
 
     void ObjectDestroy() {
-
+        UIElementClickHandler uIElement = GetComponent<UIElementClickHandler>();
+        uIElement.parentAfterCell.DestoryChild();
+        uIElement.RemoveCellItem();
+        Destroy(this);
     }
 
 

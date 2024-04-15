@@ -42,8 +42,11 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 component.dropCell = this;
             //현재 나의 아이템이 탄약이고 드랍된 곳의 아이템이 탄창 이라면
             } else if(((component.myItem.item_Key & ItemKey.Ammo) != ItemKey.Not) && (slotcurrentItem.item_Key & (ItemKey.Magazine)) != ItemKey.Not) {
-                if(slotcurrentItem is Magazine magazine && component.myItem is Ammo ammo) {
+                if(slotcurrentItem is Magazine magazine && magazine.Durability != magazine.MaxDurability) {
+                    magazine.IsInteract = true;
                     StartCoroutine(magazine.InsertAmmo(component.myItem as Ammo));
+                    magazine.loadingUI = LeanPool.Spawn(UIManager.Instance.loadingUI_prefab, item_ParentCell.GetComponentInChildren<UIElementClickHandler>().transform, false).gameObject;
+                    magazine.loadingUI.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
                 }
             }
             else
@@ -93,8 +96,10 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
             if (item_ParentCell != null)
             {
-                item_ParentCell.transform.Find("ItemBackgroundImage").TryGetComponent(out Image image);
-                if (image != null) image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.item_Key);
+                Transform image_trans = item_ParentCell.transform.Find("ItemBackgroundImage");
+                if(image_trans != null && image_trans.TryGetComponent(out Image image)) {
+                    image.color = UIManager.Instance.GetItemTypeColor(item_ParentCell.slotcurrentItem.item_Key);
+                }
             }
         }
     }

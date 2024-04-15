@@ -395,6 +395,7 @@ namespace Lean.Pool
 		/// <summary>This will either instantly despawn the specified gameObject, or delay despawn it after t seconds.</summary>
 		public void Despawn(GameObject clone, float t = 0.0f)
 		{
+			Debug.Log(clone  + "Despawned");
 			if (clone != null)
 			{
 				// Delay the despawn?

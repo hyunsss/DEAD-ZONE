@@ -78,7 +78,9 @@ public class DurableItem : MonoBehaviour
     }
 
     void ObjectDestroy() {
-
+        UIElementClickHandler uIElement = GetComponent<UIElementClickHandler>();
+        uIElement.parentAfterCell.DestoryChild();
+        uIElement.RemoveCellItem();
     }
 
 }
