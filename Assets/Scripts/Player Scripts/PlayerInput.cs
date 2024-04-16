@@ -132,7 +132,7 @@ public class PlayerInput : MonoBehaviour
             }
             else if (UIManager.Instance.handler_focus.TryGetComponent(out Cell cell))
             {
-                if (cell.slotcurrentItem != null)
+                if (cell.slotcurrentItem != null && cell.slotcurrentItem.isSearchable == true)
                 {
                     // 안전하게 UIElementClickHandler 찾기 및 RemoveCellItem 호출
                     UIElementClickHandler clickHandler = cell.Item_ParentCell.GetComponentInChildren<UIElementClickHandler>();
@@ -169,7 +169,7 @@ public class PlayerInput : MonoBehaviour
                 if (focus_cell.slotcurrentItem != null && focus_cell is EquipmentCell equipmentCell)
                 {
                     UIElementClickHandler clickHandler = focus_cell.GetComponentInChildren<UIElementClickHandler>();
-                    UIManager.Instance.ShiftQuickMoveItem(BoxType.EquipCell, focus_cell.slotcurrentItem, out bool Finish, clickHandler);
+                    UIManager.Instance.ShiftQuickMoveItem(BoxType.EquipCell, focus_cell.slotcurrentItem, out bool Finish);
                     if (Finish == true)
                     {
                         focus_cell.DestoryChild();

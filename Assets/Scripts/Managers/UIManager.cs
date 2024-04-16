@@ -28,7 +28,15 @@ public class UIManager : MonoBehaviour
     [Header("루팅 박스 패널")]
     public RootingBox currentRootBox;
     public Button searchButton;
+
+    [Space]
+    [Header("로딩 UI 리스트")]
     public LoadingUI loadingUI_prefab;
+    public List<LoadingUI> loadingUI_list = new List<LoadingUI>();
+
+    [Space]
+    [Header("Magazine Coroutine")]
+    [HideInInspector] public Coroutine MagInsertCoroutine;
 
 
     [Space]
@@ -113,11 +121,27 @@ public class UIManager : MonoBehaviour
         CameraManager.Instance.CursorVisible(!isActive);
         Inventory.SetActive(!isActive);
 
-        if (isActive == true && currentRootBox != null)
+        if (isActive == true)
         {
-            rooting_transform.gameObject.SetActive(false);
-            currentRootBox.currentItemCellPanel.transform.SetParent(currentRootBox.transform, false);
-            currentRootBox = null;
+            if (currentRootBox != null)
+            {
+                rooting_transform.gameObject.SetActive(false);
+                currentRootBox.currentItemCellPanel.transform.SetParent(currentRootBox.transform, false);
+                currentRootBox.StopMyCoroutine();
+                currentRootBox = null;
+            }
+
+            if (MagInsertCoroutine != null)
+            {
+                StopCoroutine(MagInsertCoroutine);
+            }
+
+            foreach (LoadingUI loadingUI in loadingUI_list)
+            {
+                loadingUI.Destroy();
+            }
+            loadingUI_list.Clear();
+
         }
 
         CellRayCastTarget(false);
@@ -229,14 +253,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShiftQuickMoveItem(BoxType boxType, Item item, out bool Finish, UIElementClickHandler clickHandler = null) 
+    public void ShiftQuickMoveItem(BoxType boxType, Item item, out bool Finish)
     {
         switch (boxType)
         {
             case BoxType.PlayerBox:
                 if (currentRootBox != null)
                 {
-                    ItemManager.Instance.MoveToInventoryFindCell(currentRootBox.currentItemCellPanel.grid, item, out Finish, clickHandler);
+                    ItemManager.Instance.MoveToInventoryFindCell(currentRootBox.currentItemCellPanel.grid, item, out Finish);
                     if (Finish == true) return;
                 }
 
@@ -247,7 +271,7 @@ public class UIManager : MonoBehaviour
                     foreach (ItemCellPanel itemCell in player_Inven)
                     {
                         Debug.Log(itemCell);
-                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish, clickHandler);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
 
                         if (Finish == true) return;
                     }
@@ -259,7 +283,7 @@ public class UIManager : MonoBehaviour
                     foreach (ItemCellPanel itemCell in player_Inven)
                     {
                         Debug.Log(itemCell);
-                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish, clickHandler);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
 
                         if (Finish == true) return;
                     }
@@ -283,12 +307,21 @@ public class UIManager : MonoBehaviour
                 return new Color(112f / 255f, 95f / 255f, 130f / 255f, 125f / 255f);
             case ItemKey.Weapon:
                 return new Color(33f / 255f, 33f / 255f, 33f / 255f, 125f / 255f);
+            case ItemKey.Helmat:
+                return new Color(54f / 255f, 25f / 255f, 121f / 255f, 125f / 255f);
             case ItemKey.Etc:
                 return new Color(86f / 255f, 106f / 255f, 142f / 255f, 125f / 255f);
+            case ItemKey.Magazine:
+                return new Color(79f / 255f, 72f / 255f, 80f / 255f, 125f / 255f);
             case ItemKey.Food:
                 return new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
             case ItemKey.Medical:
                 return new Color(181f / 255f, 87f / 255f, 77f / 255f, 125f / 255f);
+            case ItemKey.Ammo:
+            case ItemKey.AmmoBox:
+                return new Color(210f / 255f, 180f / 255f, 140f / 255f, 125f / 255f);
+            case ItemKey.Key:
+                return new Color(76f / 255f, 0f / 255f, 153f / 255f, 125f / 255f);
             default:
                 return new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
         }

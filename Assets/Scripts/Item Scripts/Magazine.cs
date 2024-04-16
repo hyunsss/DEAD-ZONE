@@ -10,7 +10,7 @@ public class Magazine : Item, IDurable
 
     [Header("Ammo Type")]
     public AmmoType ammoType;
-    
+
     [Space(5f)]
     [Header("Ammo Count")]
     [SerializeField] private int maxAmmoCount;
@@ -20,7 +20,7 @@ public class Magazine : Item, IDurable
 
     public int Durability { get => currentAmmoCount; set { currentAmmoCount = value; } }
     public int MaxDurability { get => maxAmmoCount; }
-
+   
 
     public GameObject loadingUI;
     private bool isInteract;
@@ -30,9 +30,10 @@ public class Magazine : Item, IDurable
         set
         {
             isInteract = value;
-            
-            if(isInteract == false) {
-                LeanPool.Despawn(loadingUI);    
+
+            if (isInteract == false)
+            {
+                LeanPool.Despawn(loadingUI);
             }
         }
     }
@@ -52,11 +53,12 @@ public class Magazine : Item, IDurable
 
     public IEnumerator InsertAmmo(Ammo ammo)
     {
-        while (currentAmmoCount <= maxAmmoCount && ammo.Count != 0 && isInteract == true)
+        while (currentAmmoCount < maxAmmoCount && ammo.Count != 0 && isInteract == true)
         {
             yield return new WaitForSeconds(0.7f);
 
-            if(thisAmmo == null) {
+            if (thisAmmo == null)
+            {
                 thisAmmo = ammo;
             }
 
@@ -79,4 +81,5 @@ public class Magazine : Item, IDurable
             return null;
         }
     }
+
 }

@@ -17,7 +17,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public GameObject myBackground;
     private RectTransform rect;
     public Image image;
-    private bool current_Rotation;
     public bool isRotation;
     private bool isBeginRotation;
     public List<Cell> itemCells = new List<Cell>();
@@ -39,7 +38,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         //Rect Transform 초기화 
         itemCells = itemcells;
         this.isRotation = isRotation;
-        current_Rotation = isRotation;
         if (this.isRotation == true) { rect.Rotate(new Vector3(0, 0, 90)); }
         if (myBackground == null) ItemManager.Instance.CreateItemBackGround(this);
     }
@@ -291,6 +289,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         }
         else
         {
+
             foreach (Cell cell in itemCells)
             {
                 cell.slotcurrentItem = null;
@@ -313,14 +312,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         parentCell.slotcurrentItem = myItem;
         image.raycastTarget = true;
         isItemDrop = false;
-    }
-
-    private void OnDisable() {
-        if(TryGetComponent(out StackableItem stackable)) {
-            Destroy(stackable);
-        } else if(TryGetComponent(out DurableItem durable)) {
-            Destroy(durable);
-        }
     }
 
 

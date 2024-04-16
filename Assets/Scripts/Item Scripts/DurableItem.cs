@@ -6,35 +6,50 @@ using UnityEngine;
 
 public class DurableItem : MonoBehaviour
 {
-    TextMeshProUGUI count_Text;
+    public TextMeshProUGUI count_Text;
     public GameObject text_Prefab;
 
     public Item currentItem;
     private int item_Duration;
     private int item_MaxDuration;
-    public int ItemDuration { 
-        get { 
-            if(currentItem.TryGetComponent(out IDurable durable)) {
+    public int ItemDuration
+    {
+        get
+        {
+            if (currentItem.TryGetComponent(out IDurable durable))
+            {
                 return durable.Durability;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
 
-        } set { 
-            if(currentItem.TryGetComponent(out IDurable durable)) {
+        }
+        set
+        {
+            if (currentItem.TryGetComponent(out IDurable durable))
+            {
                 durable.Durability = value;
                 UpdateCountText();
             }
-        }}
+        }
+    }
 
-    public int ItemMaxDuration { 
-        get { 
-            if(currentItem.TryGetComponent(out IDurable durable)) {
+    public int ItemMaxDuration
+    {
+        get
+        {
+            if (currentItem.TryGetComponent(out IDurable durable))
+            {
                 return durable.MaxDurability;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
-        }}
+        }
+    }
 
     void Awake()
     {
@@ -51,22 +66,27 @@ public class DurableItem : MonoBehaviour
         UpdateCountText();
     }
 
-    public void Init() {
+    public void Init()
+    {
         item_MaxDuration = currentItem.GetComponent<IDurable>().MaxDurability;
         item_Duration = currentItem.GetComponent<IDurable>().Durability;
     }
 
-    private void Update() {
-        if(currentItem == null && TryGetComponent(out UIElementClickHandler component)) {
+    private void Update()
+    {
+        if (currentItem == null && TryGetComponent(out UIElementClickHandler component))
+        {
             currentItem = component.myItem;
         }
 
-        if(currentItem != null) {
+        if (currentItem != null)
+        {
             // item_Duration = currentItem.GetComponent<IDurable>().Durability;
             // item_MaxDuration = currentItem.GetComponent<IDurable>().MaxDurability;
             UpdateCountText();
 
-            if(item_Duration <= 0 && currentItem.TryGetComponent(out Magazine magazine) == false) {
+            if (item_Duration <= 0 && currentItem.TryGetComponent(out Magazine magazine) == false)
+            {
                 ObjectDestroy();
             }
         }
@@ -77,10 +97,18 @@ public class DurableItem : MonoBehaviour
         count_Text.text = $"{ItemDuration}/{ItemMaxDuration}";
     }
 
-    void ObjectDestroy() {
+    public void ObjectDestroy()
+    {
         UIElementClickHandler uIElement = GetComponent<UIElementClickHandler>();
         uIElement.parentAfterCell.DestoryChild();
         uIElement.RemoveCellItem();
+        DestroyComponent();
+    }
+
+    public void DestroyComponent()
+    {
+        Destroy(count_Text.gameObject);
+        Destroy(this);
     }
 
 }

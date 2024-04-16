@@ -8,34 +8,49 @@ using UnityEngine;
 
 public class StackableItem : MonoBehaviour
 {
-    TextMeshProUGUI count_Text;
+    public TextMeshProUGUI count_Text;
     public GameObject text_Prefab;
 
     public Item currentItem;
-    public int ItemCount { 
-        get { 
-            if(currentItem.TryGetComponent(out IStackable stackable)) {
+    public int ItemCount
+    {
+        get
+        {
+            if (currentItem.TryGetComponent(out IStackable stackable))
+            {
                 return stackable.Count;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
 
-        } set { 
-            if(currentItem.TryGetComponent(out IStackable stackable)) {
+        }
+        set
+        {
+            if (currentItem.TryGetComponent(out IStackable stackable))
+            {
                 stackable.Count = value;
                 UpdateCountText();
             }
-        }}
-    
-     public int ItemMaxCount { 
-        get { 
-            if(currentItem.TryGetComponent(out IStackable stackable)) {
+        }
+    }
+
+    public int ItemMaxCount
+    {
+        get
+        {
+            if (currentItem.TryGetComponent(out IStackable stackable))
+            {
                 return stackable.MaxCount;
-            } else {
+            }
+            else
+            {
                 return 0;
             }
 
-        }}
+        }
+    }
 
     void Awake()
     {
@@ -51,23 +66,29 @@ public class StackableItem : MonoBehaviour
         UpdateCountText();
     }
 
-    void OnEnable() {
-        Debug.Log("start Stackable");
+    void OnDisable()
+    {
+        print(currentItem.name);
     }
 
-    public void Init() {
+    public void Init()
+    {
         ItemCount = currentItem.GetComponent<IStackable>().Count;
     }
 
-    private void Update() {
-        if(currentItem == null && TryGetComponent(out UIElementClickHandler component)) {
+    private void Update()
+    {
+        if (currentItem == null && TryGetComponent(out UIElementClickHandler component))
+        {
             currentItem = component.myItem;
         }
 
-        if(currentItem != null) {
+        if (currentItem != null)
+        {
             ItemCount = currentItem.GetComponent<IStackable>().Count;
             UpdateCountText();
-            if(ItemCount <= 0) {
+            if (ItemCount <= 0)
+            {
                 ObjectDestroy();
             }
         }
@@ -78,10 +99,17 @@ public class StackableItem : MonoBehaviour
         count_Text.text = $"{ItemCount}";
     }
 
-    void ObjectDestroy() {
+    public void ObjectDestroy()
+    {
         UIElementClickHandler uIElement = GetComponent<UIElementClickHandler>();
         uIElement.parentAfterCell.DestoryChild();
         uIElement.RemoveCellItem();
+        DestroyComponent();
+    }
+
+    public void DestroyComponent()
+    {
+        Destroy(count_Text.gameObject);
         Destroy(this);
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Lean.Pool;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ public class RootingBox : MonoBehaviour, IInteractable
     public ItemKey allowItemKey;
 
     bool isSearch;
+
+    private Coroutine SearchCoroutine;
 
     private void Awake()
     {
@@ -31,6 +34,14 @@ public class RootingBox : MonoBehaviour, IInteractable
             currentItemCellPanel.grid.GenerateGrid();
         }
         GetBoxItems();
+    }
+
+    public void StopMyCoroutine()
+    {
+        if (SearchCoroutine != null)
+        {
+            StopCoroutine(SearchCoroutine);
+        }
     }
 
     public void GetBoxItems()
@@ -68,7 +79,15 @@ public class RootingBox : MonoBehaviour, IInteractable
                 Image item_image = currentBoxItems[i].GetComponent<Image>();
                 item_image.enabled = true;
                 item_image.raycastTarget = true;
+
+                if (currentBoxItems[i].myItem.item_Type != ItemType.None)
+                {
+                    currentBoxItems[i].GetComponentInChildren<TextMeshProUGUI>().enabled = true;
+                }
+
+
                 loadingUI.Destroy();
+                UIManager.Instance.loadingUI_list.Remove(loadingUI);
                 i++;
             }
             else
@@ -113,8 +132,10 @@ public class RootingBox : MonoBehaviour, IInteractable
                 }
             }
 
-        } else if(item_obj.TryGetComponent(out Ammo ammo)) {
-            int itemcount = Random.Range(ammo.MaxCount - 10, ammo.MaxCount);
+        }
+        else if (item_obj.TryGetComponent(out Ammo ammo))
+        {
+            int itemcount = Random.Range(8, 35);
             ammo.Count = itemcount;
         }
 
@@ -153,7 +174,7 @@ public class RootingBox : MonoBehaviour, IInteractable
         SetSearchableItem();
 
         UIManager.Instance.searchButton.onClick.RemoveAllListeners();
-        UIManager.Instance.searchButton.onClick.AddListener(() => StartCoroutine(SearchItem()));
+        UIManager.Instance.searchButton.onClick.AddListener(() => SearchCoroutine = StartCoroutine(SearchItem()));
     }
 
     void SetSearchableItem()
@@ -165,6 +186,11 @@ public class RootingBox : MonoBehaviour, IInteractable
                 Image item_image = item_icon.GetComponent<Image>();
                 item_image.raycastTarget = false;
                 item_image.enabled = false;
+
+                if (item_icon.myItem.item_Type == ItemType.StackableItem || item_icon.myItem.item_Type == ItemType.DurableItem)
+                {
+                    item_icon.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+                }
             }
         }
     }

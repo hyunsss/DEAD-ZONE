@@ -12,6 +12,11 @@ public class LoadingUI : MonoBehaviour
         loading_animation = GetComponent<Animator>();
     }
 
+    void OnEnable()
+    {
+        UIManager.Instance.loadingUI_list.Add(this);
+    }
+
     public void Destroy()
     {
         LeanPool.Despawn(this);
