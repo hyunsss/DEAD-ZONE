@@ -24,7 +24,7 @@ public class PlayerEquipManagment : MonoBehaviour
     public Weapon[] Weapons { get { return weapons; } set { weapons = value; } }
     public int currentindex;
     public Action<Weapon> CurrentWeaponSetting;
-    private TwoBoneIKConstraint subHandIK;
+    
 
     [Space(20f)]
     [Header("Bag Properties")]
@@ -42,7 +42,7 @@ public class PlayerEquipManagment : MonoBehaviour
     {
         playerAttack = GetComponent<PlayerAttack>();
         playerInput = GetComponent<PlayerInput>();
-        subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
+        
     }
 
     #region Weapon equip rosics
@@ -91,8 +91,7 @@ public class PlayerEquipManagment : MonoBehaviour
     {
         print("CurrentWeaponSetting");
         currentWeapon.transform.SetParent(hand_R);
-        subHandIK.data.target = currentWeapon.subHandIK_target;
-        subHandIK.data.hint = currentWeapon.subHandIK_hint;
+        
         currentWeapon.transform.localPosition = currentWeapon.handPosition;
         currentWeapon.transform.localRotation = Quaternion.Euler(currentWeapon.handRotation);
 

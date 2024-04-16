@@ -113,6 +113,9 @@ public class RootingBox : MonoBehaviour, IInteractable
                 }
             }
 
+        } else if(item_obj.TryGetComponent(out Ammo ammo)) {
+            int itemcount = Random.Range(ammo.MaxCount - 10, ammo.MaxCount);
+            ammo.Count = itemcount;
         }
 
         ItemManager.Instance.MoveToInventoryFindCell(currentItemCellPanel.grid, item_obj.GetComponent<Item>(), out bool Finish);

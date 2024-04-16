@@ -31,11 +31,11 @@ public class SnapshotCamera : MonoBehaviour
     /// <summary>
     /// The default rotation applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultRotation = new Vector3(-90,90f, 45f);
+    public Vector3 defaultRotation = new Vector3(90, 35f, 90f);
     /// <summary>
     /// The default scale applied to objects when none is specified.
     /// </summary>
-    public Vector3 defaultScale = new Vector3(1.7f, 1.7f, 1.7f);
+    public Vector3 defaultScale = new Vector3(5f, 5f, 5f);
 
     // This private constructor serves to ensure only the factory can produce new instances.
     private SnapshotCamera() { }

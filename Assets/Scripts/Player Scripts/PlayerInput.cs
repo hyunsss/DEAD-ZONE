@@ -169,7 +169,7 @@ public class PlayerInput : MonoBehaviour
                 if (focus_cell.slotcurrentItem != null && focus_cell is EquipmentCell equipmentCell)
                 {
                     UIElementClickHandler clickHandler = focus_cell.GetComponentInChildren<UIElementClickHandler>();
-                    UIManager.Instance.ShiftQuickMoveItem(BoxType.EquipCell, focus_cell.slotcurrentItem, out bool Finish);
+                    UIManager.Instance.ShiftQuickMoveItem(BoxType.EquipCell, focus_cell.slotcurrentItem, out bool Finish, clickHandler);
                     if (Finish == true)
                     {
                         focus_cell.DestoryChild();

@@ -381,7 +381,7 @@
                     "name": "",
                     "id": "0c3f3cbf-1b7f-4512-ba36-ed5013cb7b4f",
                     "path": "<Keyboard>/r",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "Reload",

@@ -217,7 +217,7 @@ Transform:
   m_GameObject: {fileID: 4299610462189205305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.142, z: -8.895}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -257,6 +257,7 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
+  gunType: 8
   ammoType: 3
   maxAmmoCount: 20
   currentAmmoCount: 0

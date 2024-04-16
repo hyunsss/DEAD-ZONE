@@ -51,6 +51,10 @@ public class StackableItem : MonoBehaviour
         UpdateCountText();
     }
 
+    void OnEnable() {
+        Debug.Log("start Stackable");
+    }
+
     public void Init() {
         ItemCount = currentItem.GetComponent<IStackable>().Count;
     }

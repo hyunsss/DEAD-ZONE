@@ -202,7 +202,6 @@ public class ItemManager : MonoBehaviour
             uiImage.CompleteMoveCell(cell);
             if (cell is EquipmentCell == false) {
                 item.gameObject.SetActive(false);
-                Debug.Log("아이템 액티브 false");
             }
             isInInventory = true;
         }

@@ -132,7 +132,6 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         bool isSuccess = false;
-        print(dropCell);
         //아이템이 드랍 되었을 때 그 셀의 currentitem이 인벤토리 패널을 가진 아이템인지 판단.
         //만약 true라면 다른 로직을 수행하게 되는데 
         //자식에 있는 모든 패널들을 조사하고 그 패널안에 직접 들어갈 수 있도록함
@@ -314,6 +313,14 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         parentCell.slotcurrentItem = myItem;
         image.raycastTarget = true;
         isItemDrop = false;
+    }
+
+    private void OnDisable() {
+        if(TryGetComponent(out StackableItem stackable)) {
+            Destroy(stackable);
+        } else if(TryGetComponent(out DurableItem durable)) {
+            Destroy(durable);
+        }
     }
 
 

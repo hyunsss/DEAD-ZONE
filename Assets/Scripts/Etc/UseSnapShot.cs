@@ -97,7 +97,7 @@ public class UseSanpShot : MonoBehaviour
     public GameObject[] item1by2Snapshot;
 
     // 파일 주소 설정
-    readonly string Path = Application.dataPath + "/Textures/Ammo";
+    readonly string Path = Application.dataPath + "/Textures/Magazine";
     // 파일 이름
     string Name;
 

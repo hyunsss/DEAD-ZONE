@@ -56,7 +56,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   item_Key: 1
-  item_Type: 1
+  item_Type: 0
   inventorySprite: {fileID: 21300000, guid: 163ef5feb2d5b4b79b6e43a73473c7d2, type: 3}
   cellwidth: 1
   cellheight: 2

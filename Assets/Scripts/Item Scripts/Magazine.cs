@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class Magazine : Item, IDurable
 {
+    [Header("Gun Type")]
+    public GunType gunType;
+
     [Header("Ammo Type")]
     public AmmoType ammoType;
-
+    
     [Space(5f)]
     [Header("Ammo Count")]
     [SerializeField] private int maxAmmoCount;
     public int currentAmmoCount;
 
-    
     public Ammo thisAmmo;
 
     public int Durability { get => currentAmmoCount; set { currentAmmoCount = value; } }
@@ -35,7 +37,6 @@ public class Magazine : Item, IDurable
         }
     }
 
-
     public void UseMagazine(out bool isEnough)
     {
         if (currentAmmoCount != 0)
@@ -51,11 +52,14 @@ public class Magazine : Item, IDurable
 
     public IEnumerator InsertAmmo(Ammo ammo)
     {
-        Debug.Log("Insert Ammo Corotine enable");
         while (currentAmmoCount <= maxAmmoCount && ammo.Count != 0 && isInteract == true)
         {
-
             yield return new WaitForSeconds(0.7f);
+
+            if(thisAmmo == null) {
+                thisAmmo = ammo;
+            }
+
             Durability++;
             ammo.Count--;
             Debug.Log(currentAmmoCount);

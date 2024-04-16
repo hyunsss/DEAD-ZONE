@@ -48,6 +48,17 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                     magazine.loadingUI = LeanPool.Spawn(UIManager.Instance.loadingUI_prefab, item_ParentCell.GetComponentInChildren<UIElementClickHandler>().transform, false).gameObject;
                     magazine.loadingUI.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
                 }
+            //현재 나의 아이템이 Stackable이 있는 갯수형 아이템이고 드랍된 곳의 아이템과 동일하다면    
+            } else if(component.myItem.TryGetComponent(out IStackable stackable) && component.myItem.name == item_ParentCell.slotcurrentItem.name) {
+                Debug.Log("stackable stackable");
+                IStackable thisStackable = item_ParentCell.slotcurrentItem.GetComponent<IStackable>();
+                thisStackable.Count += stackable.Count;
+                if(thisStackable.Count > thisStackable.MaxCount) {
+                    int remainCount = thisStackable.Count - thisStackable.MaxCount;
+                    thisStackable.Count = thisStackable.MaxCount;
+                    stackable.Count = remainCount;
+                }
+                Debug.Log(stackable.Count + "/////" + thisStackable.Count);
             }
             else
             {

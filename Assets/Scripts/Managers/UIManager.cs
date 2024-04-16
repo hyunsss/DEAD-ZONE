@@ -229,14 +229,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShiftQuickMoveItem(BoxType boxType, Item item, out bool Finish)
+    public void ShiftQuickMoveItem(BoxType boxType, Item item, out bool Finish, UIElementClickHandler clickHandler = null) 
     {
         switch (boxType)
         {
             case BoxType.PlayerBox:
                 if (currentRootBox != null)
                 {
-                    ItemManager.Instance.MoveToInventoryFindCell(currentRootBox.currentItemCellPanel.grid, item, out Finish);
+                    ItemManager.Instance.MoveToInventoryFindCell(currentRootBox.currentItemCellPanel.grid, item, out Finish, clickHandler);
                     if (Finish == true) return;
                 }
 
@@ -247,7 +247,7 @@ public class UIManager : MonoBehaviour
                     foreach (ItemCellPanel itemCell in player_Inven)
                     {
                         Debug.Log(itemCell);
-                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish, clickHandler);
 
                         if (Finish == true) return;
                     }
@@ -259,7 +259,7 @@ public class UIManager : MonoBehaviour
                     foreach (ItemCellPanel itemCell in player_Inven)
                     {
                         Debug.Log(itemCell);
-                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish);
+                        ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, item, out Finish, clickHandler);
 
                         if (Finish == true) return;
                     }

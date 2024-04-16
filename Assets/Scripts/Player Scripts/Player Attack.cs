@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
@@ -10,7 +11,9 @@ public class PlayerAttack : MonoBehaviour
 
     private Weapon currentWeapon;
     Animator animator;
+    private TwoBoneIKConstraint subHandIK;
 
+    public Transform default_Trans;
 
     public Weapon CurrentWeapon
     {
@@ -21,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
             if (currentWeapon != null)
             {
                 playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon);
+                
                 animator.SetLayerWeight(1, 1);
             }
             else
@@ -35,6 +39,17 @@ public class PlayerAttack : MonoBehaviour
         currentWeapon = null;
         animator = GetComponent<Animator>();
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
+        subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
+    }
+
+    private void Update() {
+        if(currentWeapon != null) {
+            subHandIK.data.target.position = currentWeapon.subHandIK_target.position;
+            subHandIK.data.target.rotation = currentWeapon.subHandIK_target.rotation;
+        } else {
+            subHandIK.data.target.position = default_Trans.position;
+            subHandIK.data.target.rotation = default_Trans.rotation;
+        }
     }
 
     void OnFire(InputValue value)
@@ -57,9 +72,11 @@ public class PlayerAttack : MonoBehaviour
 
     void OnReload(InputValue value)
     {
-        if (WeaponType<Gun>(currentWeapon) == true)
+        float inputvalue = value.Get<float>();
+        bool isPressed = inputvalue == 1.0f;
+        if (isPressed == true && currentWeapon is Gun gun && gun.IsHaveMagazine() == true)
         {
-            Reload();
+            animator.SetTrigger("Reload");
         }
     }
 
@@ -74,13 +91,11 @@ public class PlayerAttack : MonoBehaviour
 
     void Reload()
     {
-        if (WeaponType<Gun>(currentWeapon) == true)
+        if (currentWeapon is Gun gun)
         {
-            if(currentWeapon is Gun gun && gun.IsHaveMagazine() == true) {
-                animator.SetTrigger("Reload");
-                gun.Reload();
-            }
+            gun.Reload();
         }
+
     }
 
     public bool WeaponType<T>(Weapon weapon)
