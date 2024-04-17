@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Lean.Pool;
 using Steamworks;
 using TMPro;
 using Unity.VisualScripting;
@@ -22,7 +23,9 @@ public class UIManager : MonoBehaviour
 
     [Space]
     [Header("상호작용 패널")]
-    public UserInteractionPanel interactionPanel;
+    public RectTransform interactionParent;
+    public UserInteractionPanel interactionPanel_prefab;
+    public UserInteractionPanel current_interactionPanel;
 
     [Space]
     [Header("루팅 박스 패널")]
@@ -51,7 +54,7 @@ public class UIManager : MonoBehaviour
     public Cell cell;
 
     [Space]
-    [Header("Cell Prefab")]
+    [Header("Item Text Prefab")]
     public TextMeshProUGUI itemtext_prefab;
 
     [Space]
@@ -84,6 +87,13 @@ public class UIManager : MonoBehaviour
 
     bool firstInit = false;
     float startTime;
+
+    public void TryDespawnInteractPanel() {
+        if(current_interactionPanel != null) {
+            LeanPool.Despawn(current_interactionPanel);
+            current_interactionPanel = null;
+        }
+    }
 
     public void InsertCellInventory(GameObject target, RectTransform parent)
     {
@@ -134,6 +144,7 @@ public class UIManager : MonoBehaviour
             if (MagInsertCoroutine != null)
             {
                 StopCoroutine(MagInsertCoroutine);
+                MagInsertCoroutine = null;
             }
 
             foreach (LoadingUI loadingUI in loadingUI_list)
@@ -142,6 +153,8 @@ public class UIManager : MonoBehaviour
             }
             loadingUI_list.Clear();
 
+        } else {
+            TryDespawnInteractPanel();
         }
 
         CellRayCastTarget(false);

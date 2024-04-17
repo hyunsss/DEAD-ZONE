@@ -126,53 +126,82 @@ public class Gun : Weapon
     public void Reload()
     {
         UIElementClickHandler itemHandler = FindAmmo(gunType);
-        if(itemHandler != null) {
+        if (itemHandler != null)
+        {
             ItemCellPanel[] itemCellPanels = UIManager.Instance.rig_transform.GetComponentsInChildren<ItemCellPanel>();
 
-            foreach(ItemCellPanel cellPanel in itemCellPanels) {
+            foreach (ItemCellPanel cellPanel in itemCellPanels)
+            {
                 ItemManager.Instance.MoveToInventoryFindCell(cellPanel.grid, currentMagazine, out bool Finish);
 
-                if(Finish == true) {
+                if (Finish == true)
+                {
+                    //Finish가 true이면 전술 조끼에 들어갈 공간이 있었다는 뜻.
+                    //기존 총의 탄창
                     currentMagazine.transform.SetParent(ItemManager.Instance.itemParent);
+                    currentMagazine.meshCollider.enabled = true;
+
+
+                    //교체 되는 총의 탄창
                     itemHandler.parentAfterCell.RemoveItem();
                     itemHandler.RemoveCellItem();
-                    
+
                     currentMagazine = itemHandler.myItem as Magazine;
                     currentMagazine.transform.SetParent(magazine_Trans, false);
                     currentMagazine.transform.localPosition = Vector3.zero;
                     currentMagazine.rigid.isKinematic = true;
+                    currentMagazine.meshCollider.enabled = false;
                     return;
-                } else {
-                    currentMagazine.transform.SetParent(ItemManager.Instance.itemParent);
-                    currentMagazine.rigid.isKinematic = false;
                 }
             }
+            //전술 조끼의 공간을 모두 탐색했는데도 부족하다면 기존 탄창은 떨구고 새탄창을 장착함.
+            currentMagazine.transform.SetParent(ItemManager.Instance.itemParent);
+            currentMagazine.rigid.isKinematic = false;
+            currentMagazine.meshCollider.enabled = true;
+
+            itemHandler.parentAfterCell.RemoveItem();
+            itemHandler.RemoveCellItem();
+
+            currentMagazine = itemHandler.myItem as Magazine;
+            currentMagazine.transform.SetParent(magazine_Trans, false);
+            currentMagazine.transform.localPosition = Vector3.zero;
+            currentMagazine.rigid.isKinematic = true;
+            currentMagazine.meshCollider.enabled = false;
+            return;
         }
     }
 
-    public UIElementClickHandler FindAmmo(GunType _gunType) {
+    public UIElementClickHandler FindAmmo(GunType _gunType)
+    {
         ItemCellPanel[] itemCellPanels = UIManager.Instance.rig_transform.GetComponentsInChildren<ItemCellPanel>();
 
-        foreach(ItemCellPanel cellPanel in itemCellPanels) {
-            for(int x = 0; x < cellPanel.grid.GridArray.GetLength(0); x++) {
-                for (int y = 0; y < cellPanel.grid.GridArray.GetLength(1); y++) {
-                    if(cellPanel.grid.GridArray[x, y].slotcurrentItem is Magazine magazine && magazine.gunType == _gunType) {
+        foreach (ItemCellPanel cellPanel in itemCellPanels)
+        {
+            for (int x = 0; x < cellPanel.grid.GridArray.GetLength(0); x++)
+            {
+                for (int y = 0; y < cellPanel.grid.GridArray.GetLength(1); y++)
+                {
+                    if (cellPanel.grid.GridArray[x, y].slotcurrentItem is Magazine magazine && magazine.gunType == _gunType)
+                    {
                         Debug.Log("return true");
                         return cellPanel.grid.GridArray[x, y].Item_ParentCell.GetComponentInChildren<UIElementClickHandler>();
-                    } else {
+                    }
+                    else
+                    {
                         continue;
                     }
-                    
+
                 }
             }
         }
         return null;
     }
 
-    public bool IsHaveMagazine() {
+    public bool IsHaveMagazine()
+    {
         UIElementClickHandler returnValue = FindAmmo(gunType);
         Debug.Log(returnValue);
-        return returnValue != null ? true : false; 
+        return returnValue != null ? true : false;
     }
 
 }

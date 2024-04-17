@@ -17,6 +17,8 @@ public class PlayerInput : MonoBehaviour
 
     private bool isOnShift_UI;
 
+    Plane plane;
+    Vector3 plane_RayCastPos;
 
     #region double click properties
     float doubleClickTimeLimit = 0.3f;
@@ -27,6 +29,7 @@ public class PlayerInput : MonoBehaviour
     {
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
         playerAttack = GetComponent<PlayerAttack>();
+        plane = new Plane(Vector3.up, Vector3.zero);
     }
 
     private void Start()
@@ -36,28 +39,87 @@ public class PlayerInput : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 7 | 1 << 8))
+        if (UIManager.Instance.Inventory.activeSelf == false)
         {
-            interactable = hit.collider.GetComponentInParent<IInteractable>();
-            // 여기에서 hit.collider를 사용하여 충돌한 객체에 접근할 수 있습니다.
-            // 아이템인 경우에만 처리
-            if (interactable != null) // "Item"은 충돌한 객체의 태그와 일치해야 합니다.
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Collider[] colliders;
+            //Raycast(ray, out hit, Mathf.Infinity, 1 << 7 | 1 << 8)
+            if (plane.Raycast(ray, out float enter))
             {
-                isInteraction = true;
+                plane_RayCastPos = ray.GetPoint(enter);
+
+                float playerToRay = Vector3.Distance(plane_RayCastPos, transform.position);
+
+                if (playerToRay < 2f)
+                {
+                    colliders = Physics.OverlapSphere(plane_RayCastPos, 0.5f, 1 << 7 | 1 << 8);
+
+                    float shortDistance = 999f;
+                    GameObject nearObject = null;
+                    foreach (Collider collider in colliders)
+                    {
+                        if (Vector3.Distance(plane_RayCastPos, collider.transform.position) < shortDistance)
+                        {
+                            shortDistance = Vector3.Distance(plane_RayCastPos, collider.transform.position);
+                            nearObject = collider.gameObject;
+                        }
+                    }
+
+                    if (nearObject != null)
+                    {
+                        if (UIManager.Instance.current_interactionPanel == null)
+                        {
+                            UIManager.Instance.current_interactionPanel = LeanPool.Spawn(UIManager.Instance.interactionPanel_prefab, UIManager.Instance.interactionParent, false);
+                        }
+
+                        if (nearObject.transform.parent.TryGetComponent(out Item item))
+                        {
+                            UIManager.Instance.current_interactionPanel.SetText(item.name, "줍기 E");
+                        }
+                        else if (nearObject.transform.parent.TryGetComponent(out RootingBox rootingBox))
+                        {
+                            UIManager.Instance.current_interactionPanel.SetText(rootingBox.name, "열기 E");
+                        }
+
+                        interactable = nearObject.GetComponentInParent<IInteractable>();
+                    }
+                    else
+                    {
+                        interactable = null;
+                        UIManager.Instance.TryDespawnInteractPanel();
+                    }
+
+                    // 아이템인 경우에만 처리
+                    if (interactable != null)
+                    {
+                        isInteraction = true;
+                    }
+                    else
+                    {
+                        isInteraction = false;
+                    }
+                }
+                else
+                {
+                    UIManager.Instance.TryDespawnInteractPanel();
+                }
             }
             else
             {
                 isInteraction = false;
             }
         }
-        else
+
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;  // 기즈모의 색 설정
+        if (plane_RayCastPos != null && Vector3.Distance(plane_RayCastPos, transform.position) < 2f)
         {
-            isInteraction = false;
+            Gizmos.DrawWireSphere(plane_RayCastPos, 0.5f);  // 와이어프레임 스피어 그리기
         }
     }
 

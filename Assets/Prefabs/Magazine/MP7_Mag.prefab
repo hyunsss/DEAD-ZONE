@@ -164,7 +164,7 @@ MonoBehaviour:
   item_Key: 4
   item_Type: 2
   inventorySprite: {fileID: 21300000, guid: cbda5022aea874be6b6d2b9c5e9a21f9, type: 3}
-  cellwidth: 2
+  cellwidth: 1
   cellheight: 2
   item_name: 
   item_desc: 
@@ -175,7 +175,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   gunType: 2
   ammoType: 2
-  maxAmmoCount: 100
+  maxAmmoCount: 40
   currentAmmoCount: 0
   thisAmmo: {fileID: 0}
   loadingUI: {fileID: 0}

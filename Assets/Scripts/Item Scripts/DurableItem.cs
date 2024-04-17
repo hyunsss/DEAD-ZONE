@@ -56,14 +56,14 @@ public class DurableItem : MonoBehaviour
         currentItem = GetComponent<Item>();
     }
 
-    void Start()
+    public void Start()
     {
-        text_Prefab = UIManager.Instance.itemtext_prefab.gameObject;
-        count_Text = LeanPool.Spawn(text_Prefab, transform).GetComponent<TextMeshProUGUI>();
-
-        count_Text.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
-
-        UpdateCountText();
+        if(count_Text == null) {
+            text_Prefab = UIManager.Instance.itemtext_prefab.gameObject;
+            count_Text = LeanPool.Spawn(text_Prefab, transform).GetComponent<TextMeshProUGUI>();
+            count_Text.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+            UpdateCountText();
+        }
     }
 
     public void Init()

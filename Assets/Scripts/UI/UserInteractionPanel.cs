@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class UserInteractionPanel : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public TextMeshProUGUI interaction_name;
+    private TextMeshProUGUI text;
+    private TextMeshProUGUI interaction_name;
 
     private void Awake() {
         text = transform.Find("Text").GetComponent<TextMeshProUGUI>();

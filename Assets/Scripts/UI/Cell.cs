@@ -47,12 +47,13 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 if (component.myItem is Ammo ammo && slotcurrentItem is Magazine magazine && ammo.ammoType == magazine.ammoType && magazine.Durability != magazine.MaxDurability)
                 {
                     magazine.IsInteract = true;
+                    Debug.Log(UIManager.Instance.MagInsertCoroutine);
                     if (UIManager.Instance.MagInsertCoroutine == null)
                     {
                         UIManager.Instance.MagInsertCoroutine = StartCoroutine(magazine.InsertAmmo(component.myItem as Ammo));
+                        magazine.loadingUI = LeanPool.Spawn(UIManager.Instance.loadingUI_prefab, item_ParentCell.GetComponentInChildren<UIElementClickHandler>().transform, false).gameObject;
+                        magazine.loadingUI.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
                     }
-                    magazine.loadingUI = LeanPool.Spawn(UIManager.Instance.loadingUI_prefab, item_ParentCell.GetComponentInChildren<UIElementClickHandler>().transform, false).gameObject;
-                    magazine.loadingUI.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
                 }
                 //현재 나의 아이템이 Stackable이 있는 갯수형 아이템이고 드랍된 곳의 아이템과 동일하다면    
             }
@@ -65,6 +66,8 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                     int remainCount = thisStackable.Count - thisStackable.MaxCount;
                     thisStackable.Count = thisStackable.MaxCount;
                     stackable.Count = remainCount;
+                } else if(thisStackable.Count <= thisStackable.MaxCount) {
+                    stackable.Count = 0;
                 }
             }
             else

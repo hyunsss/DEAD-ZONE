@@ -784,6 +784,11 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3005611650129277678, guid: 54efffb72f90841538535f79669c40aa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6636858391139713231, guid: 54efffb72f90841538535f79669c40aa,
         type: 3}
       propertyPath: serializationData.Prefab

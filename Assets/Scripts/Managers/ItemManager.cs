@@ -234,6 +234,7 @@ public class ItemManager : MonoBehaviour
             case ItemType.DurableItem:
                 DurableItem durable = targetObj.AddComponent<DurableItem>();
                 durable.currentItem = item;
+                durable.Start();
                 break;
             case ItemType.StackableItem:
                 StackableItem stackable = targetObj.AddComponent<StackableItem>();

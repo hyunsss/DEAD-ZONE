@@ -695,6 +695,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magazine14
       objectReference: {fileID: 0}
+    - target: {fileID: 2509561932249259971, guid: 70ee30927d1814ff6889a747b605aca1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4082146780933202565, guid: 70ee30927d1814ff6889a747b605aca1,
         type: 3}
       propertyPath: serializationData.Prefab

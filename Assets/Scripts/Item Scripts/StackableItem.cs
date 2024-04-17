@@ -66,11 +66,6 @@ public class StackableItem : MonoBehaviour
         UpdateCountText();
     }
 
-    void OnDisable()
-    {
-        print(currentItem.name);
-    }
-
     public void Init()
     {
         ItemCount = currentItem.GetComponent<IStackable>().Count;
