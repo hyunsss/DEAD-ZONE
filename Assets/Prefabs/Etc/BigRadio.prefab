@@ -115,7 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2501190208330740328}
-  - component: {fileID: 8225743834505502100}
+  - component: {fileID: 5621226428196774722}
   - component: {fileID: 1671418172406681348}
   m_Layer: 7
   m_Name: BigRadio
@@ -140,7 +140,7 @@ Transform:
   - {fileID: 5914322162005972738}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8225743834505502100
+--- !u!114 &5621226428196774722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8598449296201679381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb545e293d1d491fba748bf48fb6635, type: 3}
+  m_Script: {fileID: 11500000, guid: ef2a574a94a5f46a79d3492f50f533a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:

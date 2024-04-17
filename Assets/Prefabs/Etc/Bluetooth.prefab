@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6033091111002772191}
-  - component: {fileID: 1849822454258906372}
+  - component: {fileID: 2917188617737593408}
   - component: {fileID: 3910024971056229123}
   m_Layer: 7
   m_Name: Bluetooth
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 5854598372154073508}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1849822454258906372
+--- !u!114 &2917188617737593408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2059177815894319201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb545e293d1d491fba748bf48fb6635, type: 3}
+  m_Script: {fileID: 11500000, guid: ef2a574a94a5f46a79d3492f50f533a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:

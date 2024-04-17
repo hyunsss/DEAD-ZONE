@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour
     public Color defaultColor = new Color(132f / 255f, 162f / 255f, 198f / 255f, 125f / 255f);
     public Color focusColor = new Color(226f / 255f, 226f / 255f, 226f / 255f, 125f / 255f);
 
+    [Space()]
+    [Header("Player Status Panel")]
+    
+
     [Space]
     [Header("상호작용 패널")]
     public RectTransform interactionParent;
