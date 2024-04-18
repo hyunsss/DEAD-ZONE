@@ -49,6 +49,7 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
             {
                 equipmentCell.EquipItem(equipmentCell.equiptype, this);
                 ItemManager.Instance.MoveToInventory(equipmentCell, this, out bool isInInventory);
+                PlayerManager.status.WeightCalculation();
                 return;
             }
         }
@@ -59,7 +60,11 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
             {
                 ItemManager.Instance.MoveToInventoryFindCell(itemCell.grid, this, out bool Finish);
 
-                if (Finish == true) return;
+                if (Finish == true)
+                {
+                    PlayerManager.status.WeightCalculation();
+                    return;
+                }
             }
         }
     }

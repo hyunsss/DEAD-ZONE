@@ -47,7 +47,6 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 if (component.myItem is Ammo ammo && slotcurrentItem is Magazine magazine && ammo.ammoType == magazine.ammoType && magazine.Durability != magazine.MaxDurability)
                 {
                     magazine.IsInteract = true;
-                    Debug.Log(UIManager.Instance.MagInsertCoroutine);
                     if (UIManager.Instance.MagInsertCoroutine == null)
                     {
                         UIManager.Instance.MagInsertCoroutine = StartCoroutine(magazine.InsertAmmo(component.myItem as Ammo));

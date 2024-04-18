@@ -60,13 +60,16 @@ MonoBehaviour:
   inventorySprite: {fileID: 21300000, guid: 7b1279d88262c5a45afcbc7467882787, type: 3}
   cellwidth: 1
   cellheight: 1
-  item_name: 
-  item_desc: 
-  prize: 0
-  isSearchable: 0
+  item_name: "\uC0AC\uACFC"
+  item_desc: "\uC0AC\uACFC"
+  prize: 6000
+  item_weight: 0.2
+  isSearchable: 1
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
+  durability: 10
+  maxDurability: 10
 --- !u!54 &6926845549721307992
 Rigidbody:
   m_ObjectHideFlags: 0

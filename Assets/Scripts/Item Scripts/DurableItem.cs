@@ -10,8 +10,6 @@ public class DurableItem : MonoBehaviour
     public GameObject text_Prefab;
 
     public Item currentItem;
-    private int item_Duration;
-    private int item_MaxDuration;
     public int ItemDuration
     {
         get
@@ -58,18 +56,13 @@ public class DurableItem : MonoBehaviour
 
     public void Start()
     {
-        if(count_Text == null) {
+        if (count_Text == null)
+        {
             text_Prefab = UIManager.Instance.itemtext_prefab.gameObject;
             count_Text = LeanPool.Spawn(text_Prefab, transform).GetComponent<TextMeshProUGUI>();
             count_Text.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
             UpdateCountText();
         }
-    }
-
-    public void Init()
-    {
-        item_MaxDuration = currentItem.GetComponent<IDurable>().MaxDurability;
-        item_Duration = currentItem.GetComponent<IDurable>().Durability;
     }
 
     private void Update()
@@ -85,7 +78,7 @@ public class DurableItem : MonoBehaviour
             // item_MaxDuration = currentItem.GetComponent<IDurable>().MaxDurability;
             UpdateCountText();
 
-            if (item_Duration <= 0 && currentItem.TryGetComponent(out Magazine magazine) == false)
+            if (ItemDuration <= 0 && currentItem.TryGetComponent(out Magazine magazine) == false)
             {
                 ObjectDestroy();
             }

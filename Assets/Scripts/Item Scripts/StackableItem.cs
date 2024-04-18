@@ -66,11 +66,6 @@ public class StackableItem : MonoBehaviour
         UpdateCountText();
     }
 
-    public void Init()
-    {
-        ItemCount = currentItem.GetComponent<IStackable>().Count;
-    }
-
     private void Update()
     {
         if (currentItem == null && TryGetComponent(out UIElementClickHandler component))

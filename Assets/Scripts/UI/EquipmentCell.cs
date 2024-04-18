@@ -104,6 +104,8 @@ public class EquipmentCell : Cell
         GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         LeanPool.Despawn(transform.GetChild(0).gameObject);
         LeanPool.Despawn(transform.GetChild(0).gameObject);
+
+        PlayerManager.status.WeightCalculation();
     }
 
     // Update is called once per frame
