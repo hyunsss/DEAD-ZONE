@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5206063030496058832}
   - component: {fileID: 4689895742468280878}
   m_Layer: 7
-  m_Name: Magazine10
+  m_Name: Vector_Mag
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

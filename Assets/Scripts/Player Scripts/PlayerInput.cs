@@ -120,7 +120,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnInteraction(InputValue value)
     {
-        if (isInteraction == true)
+        if (isInteraction == true && interactable != null)
         {
             interactable.Interact();
             interactable = null;

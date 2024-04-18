@@ -203,8 +203,10 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             if (parentAfterCell is EquipmentCell equipment)
             {
                 equipment.EquipItem(equipment.equiptype, myItem);
+            } else {
+                InsertCellItem(parentAfterCell);
             }
-            InsertCellItem(parentAfterCell);
+
             CompleteMoveCell(parentAfterCell);
             EndDropReset();
         }
@@ -300,6 +302,7 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
             itemCells.Clear();
         }
 
+        PlayerManager.status.WeightCalculation();
     }
 
     public void CompleteMoveCell(Cell parentCell)
@@ -312,6 +315,8 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
         parentCell.slotcurrentItem = myItem;
         image.raycastTarget = true;
         isItemDrop = false;
+
+        PlayerManager.status.WeightCalculation();
     }
 
 

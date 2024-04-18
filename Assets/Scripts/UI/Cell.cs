@@ -102,7 +102,8 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         GetComponentInChildren<UIElementClickHandler>().myBackground = null;
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
-
+        
+        PlayerManager.status.WeightCalculation();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

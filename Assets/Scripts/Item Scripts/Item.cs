@@ -22,6 +22,7 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
     public string item_name;
     public string item_desc;
     public int prize;
+    public float item_weight;
 
     public bool isSearchable;
 

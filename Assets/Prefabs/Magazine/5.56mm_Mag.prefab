@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1920554450384576391}
   - component: {fileID: 1573425175094088573}
   m_Layer: 7
-  m_Name: Magazine2
+  m_Name: 5.56mm_Mag
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

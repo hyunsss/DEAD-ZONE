@@ -42,12 +42,30 @@ public class ItemManager : MonoBehaviour
     public GameObject ItemImage;
     public GameObject ItemBackgroundImage;
 
+    public List<Dictionary<string, object>> ItemCSVfile;
+
     // public List<RootingBox> rootingBoxes = new List<RootingBox>();
 
     private void Awake()
     {
         Instance = this;
         SetItemDictionary();
+        ItemCSVfile = CSVReader.Read("TarkovPreject");
+        ItemStringInit();
+    }
+
+    void ItemStringInit() {
+        foreach(var item in ItemList) {
+            foreach(var data in ItemCSVfile) {
+                if(data["Prefab_name"].ToString() == item.gameObject.name) {
+                    item.item_name = data["Name"].ToString();
+                    item.item_desc = data["Desc"].ToString();
+                    item.prize = (int)data["Prize"];
+                    float.TryParse(data["Weight"].ToString(), out item.item_weight);
+                    break;
+                }
+            }
+        }
     }
 
     public void SetItemDictionary()

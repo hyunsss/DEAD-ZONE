@@ -104,6 +104,12 @@ public class PlayerStatus : MonoBehaviour
 
     void Update() {
         StatChangeOverTime(true);
+
+        // Weight = 
+    }
+
+    public void WeightCalculation() {
+        Weight = UIManager.Instance.GetInventoryWeight();
     }
 
     public void StatChangeOverTime(bool inGame)
