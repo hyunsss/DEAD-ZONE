@@ -12,9 +12,6 @@ public class PlayerInput : MonoBehaviour
     PlayerAttack playerAttack;
 
     public InputActionAsset inputActions;
-    private InputActionMap uiActionMap;
-    private InputActionMap playerActionMap;
-
     private bool isOnShift_UI;
 
     Plane plane;
@@ -34,8 +31,6 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
-        uiActionMap = inputActions.FindActionMap("UI");
-        playerActionMap = inputActions.FindActionMap("Player");
 
     }
 
@@ -156,7 +151,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnWeapon1(InputValue value)
     {
-        if (playerEquipManagment.Weapons[0] != null)
+        if (PlayerManager.equip.Weapons[0] != null)
         {
             AssignmentWeapon(0);
         }
@@ -165,7 +160,7 @@ public class PlayerInput : MonoBehaviour
 
     public void OnWeapon2(InputValue value)
     {
-        if (playerEquipManagment.Weapons[1] != null)
+        if (PlayerManager.equip.Weapons[1] != null)
         {
             AssignmentWeapon(1);
         }
@@ -173,8 +168,8 @@ public class PlayerInput : MonoBehaviour
 
     public void AssignmentWeapon(int index)
     {
-        playerEquipManagment.currentindex = index;
-        playerAttack.CurrentWeapon = playerEquipManagment.Weapons[index];
+        PlayerManager.equip.currentindex = index;
+        playerAttack.CurrentWeapon = PlayerManager.equip.Weapons[index];
 
     }
 
@@ -188,7 +183,7 @@ public class PlayerInput : MonoBehaviour
                 {
                     //장착 아이템을 해제하는 로직
                     //해당 슬롯의 장비 유형에 따라 아이템을 해체하는 로직을 수행합니다.
-                    playerEquipManagment.RemoveItemofCelltype(equipmentcell.equiptype);
+                    PlayerManager.equip.RemoveItemofCelltype(equipmentcell.equiptype);
                     equipmentcell.RemoveItem();
                 }
             }

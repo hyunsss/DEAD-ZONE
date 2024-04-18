@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     [Space()]
     [Header("Player Status Panel")]
-    
+    public Transform StatusPanel;
 
     [Space]
     [Header("상호작용 패널")]
