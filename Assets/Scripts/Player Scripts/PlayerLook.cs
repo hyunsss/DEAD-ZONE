@@ -8,27 +8,90 @@ public class PlayerLook : MonoBehaviour
 {
     public CinemachineVirtualCamera cam;
     private float xRotation = 0f;
-
+    
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
 
+    [SerializeField] private Vector3 zoomPos;
+    [SerializeField] private Vector3 leftTiltPos;
+    [SerializeField] private Vector3 rightTiltPos;
+
+    private bool isZoom;
+    private bool leftTilt;
+    private bool rightTilt;
+
     Vector2 inputValue;
+
+    private Vector3 delta_camPos;
+
+    public bool IsZoom {
+        get => isZoom;
+        set {
+            if (isZoom != value) {
+                isZoom = value;
+            
+                delta_camPos = isZoom == true ? delta_camPos + zoomPos : delta_camPos - zoomPos;
+            }
+        }
+    }
+
+    public bool LeftTilt {
+        get => leftTilt;
+        set {
+            if (leftTilt != value) {
+                leftTilt = value;
+                
+                delta_camPos = leftTilt == true ? delta_camPos + leftTiltPos : delta_camPos - leftTiltPos;
+            }
+        }
+    }
+
+    public bool RightTilt {
+        get => rightTilt;
+        set {
+            if (rightTilt != value) {
+                rightTilt = value;
+                
+                delta_camPos = rightTilt == true ? delta_camPos + rightTiltPos : delta_camPos - rightTiltPos;
+            }
+        }
+    }
+
+    IEnumerator SmoothMove(Vector3 positionDelta)
+    {
+        Vector3 startingPos = cam.transform.localPosition;
+        Vector3 targetPos = cam.transform.localPosition + positionDelta;
+        float elapsedTime = 0;
+        float duration = 0.1f; // 이동에 걸리는 시간, 초 단위
+
+        while (elapsedTime < duration)
+        {
+            cam.transform.localPosition = Vector3.Lerp(startingPos, targetPos, (elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        cam.transform.localPosition = targetPos;
+    }
     
     private void Awake() {
         cam = GetComponentInChildren<CinemachineVirtualCamera>();
+        delta_camPos = cam.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
         ProcessLook(inputValue);
+
+        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, delta_camPos, 0.1f);
     }
 
     public void ProcessLook(Vector2 input) {
         float mouseX = input.x;
         float mouseY = input.y;
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+        xRotation = Mathf.Clamp(xRotation, -60f, 60f);
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
@@ -37,4 +100,6 @@ public class PlayerLook : MonoBehaviour
     void OnLookAt(InputValue value) {
         inputValue = value.Get<Vector2>();
     }
+
+    
 }

@@ -70,6 +70,9 @@ MonoBehaviour:
   rigid: {fileID: 0}
   durability: 10
   maxDurability: 10
+  delay: 4
+  energy: 20
+  moisture: 20
 --- !u!54 &6926845549721307992
 Rigidbody:
   m_ObjectHideFlags: 0

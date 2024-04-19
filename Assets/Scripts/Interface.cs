@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IUseable {
-    public void Use();
+    public float Delay { get; }
+    public void Use(float value);
+    public void ShowSetUsageValuePanel();
+
 }
 
 public interface IInteractable {

@@ -41,6 +41,15 @@ public class UIManager : MonoBehaviour
     public LoadingUI loadingUI_prefab;
     public List<LoadingUI> loadingUI_list = new List<LoadingUI>();
 
+    public TimeDelay timeDelay_prefab;
+    public TimeDelay current_timeDelay;
+
+    [Space]
+    [Header("아이템 사용 내구도 세팅 패널")]
+    public UsageValueSettingPanel usageValueSetting_prefab;
+    public UsageValueSettingPanel current_usageValueSetting;
+
+
     [Space]
     [Header("Magazine Coroutine")]
     [HideInInspector] public Coroutine MagInsertCoroutine;
@@ -192,6 +201,10 @@ public class UIManager : MonoBehaviour
                 loadingUI.Destroy();
             }
             loadingUI_list.Clear();
+
+            if(current_usageValueSetting != null) {
+                current_usageValueSetting.CancelButtonClick();
+            }
 
         } else {
             TryDespawnInteractPanel();

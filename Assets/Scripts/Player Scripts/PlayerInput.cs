@@ -260,6 +260,20 @@ public class PlayerInput : MonoBehaviour
 
     }
 
+    public void OnRightClick(InputValue value)
+    {
+        if (UIManager.Instance.handler_focus != null && UIManager.Instance.handler_focus.TryGetComponent(out Cell cell))
+        {
+            Item currentItem = cell.slotcurrentItem;
+
+            if (currentItem.TryGetComponent(out IUseable useable))
+            {
+                useable.ShowSetUsageValuePanel();
+            }
+
+        }
+    }
+
     public void DoubleClick()
     {
         if (UIManager.Instance.handler_focus != null &&
@@ -295,4 +309,76 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    private bool isTiltingLeft = false;
+    private bool isTiltingRight = false;
+    public void OnLeftTilt(InputValue value)
+    {
+        bool isPressed = value.Get<float>() == 1 ? true : false;
+        isTiltingLeft = isPressed;
+
+        if (!isTiltingRight) // 오른쪽으로 기울고 있지 않을 때만 처리
+        {
+            StartTiltingLeft();
+        }
+
+        if(isTiltingLeft == false) {
+            StopTiltingLeft();
+            if (isTiltingRight) // Q를 놓을 때 E가 눌려있으면 오른쪽 기울기 적용
+            {
+                StartTiltingRight();
+            }
+        }
+    }
+    public void OnRightTilt(InputValue value)
+    {
+        bool isPressed = value.Get<float>() == 1 ? true : false;
+        isTiltingRight = isPressed;
+
+        if (!isTiltingLeft) // 오른쪽으로 기울고 있지 않을 때만 처리
+        {
+            StartTiltingRight();
+        }
+
+        if(isTiltingRight == false) {
+            StopTiltingRight();
+            if (isTiltingLeft) // Q를 놓을 때 E가 눌려있으면 오른쪽 기울기 적용
+            {
+                StartTiltingLeft();
+            }
+        }
+
+    }
+    public void OnZoom(InputValue value)
+    {
+        bool isPressed = value.Get<float>() == 1 ? true : false;
+        PlayerManager.look.IsZoom = isPressed;
+    }
+
+    void StartTiltingLeft()
+    {
+        PlayerManager.look.LeftTilt = true;
+        // 여기에 왼쪽으로 기울기 시작하는 로직 추가
+        Debug.Log("Tilting Left");
+    }
+
+    void StopTiltingLeft()
+    {
+        PlayerManager.look.LeftTilt = false;
+        // 여기에 왼쪽 기울기 중지하는 로직 추가
+        Debug.Log("Stop Tilting Left");
+    }
+
+    void StartTiltingRight()
+    {
+        PlayerManager.look.RightTilt = true;
+        // 여기에 오른쪽으로 기울기 시작하는 로직 추가
+        Debug.Log("Tilting Right");
+    }
+
+    void StopTiltingRight()
+    {
+        PlayerManager.look.RightTilt = false;
+        // 여기에 오른쪽 기울기 중지하는 로직 추가
+        Debug.Log("Stop Tilting Right");
+    }
 }

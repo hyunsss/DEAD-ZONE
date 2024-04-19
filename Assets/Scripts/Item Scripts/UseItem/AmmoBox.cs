@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class AmmoBox : Item, IUseable
 {
-    public void Use()
+    public float Delay { get => 0;}
+
+    public void ShowSetUsageValuePanel()
+    {
+
+    }
+
+    public void Use(float value)
     {
         //총알을 지급하는 함수
 

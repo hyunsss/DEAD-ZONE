@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18169281, g: 0.22735152, b: 0.30741936, a: 1}
+  m_IndirectSpecularColor: {r: 0.18169259, g: 0.22735094, b: 0.30741817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1883,9 +1883,9 @@ RectTransform:
   - {fileID: 1770472189}
   m_Father: {fileID: 1786968099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130, y: -60}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &490498352
@@ -2454,9 +2454,9 @@ RectTransform:
   - {fileID: 63023808}
   m_Father: {fileID: 1786968099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130, y: -440}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &622580622
@@ -3083,9 +3083,9 @@ RectTransform:
   - {fileID: 5680445728449457391}
   m_Father: {fileID: 1786968099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 220, y: -290}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 360, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &681377547
@@ -5671,8 +5671,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 3
-  walkSpeed: 7
-  runSpeed: 10
 --- !u!114 &802177624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5688,6 +5686,9 @@ MonoBehaviour:
   cam: {fileID: 1006808136}
   xSensitivity: 30
   ySensitivity: 30
+  zoomPos: {x: 0, y: -0.2, z: 0.78}
+  leftTiltPos: {x: -1, y: 0, z: 0}
+  rightTiltPos: {x: 0.3, y: 0, z: 0}
 --- !u!114 &802177625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5794,6 +5795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a15fa30f97c34a1897d200d3c95dc97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxWeight: 80
   text_Weight: {fileID: 0}
   text_HP: {fileID: 0}
   text_Moisture: {fileID: 0}
@@ -7034,8 +7036,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 20
-    m_Right: 20
+    m_Left: 15
+    m_Right: 15
     m_Top: 25
     m_Bottom: 25
   m_ChildAlignment: 0
@@ -9105,7 +9107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1360371357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10119,8 +10121,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 0}
-  m_SizeDelta: {x: 70, y: 100}
+  m_AnchoredPosition: {x: 6.5, y: 0}
+  m_SizeDelta: {x: 70, y: 54.45}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1547014253
 MonoBehaviour:
@@ -10579,9 +10581,9 @@ RectTransform:
   - {fileID: 1878697690}
   m_Father: {fileID: 1786968099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -670}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1577892132
@@ -20464,6 +20466,12 @@ MonoBehaviour:
   loadingUI_prefab: {fileID: 5113186715936246878, guid: 7bcdb9ea08407714fbc210b892ef1200,
     type: 3}
   loadingUI_list: []
+  timeDelay_prefab: {fileID: 5219971346515590921, guid: 64894a390a44f4b989f69f1c70c0bc2f,
+    type: 3}
+  current_timeDelay: {fileID: 0}
+  usageValueSetting_prefab: {fileID: 6232471041033539161, guid: 61aa60052cc3a42cfa9ec9c18af06a67,
+    type: 3}
+  current_usageValueSetting: {fileID: 0}
   AllCells: []
   current_MoveItem: {fileID: 0}
   cell: {fileID: -5813776784782365721, guid: 9142e1737815e48ab98497e0cf2e9364, type: 3}
