@@ -57,23 +57,6 @@ public class PlayerLook : MonoBehaviour
         }
     }
 
-    IEnumerator SmoothMove(Vector3 positionDelta)
-    {
-        Vector3 startingPos = cam.transform.localPosition;
-        Vector3 targetPos = cam.transform.localPosition + positionDelta;
-        float elapsedTime = 0;
-        float duration = 0.1f; // 이동에 걸리는 시간, 초 단위
-
-        while (elapsedTime < duration)
-        {
-            cam.transform.localPosition = Vector3.Lerp(startingPos, targetPos, (elapsedTime / duration));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        cam.transform.localPosition = targetPos;
-    }
-    
     private void Awake() {
         cam = GetComponentInChildren<CinemachineVirtualCamera>();
         delta_camPos = cam.transform.localPosition;
@@ -92,7 +75,15 @@ public class PlayerLook : MonoBehaviour
         float mouseY = input.y;
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
         xRotation = Mathf.Clamp(xRotation, -60f, 60f);
-        cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+
+        Quaternion currentRotation = cam.transform.localRotation;
+
+        // 현재 회전에서 y축과 z축의 값을 추출합니다.
+        Vector3 currentEuler = currentRotation.eulerAngles;
+        float yRotation = currentEuler.y;
+        float zRotation = currentEuler.z;
+
+        cam.transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
     }

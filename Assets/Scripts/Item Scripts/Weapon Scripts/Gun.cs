@@ -34,6 +34,11 @@ public class Gun : Weapon
 
     [Header("MagazineTransform")]
     public Transform magazine_Trans;
+
+
+    public Coroutine recoil_coroutine;
+    private Vector3 recoil_rotation;
+
     protected override void Awake()
     {
         base.Awake();
@@ -53,6 +58,9 @@ public class Gun : Weapon
             ammo.rigid.velocity = shotPoint.forward * ammo.bulletSpeed;
 
             LeanPool.Despawn(ammo, 3f);
+
+            if(recoil_coroutine != null) StopCoroutine(recoil_coroutine);
+            recoil_coroutine = StartCoroutine(Recoil());
         }
     }
 
@@ -202,6 +210,37 @@ public class Gun : Weapon
         UIElementClickHandler returnValue = FindAmmo(gunType);
         Debug.Log(returnValue);
         return returnValue != null ? true : false;
+    }
+
+    IEnumerator Recoil() {
+        float x = Random.Range(-0.2f, 0);
+        float z = Random.Range(-0.2f, 0.2f);
+        recoil_rotation += new Vector3(x, 0, z);
+        Vector3 originalRotation = PlayerManager.look.cam.transform.localEulerAngles;
+        originalRotation.z = 0f;
+        
+
+        float recoilTime = 0.1f;
+        float time = 0;
+
+        while (time < recoilTime)
+        {
+            // 시간에 따라 카메라 회전을 부드럽게 적용
+            PlayerManager.look.cam.transform.localRotation = Quaternion.Lerp(PlayerManager.look.cam.transform.localRotation, Quaternion.Euler(originalRotation + recoil_rotation), time / recoilTime);
+            time += Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        time = 0;
+        while (time < recoilTime)
+        {
+            PlayerManager.look.cam.transform.localRotation = Quaternion.Lerp(PlayerManager.look.cam.transform.localRotation, Quaternion.Euler(originalRotation), time / recoilTime);
+            time += Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        PlayerManager.look.cam.transform.localRotation = Quaternion.Euler(originalRotation);
+        recoil_rotation = Vector3.zero;
     }
 
 }

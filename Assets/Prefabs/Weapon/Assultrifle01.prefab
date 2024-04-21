@@ -399,6 +399,9 @@ MonoBehaviour:
     - Name: coroutine
       Entry: 6
       Data: 
+    - Name: recoil_coroutine
+      Entry: 6
+      Data: 
   item_Key: 8
   item_Type: 0
   inventorySprite: {fileID: 21300000, guid: 52553bcc9d90c47e1a6c8ad4bc9d1d49, type: 3}
@@ -407,6 +410,7 @@ MonoBehaviour:
   item_name: 
   item_desc: 
   prize: 0
+  item_weight: 0
   isSearchable: 0
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
@@ -476,9 +480,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6437874601705627607}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4733008, y: 0.19789252, z: 0.8018466, w: 0.30637696}
-  m_LocalPosition: {x: -0.045, y: 0.043, z: 0.203}
-  m_LocalScale: {x: 0.09999999, y: 0.09999996, z: 0.09999994}
+  m_LocalRotation: {x: -0.47330084, y: 0.19789253, z: 0.8018467, w: 0.306377}
+  m_LocalPosition: {x: -0.045, y: 0.043, z: 0.20300001}
+  m_LocalScale: {x: 0.09999996, y: 0.09999993, z: 0.09999992}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6206299563896842157}
@@ -536,6 +540,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8664646531044956642, guid: 93125056cafb54d16be36d4fcc2d44a3,
+        type: 3}
+      propertyPath: thisAmmo
+      value: 
+      objectReference: {fileID: 2349427764638066437, guid: 1dc3c02e814d94c74a2e740adf0ca3f6,
+        type: 3}
+    - target: {fileID: 8664646531044956642, guid: 93125056cafb54d16be36d4fcc2d44a3,
+        type: 3}
+      propertyPath: currentAmmoCount
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 8664646531044956642, guid: 93125056cafb54d16be36d4fcc2d44a3,
         type: 3}
