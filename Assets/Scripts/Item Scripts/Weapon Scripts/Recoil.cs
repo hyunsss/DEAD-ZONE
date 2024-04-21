@@ -18,7 +18,7 @@ public class Recoil : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -26,10 +26,11 @@ public class Recoil : MonoBehaviour
     {
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, retrunSpeed * Time.deltaTime);
         currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
-        transform.localRotation = Quaternion.Euler(currentRotation);    
+        transform.localRotation = Quaternion.Euler(currentRotation);
     }
 
-    public void RecoilFire() {
-        targetRotation += new Vector3(Random.Range(-recoilX, recoilX), Random.Range(-recoilY, recoilY), Random.Range(-recoilZ,recoilZ));
+    public void RecoilFire()
+    {
+        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 }
