@@ -6,13 +6,13 @@ public class Recoil : MonoBehaviour
 {
 
     private Vector3 currentRotation;
-    private Vector3 targetRotation;
+    [HideInInspector] public Vector3 targetRotation;
 
     [SerializeField] private float recoilX;
     [SerializeField] private float recoilY;
     [SerializeField] private float recoilZ;
 
-    [SerializeField] private float snappiness;
+    [HideInInspector] public float snappiness;
     [SerializeField] private float retrunSpeed;
 
     // Start is called before the first frame update
@@ -25,8 +25,8 @@ public class Recoil : MonoBehaviour
     void Update()
     {
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, retrunSpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
-        transform.localRotation = Quaternion.Euler(currentRotation);
+        // currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
+        // transform.localRotation = Quaternion.Euler(currentRotation);
     }
 
     public void RecoilFire()

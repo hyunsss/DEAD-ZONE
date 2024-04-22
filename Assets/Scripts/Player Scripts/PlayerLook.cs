@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -8,13 +9,11 @@ public class PlayerLook : MonoBehaviour
 {
     public CinemachineVirtualCamera cam;
     private float xRotation = 0f;
-    
+    public Transform followTarget;
+
     public float xSensitivity = 30f;
     public float ySensitivity = 30f;
 
-    [SerializeField] private Vector3 zoomPos;
-    [SerializeField] private Vector3 leftTiltPos;
-    [SerializeField] private Vector3 rightTiltPos;
 
     private bool isZoom;
     private bool leftTilt;
@@ -22,44 +21,67 @@ public class PlayerLook : MonoBehaviour
 
     Vector2 inputValue;
 
-    private Vector3 delta_camPos;
+    Cinemachine3rdPersonFollow _3rdParam_base;
 
-    public bool IsZoom {
+    [SerializeField] private float leftTilt_X;
+    [SerializeField] private float rightTilt_X;
+
+    private float zoomDistance;
+    private float delta_tilt_X;
+
+    Vector3 recoilRotation;
+    Recoil cam_Recoil;
+
+
+    public bool IsZoom
+    {
         get => isZoom;
-        set {
-            if (isZoom != value) {
+        set
+        {
+            if (isZoom != value)
+            {
                 isZoom = value;
-            
-                delta_camPos = isZoom == true ? delta_camPos + zoomPos : delta_camPos - zoomPos;
+
+                zoomDistance = isZoom == true ? 1 : 2;
+
             }
         }
     }
 
-    public bool LeftTilt {
+    public bool LeftTilt
+    {
         get => leftTilt;
-        set {
-            if (leftTilt != value) {
+        set
+        {
+            if (leftTilt != value)
+            {
                 leftTilt = value;
-                
-                delta_camPos = leftTilt == true ? delta_camPos + leftTiltPos : delta_camPos - leftTiltPos;
+
+                delta_tilt_X = leftTilt == true ? delta_tilt_X - leftTilt_X : delta_tilt_X + leftTilt_X;
             }
         }
     }
 
-    public bool RightTilt {
+    public bool RightTilt
+    {
         get => rightTilt;
-        set {
-            if (rightTilt != value) {
+        set
+        {
+            if (rightTilt != value)
+            {
                 rightTilt = value;
-                
-                delta_camPos = rightTilt == true ? delta_camPos + rightTiltPos : delta_camPos - rightTiltPos;
+
+                delta_tilt_X = rightTilt == true ? delta_tilt_X - rightTilt_X : delta_tilt_X + rightTilt_X;
             }
         }
     }
 
-    private void Awake() {
-        cam = GetComponentInChildren<CinemachineVirtualCamera>();
-        delta_camPos = cam.transform.localPosition;
+    private void Awake()
+    {
+        _3rdParam_base = cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        cam_Recoil = cam.transform.GetComponent<Recoil>();
+        delta_tilt_X = _3rdParam_base.ShoulderOffset.x;
+        zoomDistance = 2f;
     }
 
     // Update is called once per frame
@@ -67,30 +89,35 @@ public class PlayerLook : MonoBehaviour
     {
         ProcessLook(inputValue);
 
-        cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, delta_camPos, 0.1f);
+        _3rdParam_base.CameraDistance = Mathf.Lerp(_3rdParam_base.CameraDistance, zoomDistance, 0.1f);
+        _3rdParam_base.ShoulderOffset.x = Mathf.Lerp(_3rdParam_base.ShoulderOffset.x, delta_tilt_X, 0.1f);
     }
 
-    public void ProcessLook(Vector2 input) {
+    public void ProcessLook(Vector2 input)
+    {
+        
         float mouseX = input.x;
         float mouseY = input.y;
         xRotation -= (mouseY * Time.deltaTime) * ySensitivity;
         xRotation = Mathf.Clamp(xRotation, -60f, 60f);
 
-        Quaternion currentRotation = cam.transform.localRotation;
 
-        // 현재 회전에서 y축과 z축의 값을 추출합니다.
-        Vector3 currentEuler = currentRotation.eulerAngles;
-        float yRotation = currentEuler.y;
-        float zRotation = currentEuler.z;
+        //반동이 있다면 recoilrotation에 적용
+        recoilRotation = Vector3.Slerp(recoilRotation, cam_Recoil.targetRotation, cam_Recoil.snappiness * Time.deltaTime);
+        // currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
+        // transform.localRotation = Quaternion.Euler(currentRotation);
 
-        cam.transform.localRotation = Quaternion.Euler(xRotation, yRotation, zRotation);
+        Quaternion newRotation = Quaternion.Euler(new Vector3(xRotation, 0, 0) + recoilRotation); // y축은 캐릭터의 회전
+        followTarget.transform.localRotation = newRotation; // 카메라 로컬 회전 적용
 
-        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
+        transform.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity); // 캐릭터의 y축 회전
+        followTarget.Rotate(Vector3.up * (mouseX * Time.deltaTime) * xSensitivity);
     }
 
-    void OnLookAt(InputValue value) {
+    void OnLookAt(InputValue value)
+    {
         inputValue = value.Get<Vector2>();
     }
 
-    
+
 }
