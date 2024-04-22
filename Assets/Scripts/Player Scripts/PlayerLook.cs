@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +29,8 @@ public class PlayerLook : MonoBehaviour
 
     private float zoomDistance;
     private float delta_tilt_X;
+
+    public GameObject sphere;
 
     Vector3 recoilRotation;
     Recoil cam_Recoil;
@@ -91,6 +94,19 @@ public class PlayerLook : MonoBehaviour
 
         _3rdParam_base.CameraDistance = Mathf.Lerp(_3rdParam_base.CameraDistance, zoomDistance, 0.1f);
         _3rdParam_base.ShoulderOffset.x = Mathf.Lerp(_3rdParam_base.ShoulderOffset.x, delta_tilt_X, 0.1f);
+
+
+    }
+
+    private void FixedUpdate() {
+        //화면 정중앙에 레이 발사
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+
+        RaycastHit hit;
+
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+            sphere.transform.position = hit.point;   
+        }
     }
 
     public void ProcessLook(Vector2 input)
