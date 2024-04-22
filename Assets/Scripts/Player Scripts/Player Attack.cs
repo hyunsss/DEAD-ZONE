@@ -15,6 +15,8 @@ public class PlayerAttack : MonoBehaviour
 
     public Transform default_Trans;
 
+    bool isChangeWeapon;
+
     public Weapon CurrentWeapon
     {
         get { return currentWeapon; }
@@ -31,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
             {
                 animator.SetLayerWeight(1, 0);
             }
+
+            isChangeWeapon = true;
         }
     }
 
@@ -42,13 +46,17 @@ public class PlayerAttack : MonoBehaviour
         subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
     }
 
-    private void Update() {
-        if(currentWeapon != null) {
-            subHandIK.data.target.position = currentWeapon.subHandIK_target.position;
-            subHandIK.data.target.rotation = currentWeapon.subHandIK_target.rotation;
-        } else {
-            subHandIK.data.target.position = default_Trans.position;
-            subHandIK.data.target.rotation = default_Trans.rotation;
+    private void FixedUpdate() {
+        if(isChangeWeapon == true) {
+            if(currentWeapon != null) {
+                subHandIK.data.target.position = currentWeapon.subHandIK_target.position;
+                subHandIK.data.target.rotation = currentWeapon.subHandIK_target.rotation;
+            } else {
+                subHandIK.data.target.position = default_Trans.position;
+                subHandIK.data.target.rotation = default_Trans.rotation;
+            }
+
+            isChangeWeapon = false;
         }
     }
 

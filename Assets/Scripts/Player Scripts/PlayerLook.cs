@@ -30,7 +30,7 @@ public class PlayerLook : MonoBehaviour
     private float zoomDistance;
     private float delta_tilt_X;
 
-    public GameObject sphere;
+    public GameObject zoomTarget;
 
     Vector3 recoilRotation;
     Recoil cam_Recoil;
@@ -104,9 +104,10 @@ public class PlayerLook : MonoBehaviour
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity)) {
-            sphere.transform.position = hit.point;   
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3))) {
+            zoomTarget.transform.position = hit.point;   
         }
+
     }
 
     public void ProcessLook(Vector2 input)

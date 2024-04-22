@@ -75,8 +75,6 @@ public class PlayerMove : MonoBehaviour
         if (moveDir.y > 0 && isRun == true) SetPlayerWalkAnimation(0, 2);
         else { SetPlayerWalkAnimation(moveDir.x, moveDir.y); }
 
-
-
     }
 
     void OnMove(InputValue value)
@@ -120,6 +118,17 @@ public class PlayerMove : MonoBehaviour
     void OnRun(InputValue value)
     {
         isRun = value.isPressed;
+    }
+
+    void OnCrouch(InputValue value) {
+        if(animator.GetBool("isCrouch") == true) {
+            animator.SetLayerWeight(1, 1);
+            animator.SetLayerWeight(2, 0);
+        } 
+        if(animator.GetBool("isCrouch") == false){
+            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(2, 1);
+        }
     }
 
     void RunState()
