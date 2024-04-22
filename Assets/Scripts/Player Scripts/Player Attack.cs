@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
             if (currentWeapon != null)
             {
                 playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon);
-                
+
                 animator.SetLayerWeight(1, 1);
             }
             else
@@ -46,18 +46,20 @@ public class PlayerAttack : MonoBehaviour
         subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
     }
 
-    private void FixedUpdate() {
-        if(isChangeWeapon == true) {
-            if(currentWeapon != null) {
-                subHandIK.data.target.position = currentWeapon.subHandIK_target.position;
-                subHandIK.data.target.rotation = currentWeapon.subHandIK_target.rotation;
-            } else {
-                subHandIK.data.target.position = default_Trans.position;
-                subHandIK.data.target.rotation = default_Trans.rotation;
-            }
+    private void FixedUpdate()
+    {
 
-            isChangeWeapon = false;
+        if (currentWeapon != null)
+        {
+            subHandIK.enabled = true;
+            subHandIK.data.target.position = currentWeapon.subHandIK_target.position;
+            subHandIK.data.target.rotation = currentWeapon.subHandIK_target.rotation;
         }
+        else
+        {
+            subHandIK.enabled = false;
+        }
+
     }
 
     void OnFire(InputValue value)

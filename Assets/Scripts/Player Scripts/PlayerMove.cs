@@ -17,14 +17,17 @@ public class PlayerMove : MonoBehaviour
     private float walkSpeed;
     private float runSpeed;
 
+    [HideInInspector] public bool isCrouch;
+
     public float WalkSpeed
     {
         get { return walkSpeed; }
         set
         {
             walkSpeed = value;
-            if(walkSpeed < 1) {
-                walkSpeed = 1; 
+            if (walkSpeed < 1)
+            {
+                walkSpeed = 1;
             }
         }
     }
@@ -35,7 +38,8 @@ public class PlayerMove : MonoBehaviour
         {
             runSpeed = value;
 
-            if(runSpeed < 3) {
+            if (runSpeed < 3)
+            {
                 runSpeed = 3;
             }
         }
@@ -48,6 +52,7 @@ public class PlayerMove : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        isCrouch = false;
         animator.SetLayerWeight(1, 0f);
         currentSpeed = walkSpeed;
         gravityValue = 1;
@@ -120,15 +125,32 @@ public class PlayerMove : MonoBehaviour
         isRun = value.isPressed;
     }
 
-    void OnCrouch(InputValue value) {
-        if(animator.GetBool("isCrouch") == true) {
-            animator.SetLayerWeight(1, 1);
-            animator.SetLayerWeight(2, 0);
-        } 
-        if(animator.GetBool("isCrouch") == false){
+    void OnCrouch(InputValue value)
+    {
+        if (isCrouch == true)
+        {
+            animator.SetTrigger("isStand");
+            isCrouch = false;
+        }
+        else
+        {
             animator.SetLayerWeight(1, 0);
             animator.SetLayerWeight(2, 1);
+            animator.SetTrigger("isCrouch");
+            isCrouch = true;
         }
+    }
+
+    public void IsStand()
+    {
+        animator.SetLayerWeight(1, 1);
+        animator.SetLayerWeight(2, 0);
+    }
+
+    public void IsCrouch()
+    {
+        animator.SetLayerWeight(1, 0);
+        animator.SetLayerWeight(2, 1);
     }
 
     void RunState()
