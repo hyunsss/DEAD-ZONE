@@ -22,7 +22,7 @@ public class PlayerLook : MonoBehaviour
 
     Vector2 inputValue;
 
-    Cinemachine3rdPersonFollow _3rdParam_base;
+    public Cinemachine3rdPersonFollow _3rdParam_base;
 
     [SerializeField] private float leftTilt_X;
     [SerializeField] private float rightTilt_X;
@@ -46,8 +46,9 @@ public class PlayerLook : MonoBehaviour
                 isZoom = value;
 
                 zoomDistance = isZoom == true ? 1 : 2;
-
+                PlayerManager.attack.gunHandIK.weight = isZoom == true ? 1 : 0.8f;
             }
+
         }
     }
 
@@ -94,8 +95,6 @@ public class PlayerLook : MonoBehaviour
 
         _3rdParam_base.CameraDistance = Mathf.Lerp(_3rdParam_base.CameraDistance, zoomDistance, 0.1f);
         _3rdParam_base.ShoulderOffset.x = Mathf.Lerp(_3rdParam_base.ShoulderOffset.x, delta_tilt_X, 0.1f);
-
-
     }
 
     private void FixedUpdate() {
@@ -104,7 +103,7 @@ public class PlayerLook : MonoBehaviour
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3))) {
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3 | 1 << 9))) {
             zoomTarget.transform.position = hit.point;   
         }
 

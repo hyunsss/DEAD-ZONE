@@ -81,9 +81,10 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
 
     }
 
-    public virtual void RemoveItem()
+    public virtual void DropItem()
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
+        ItemChangeLayer(slotcurrentItem, LayerMask.NameToLayer("Item"));
         DestoryChild();
     }
 
@@ -103,6 +104,15 @@ public class Cell : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         LeanPool.Despawn(Item_ParentCell.transform.GetChild(0).gameObject);
         
         PlayerManager.status.WeightCalculation();
+    }
+
+    protected void ItemChangeLayer(Item item, int layermask) {
+        Transform[] childs = item.gameObject.GetComponentsInChildren<Transform>();
+
+        foreach (Transform trans in childs)
+        {
+            trans.gameObject.layer = layermask;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

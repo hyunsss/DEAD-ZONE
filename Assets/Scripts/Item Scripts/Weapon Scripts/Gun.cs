@@ -149,7 +149,7 @@ public class Gun : Weapon
 
 
                     //교체 되는 총의 탄창
-                    itemHandler.parentAfterCell.RemoveItem();
+                    itemHandler.parentAfterCell.DropItem();
                     itemHandler.RemoveCellItem();
 
                     currentMagazine = itemHandler.myItem as Magazine;
@@ -165,7 +165,7 @@ public class Gun : Weapon
             currentMagazine.rigid.isKinematic = false;
             currentMagazine.meshCollider.enabled = true;
 
-            itemHandler.parentAfterCell.RemoveItem();
+            itemHandler.parentAfterCell.DropItem();
             itemHandler.RemoveCellItem();
 
             currentMagazine = itemHandler.myItem as Magazine;

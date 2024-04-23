@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -131,6 +132,8 @@ public class PlayerMove : MonoBehaviour
         {
             animator.SetTrigger("isStand");
             isCrouch = false;
+            SetCharacterController(new Vector3(0, 0.96f, 0), 1.85f);
+            StartCoroutine(SetShoulderOffset(1.7f));
         }
         else
         {
@@ -138,6 +141,8 @@ public class PlayerMove : MonoBehaviour
             animator.SetLayerWeight(2, 1);
             animator.SetTrigger("isCrouch");
             isCrouch = true;
+            SetCharacterController(new Vector3(0, 0.65f, 0), 1.22f);
+            StartCoroutine(SetShoulderOffset(1.3f));
         }
     }
 
@@ -151,6 +156,21 @@ public class PlayerMove : MonoBehaviour
     {
         animator.SetLayerWeight(1, 0);
         animator.SetLayerWeight(2, 1);
+    }
+
+    IEnumerator SetShoulderOffset(float value) {
+
+        while (Mathf.Abs(PlayerManager.look._3rdParam_base.ShoulderOffset.y - value) > 0.01f)
+        {
+            float lerpValue = Mathf.Lerp(PlayerManager.look._3rdParam_base.ShoulderOffset.y, value, 10f * Time.deltaTime);
+            PlayerManager.look._3rdParam_base.ShoulderOffset.y = lerpValue;
+            yield return null;
+        }
+    }
+
+    void SetCharacterController(Vector3 center, float height) {
+        characterController.height = height;
+        characterController.center = center;
     }
 
     void RunState()

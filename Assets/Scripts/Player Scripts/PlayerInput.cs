@@ -71,11 +71,11 @@ public class PlayerInput : MonoBehaviour
 
                         if (nearObject.transform.parent.TryGetComponent(out Item item))
                         {
-                            UIManager.Instance.current_interactionPanel.SetText(item.name, "줍기 E");
+                            UIManager.Instance.current_interactionPanel.SetText(item.name, "줍기 F");
                         }
                         else if (nearObject.transform.parent.TryGetComponent(out RootingBox rootingBox))
                         {
-                            UIManager.Instance.current_interactionPanel.SetText(rootingBox.name, "열기 E");
+                            UIManager.Instance.current_interactionPanel.SetText(rootingBox.name, "열기 F");
                         }
 
                         interactable = nearObject.GetComponentInParent<IInteractable>();
@@ -184,7 +184,7 @@ public class PlayerInput : MonoBehaviour
                     //장착 아이템을 해제하는 로직
                     //해당 슬롯의 장비 유형에 따라 아이템을 해체하는 로직을 수행합니다.
                     PlayerManager.equip.RemoveItemofCelltype(equipmentcell.equiptype);
-                    equipmentcell.RemoveItem();
+                    equipmentcell.DropItem();
                 }
             }
             else if (UIManager.Instance.handler_focus.TryGetComponent(out Cell cell))
@@ -196,7 +196,7 @@ public class PlayerInput : MonoBehaviour
                     if (clickHandler != null)
                     {
                         //아래 두 함수 아이템 참조 해제 시키는 부분 순서 결정이 필요함
-                        cell.RemoveItem();
+                        cell.DropItem();
                         clickHandler.RemoveCellItem();
                     }
                     else

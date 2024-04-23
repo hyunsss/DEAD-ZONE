@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 using Lean.Pool;
+using Unity.VisualScripting;
 
 public enum EquipmentType { Helmat, Armor, Accesary1, Accesary2, Weapon1, Weapon2, Bag }
 public class EquipmentCell : Cell
@@ -90,11 +91,13 @@ public class EquipmentCell : Cell
                 break;
         }
 
+        ItemChangeLayer(item, LayerMask.NameToLayer("Equiped"));
     }
 
-    public override void RemoveItem()
+    public override void DropItem()
     {
         ItemManager.Instance.DropItem(slotcurrentItem);
+        ItemChangeLayer(slotcurrentItem, LayerMask.NameToLayer("Item"));
         slotcurrentItem = null;
         DestoryChild();
     }
@@ -107,6 +110,7 @@ public class EquipmentCell : Cell
 
         PlayerManager.status.WeightCalculation();
     }
+
 
     // Update is called once per frame
     void Update()

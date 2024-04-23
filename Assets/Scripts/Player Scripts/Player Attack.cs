@@ -11,6 +11,8 @@ public class PlayerAttack : MonoBehaviour
 
     private Weapon currentWeapon;
     Animator animator;
+
+    [HideInInspector] public MultiAimConstraint gunHandIK;
     private TwoBoneIKConstraint subHandIK;
 
     public Transform default_Trans;
@@ -26,13 +28,9 @@ public class PlayerAttack : MonoBehaviour
             if (currentWeapon != null)
             {
                 playerEquipManagment.CurrentWeaponSetting.Invoke(currentWeapon);
+            }
 
-                animator.SetLayerWeight(1, 1);
-            }
-            else
-            {
-                animator.SetLayerWeight(1, 0);
-            }
+            SetIK();
 
             isChangeWeapon = true;
         }
@@ -44,6 +42,23 @@ public class PlayerAttack : MonoBehaviour
         animator = GetComponent<Animator>();
         playerEquipManagment = GetComponent<PlayerEquipManagment>();
         subHandIK = transform.Find("IK Rig/SubHandIK").GetComponent<TwoBoneIKConstraint>();
+        gunHandIK = transform.Find("IK Rig/HandIK").GetComponent<MultiAimConstraint>();
+    }
+
+    void SetIK() {
+        if(currentWeapon != null) {
+            animator.SetLayerWeight(1, 1);
+            subHandIK.weight = 1f;
+            gunHandIK.weight = 0.8f;
+        } else {
+            animator.SetLayerWeight(1, 0);
+            subHandIK.weight = 0f;
+            gunHandIK.weight = 0f;
+        }
+    }
+
+    private void Start() {
+        SetIK();
     }
 
     private void FixedUpdate()
