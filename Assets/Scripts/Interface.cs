@@ -9,7 +9,10 @@ public interface IUseable {
 
 }
 
+public enum InteractType { Item, RootBox, Door }
+
 public interface IInteractable {
+    public InteractType Type { get; }
     public void Interact();
 }
 
@@ -21,5 +24,11 @@ public interface IDurable {
 public interface IStackable {
     public int Count { get; set;}
     public int MaxCount { get; }
+}
+
+public interface INoiseWeight {
+    public float NoiseWeight { get; set;}
+    public Vector3 NoisePosition { get; set;}
+    public Transform MyTransform{get;}
 }
 

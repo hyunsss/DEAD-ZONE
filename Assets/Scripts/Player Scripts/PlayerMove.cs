@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     CharacterController characterController;
-    Animator animator;
+    public Animator animator;
 
     Vector3 moveDir;
     Vector3 inputVec;

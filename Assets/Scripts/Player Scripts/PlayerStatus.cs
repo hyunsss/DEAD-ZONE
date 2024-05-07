@@ -7,10 +7,12 @@ public class PlayerStatus : MonoBehaviour
     [Header("PlayerStatus Text Value")]
     private float weight;
     [SerializeField] private float maxWeight = 80f;
-    private float hp;
     private float full_hp;
     private float moisture;
     private float hungry;
+
+    [Header("DamageByPart Component")]
+    DamageByPartComponent damageByPart;
 
     public float Weight
     {
@@ -28,23 +30,22 @@ public class PlayerStatus : MonoBehaviour
 
     public float HP
     {
-        get => hp; set
+        get => damageByPart.GetCurrentHP(); set
         {
-            hp = value;
-            text_HP.text = $"{Math.Round(hp, 1)}/{Math.Round(full_hp)}";
-            if(hp <= 0) {
-                //Todo :: GameOver
-            } else if(hp >= full_hp){
-                hp = full_hp;
-            }
+            // text_HP.text = $"{Math.Round(hp, 1)}/{Math.Round(full_hp)}";
+            // if(hp <= 0) {
+            //     //Todo :: GameOver
+            // } else if(hp >= full_hp){
+            //     hp = full_hp;
+            // }
 
-            if(hp < 60) {
-                text_HP.color = Color.red;
-            }
+            // if(hp < 60) {
+            //     text_HP.color = Color.red;
+            // }
         }
     }
 
-    public float Full_Hp { get => full_hp; set => full_hp = value; }
+    public float Full_Hp { get => damageByPart.GetFullHP(); }
 
     public float Moisture
     {
@@ -84,11 +85,11 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    [Header("PlayerStatus Text Value")]
-    public TextMeshProUGUI text_Weight;
-    public TextMeshProUGUI text_HP;
-    public TextMeshProUGUI text_Moisture;
-    public TextMeshProUGUI text_Hungry;
+    //[Header("PlayerStatus Text Value")]
+    [HideInInspector] public TextMeshProUGUI text_Weight;
+    [HideInInspector] public TextMeshProUGUI text_HP;
+    [HideInInspector] public TextMeshProUGUI text_Moisture;
+    [HideInInspector] public TextMeshProUGUI text_Hungry;
 
     [Header("isSecondOver")]
     private bool isOneSecondOver;
@@ -99,6 +100,7 @@ public class PlayerStatus : MonoBehaviour
 
     private void Awake()
     {
+        damageByPart = GetComponent<DamageByPartComponent>();
     }
 
     // Start is called before the first frame update
@@ -111,8 +113,6 @@ public class PlayerStatus : MonoBehaviour
 
         Hungry = 40f;
         Moisture = 40f;
-        Full_Hp = 440;
-        HP = 200;
 
         startTime = Time.time;
         WeightCalculation();
@@ -121,7 +121,7 @@ public class PlayerStatus : MonoBehaviour
     void Update() {
         StatChangeOverTime(true);
 
-        // Weight = 
+        text_HP.text = $"{HP}/{Full_Hp}";
     }
 
     public void WeightCalculation() {

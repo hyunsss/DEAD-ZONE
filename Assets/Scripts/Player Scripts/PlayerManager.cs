@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerLook look { get; private set; }
     public static PlayerStatus status { get; private set; }
     public static PlayerEquipManagment equip { get; private set; }
+    public static PlayerDeath death { get; private set; }
 
     private void Awake() {
         Instance = this;
@@ -21,16 +22,7 @@ public class PlayerManager : MonoBehaviour
         look = GetComponent<PlayerLook>();
         status = GetComponent<PlayerStatus>();;
         equip = GetComponent<PlayerEquipManagment>();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        death = GetComponent<PlayerDeath>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

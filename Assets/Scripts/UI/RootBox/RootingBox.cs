@@ -19,6 +19,8 @@ public class RootingBox : MonoBehaviour, IInteractable
 
     private Coroutine SearchCoroutine;
 
+    public InteractType Type { get => InteractType.RootBox; }
+
     private void Awake()
     {
         itemCount = Random.Range(2, 10);

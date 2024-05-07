@@ -59,6 +59,8 @@ public class Gun : Weapon
             recoil.RecoilFire();
 
             LeanPool.Despawn(ammo, 3f);
+
+            NoiseWeightManager.Instance.SetWeightDataAll(PlayerManager.Instance.transform.position, 100f);
         }
     }
 

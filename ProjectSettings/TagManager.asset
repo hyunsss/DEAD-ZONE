@@ -19,8 +19,8 @@ TagManager:
   - Item
   - RootingBox
   - Equiped
-  - 
-  - 
+  - Enemy
+  - PlayerHit
   - 
   - 
   - 

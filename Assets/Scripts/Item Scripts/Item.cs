@@ -30,6 +30,8 @@ public abstract class Item : SerializedMonoBehaviour, IInteractable
     [HideInInspector] public MeshRenderer meshRenderer;
     [HideInInspector] public Rigidbody rigid;
 
+    public InteractType Type { get => InteractType.Item; }
+
     protected virtual void Awake()
     {
         isSearchable = true;

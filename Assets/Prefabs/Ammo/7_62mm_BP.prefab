@@ -60,16 +60,18 @@ MonoBehaviour:
   inventorySprite: {fileID: 21300000, guid: 54f4eee4c0f5b44bca42cc17a4c7b650, type: 3}
   cellwidth: 1
   cellheight: 1
-  item_name: 
-  item_desc: 
-  prize: 0
+  item_name: 7.62mm
+  item_desc: "7.62mm\uC758 \uC18C\uCD1D \uD0C4\uC57D\uC774\uB2E4. \uC0AC\uC6A9\uCC98
+    : \uB3CC\uACA9\uC18C\uCD1D, \uBA38\uC2E0\uAC74, \uB9AC\uBCFC\uBC84"
+  prize: 400
+  item_weight: 0.01
   isSearchable: 0
   meshCollider: {fileID: 0}
   meshRenderer: {fileID: 0}
   rigid: {fileID: 0}
   ammoType: 2
   state: 0
-  damage: 0
+  damage: 38
   bulletSpeed: 60
   count: 1
   maxCount: 50

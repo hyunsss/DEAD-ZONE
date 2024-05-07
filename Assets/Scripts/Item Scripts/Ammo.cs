@@ -35,4 +35,15 @@ public class Ammo : Item, IStackable
 
 
     //Todo 샷 상태에서 맞았을 경우 데미지를 주고 despawn함
+    private void OnCollisionEnter(Collision hit) {
+        if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+            DamageByPartComponent damageByPart = hit.collider.GetComponentInParent<DamageByPartComponent>();
+            ZombieStateMachineConroller zombieState = hit.collider.GetComponentInParent<ZombieStateMachineConroller>();
+
+            Debug.Log($"Ammo Hit !! {damageByPart} .. {zombieState}");
+            damageByPart.TakeDamage(damageByPart.part_cols[hit.collider], damage, zombieState.Death, () => zombieState.animator.SetTrigger("Hit"));
+
+            LeanPool.Despawn(this);
+        }
+    }
 }

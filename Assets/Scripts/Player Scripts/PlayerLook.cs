@@ -103,7 +103,7 @@ public class PlayerLook : MonoBehaviour
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3 | 1 << 9))) {
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3 | 1 << 9 | 1 << 11))) {
             zoomTarget.transform.position = hit.point;   
         }
 

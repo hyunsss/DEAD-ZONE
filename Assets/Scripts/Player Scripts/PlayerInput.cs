@@ -3,13 +3,12 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Sirenix.OdinInspector;
 using Lean.Pool;
+using System.Collections;
 
 public class PlayerInput : MonoBehaviour
 {
     bool isInteraction;
     IInteractable interactable;
-    PlayerEquipManagment playerEquipManagment;
-    PlayerAttack playerAttack;
 
     public InputActionAsset inputActions;
     private bool isOnShift_UI;
@@ -24,9 +23,8 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
-        playerEquipManagment = GetComponent<PlayerEquipManagment>();
-        playerAttack = GetComponent<PlayerAttack>();
         plane = new Plane(Vector3.up, Vector3.zero);
+        isInteraction = true;
     }
 
     private void Start()
@@ -36,7 +34,7 @@ public class PlayerInput : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (UIManager.Instance.Inventory.activeSelf == false)
+        if (UIManager.Instance.Inventory.activeSelf == false && isInteraction == true)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             Collider[] colliders;
@@ -86,24 +84,11 @@ public class PlayerInput : MonoBehaviour
                         UIManager.Instance.TryDespawnInteractPanel();
                     }
 
-                    // 아이템인 경우에만 처리
-                    if (interactable != null)
-                    {
-                        isInteraction = true;
-                    }
-                    else
-                    {
-                        isInteraction = false;
-                    }
                 }
                 else
                 {
                     UIManager.Instance.TryDespawnInteractPanel();
                 }
-            }
-            else
-            {
-                isInteraction = false;
             }
         }
 
@@ -122,8 +107,27 @@ public class PlayerInput : MonoBehaviour
     {
         if (isInteraction == true && interactable != null)
         {
+            PlayInteractTypeAnimation(interactable.Type);
             interactable.Interact();
             interactable = null;
+            StartCoroutine(WaitInteractable());
+        }
+    }
+
+    IEnumerator WaitInteractable() {
+        isInteraction = false;
+        UIManager.Instance.TryDespawnInteractPanel();
+        yield return new WaitForSeconds(1f);
+        isInteraction = true;
+    }
+
+    void PlayInteractTypeAnimation(InteractType type) {
+        if(type == InteractType.Item) {
+            PlayerManager.move.animator.SetTrigger("PickUp");
+        } else if (type == InteractType.RootBox) {
+
+        } else if (type == InteractType.Door) {
+
         }
     }
 
@@ -169,7 +173,7 @@ public class PlayerInput : MonoBehaviour
     public void AssignmentWeapon(int index)
     {
         PlayerManager.equip.currentindex = index;
-        playerAttack.CurrentWeapon = PlayerManager.equip.Weapons[index];
+        PlayerManager.attack.CurrentWeapon = PlayerManager.equip.Weapons[index];
 
     }
 
