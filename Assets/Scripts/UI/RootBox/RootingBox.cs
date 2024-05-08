@@ -10,7 +10,8 @@ public class RootingBox : MonoBehaviour, IInteractable
 {
     public List<Item> keyMatchItemList = new List<Item>();
     UIElementClickHandler[] currentBoxItems;
-    public int itemCount;
+    private int itemCount;
+    public int minitemCount, maxitemCount;
     public ItemCellPanel currentItemCellPanel;
     public GameObject cellPanelPrefab;
     public ItemKey allowItemKey;
@@ -23,7 +24,7 @@ public class RootingBox : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        itemCount = Random.Range(2, 10);
+        itemCount = Random.Range(minitemCount, maxitemCount);
         currentItemCellPanel = LeanPool.Spawn(cellPanelPrefab).GetComponent<ItemCellPanel>();
         currentItemCellPanel.boxType = BoxType.RootBox;
     }
