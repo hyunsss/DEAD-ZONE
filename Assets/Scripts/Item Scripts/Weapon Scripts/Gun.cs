@@ -24,6 +24,7 @@ public class Gun : Weapon
     [Space(20f)]
     [Header("Current Magazine")]
     [SerializeField] private Magazine currentMagazine;
+    public Magazine CurrentMagazine { get => currentMagazine; }
 
     [Space(20f)]
     [Header("Gun Properties")]
@@ -129,7 +130,7 @@ public class Gun : Weapon
             }
         }
     }
-    //Todo List 탄창 교체 잘 되는지 체크하기
+
 
     public void Reload()
     {
@@ -241,6 +242,11 @@ public class Gun : Weapon
         return returnValue != null ? true : false;
     }
 
-
+    public string GetFireMode()
+    {
+        if (mode == global::FireMode.Single) return "단발";
+        else if (mode == global::FireMode.Burst) return "점사";
+        else return "자동";
+    }
 
 }

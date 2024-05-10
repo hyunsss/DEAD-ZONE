@@ -12,7 +12,7 @@ public class PlayerStatus : MonoBehaviour
     private float hungry;
 
     [Header("DamageByPart Component")]
-    DamageByPartComponent damageByPart;
+    public DamageByPartComponent damageByPart;
 
     public float Weight
     {

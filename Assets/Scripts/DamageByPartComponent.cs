@@ -18,6 +18,13 @@ public class DamageByPartComponent : MonoBehaviour
     public Dictionary<DamageType, int> hp_by_Part;
     public Dictionary<Collider, DamageType> part_cols = new Dictionary<Collider, DamageType>();
 
+    public float Head_Amount { get => (float)hp_by_Part[DamageType.Head] / head_HP; }
+    public float L_Arm_Amount { get => (float)hp_by_Part[DamageType.L_Arm] / l_Arm_HP; }
+    public float R_Arm_Amount { get => (float)hp_by_Part[DamageType.R_Arm] / r_Arm_HP; }
+    public float Chest_Amount { get => (float)hp_by_Part[DamageType.Chest] / chest_HP; }
+    public float L_Leg_Amount { get => (float)hp_by_Part[DamageType.L_Leg] / l_Leg_HP; }
+    public float R_Leg_Amount { get => (float)hp_by_Part[DamageType.R_Leg] / r_Leg_HP; }
+
     private void Awake()
     {
         hp_by_Part = new Dictionary<DamageType, int>() {
@@ -25,7 +32,7 @@ public class DamageByPartComponent : MonoBehaviour
             {DamageType.L_Arm, l_Arm_HP},
             {DamageType.R_Arm, r_Arm_HP},
             {DamageType.Chest, chest_HP},
-            {DamageType.L_Leg, l_Leg_HP},             //총 체력 475
+            {DamageType.L_Leg, l_Leg_HP},
             {DamageType.R_Leg, r_Leg_HP},
         };
 
@@ -87,12 +94,13 @@ public class DamageByPartComponent : MonoBehaviour
 
         foreach (int hp in hp_by_Part.Values) if (hp > 0) index++;
 
-        if(index != 0) {
+        if (index != 0)
+        {
             foreach (var key in new List<DamageType>(hp_by_Part.Keys))
             {
                 hp_by_Part[key] -= damage / index;
 
-                if(hp_by_Part[key] < 0) hp_by_Part[key] = 0;
+                if (hp_by_Part[key] < 0) hp_by_Part[key] = 0;
             }
         }
 
@@ -110,13 +118,16 @@ public class DamageByPartComponent : MonoBehaviour
         return current_Total_HP <= 0 ? true : false;
     }
 
-    public int GetFullHP() {
+    public int GetFullHP()
+    {
         return head_HP + l_Arm_HP + r_Arm_HP + l_Leg_HP + r_Leg_HP + chest_HP;
     }
 
-    public int GetCurrentHP() {
+    public int GetCurrentHP()
+    {
         int total_HP = 0;
-        foreach(var hp in hp_by_Part.Values) {
+        foreach (var hp in hp_by_Part.Values)
+        {
             total_HP += hp;
         }
 

@@ -73,6 +73,7 @@ public class UIManager : MonoBehaviour
     [Space]
     [Header("Transform")]
     public RectTransform equip_transform;
+    public RectTransform healthCondition;
     public RectTransform inven_transform;
     public RectTransform rig_transform;
     public RectTransform pocket_transform;
@@ -102,43 +103,51 @@ public class UIManager : MonoBehaviour
     bool firstInit = false;
     float startTime;
 
-    public float GetInventoryWeight() {
+    public float GetInventoryWeight()
+    {
         float equip_weight = 0f;
         float inven_weight = 0f;
 
         //equipcell handler_array
         UIElementClickHandler[] equip_handlers = equip_transform.GetComponentsInChildren<UIElementClickHandler>();
-        
+
         foreach (UIElementClickHandler handler in equip_handlers)
         {
-            equip_weight += handler.myItem.item_weight;            
+            equip_weight += handler.myItem.item_weight;
         }
 
         //inven handler_array
-        foreach(ItemCellPanel cellpanel in player_Inven) {
+        foreach (ItemCellPanel cellpanel in player_Inven)
+        {
             UIElementClickHandler[] inven_handlers = cellpanel.GetComponentsInChildren<UIElementClickHandler>();
 
-            foreach(UIElementClickHandler handler in inven_handlers) {
+            foreach (UIElementClickHandler handler in inven_handlers)
+            {
 
                 inven_weight += handler.myItem.item_weight;
 
-                if(handler.myItem is Bag bag) {
+                if (handler.myItem is Bag bag)
+                {
                     inven_weight += bag.GetcurrentInvenWeight(bag.currentBagInventory);
                     bag.totalWeight = 0;
-                } else if (handler.myItem is Armor armor) {
+                }
+                else if (handler.myItem is Armor armor)
+                {
                     inven_weight += armor.GetcurrentInvenWeight(armor.currentRigInventory);
                     armor.totalWeight = 0;
                 }
             }
         }
 
-        
+
 
         return inven_weight + equip_weight;
     }
 
-    public void TryDespawnInteractPanel() {
-        if(current_interactionPanel != null) {
+    public void TryDespawnInteractPanel()
+    {
+        if (current_interactionPanel != null)
+        {
             LeanPool.Despawn(current_interactionPanel);
             current_interactionPanel = null;
         }
@@ -202,11 +211,14 @@ public class UIManager : MonoBehaviour
             }
             loadingUI_list.Clear();
 
-            if(current_usageValueSetting != null) {
+            if (current_usageValueSetting != null)
+            {
                 current_usageValueSetting.CancelButtonClick();
             }
 
-        } else {
+        }
+        else
+        {
             TryDespawnInteractPanel();
         }
 

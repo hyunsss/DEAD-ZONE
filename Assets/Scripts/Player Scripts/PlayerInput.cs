@@ -27,11 +27,6 @@ public class PlayerInput : MonoBehaviour
         isInteraction = true;
     }
 
-    private void Start()
-    {
-
-    }
-
     void FixedUpdate()
     {
         if (UIManager.Instance.Inventory.activeSelf == false && isInteraction == true)
