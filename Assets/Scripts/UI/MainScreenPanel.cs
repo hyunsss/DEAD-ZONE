@@ -68,20 +68,30 @@ public class MainScreenPanel : MonoBehaviour
     }
 
     #endregion
+    #region Time & ExitList Text
+    private TextMeshProUGUI timeText;
+    private RectTransform ExitList_Trans;
 
+    public GameObject exit_prefab;
+
+    void TopPropertiesInit()
+    {
+        timeText = transform.Find("Top Panel/Remain Time Panel & Exit List/Image/Time").GetComponent<TextMeshProUGUI>();
+        ExitList_Trans = transform.Find("Top Panel/Remain Time Panel & Exit List/Exit List").GetComponent<RectTransform>();
+    }
+
+    void SetTimeText()
+    {
+        timeText.text = string.Format("{0:D2}:{1:D2}", TimeManager.Instance.Min, TimeManager.Instance.Sec);
+    }
+
+    #endregion
     void Awake()
     {
         Player_Silhouette_Init();
         WeaponImage_Init();
+        TopPropertiesInit();
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-    }
-
 
     void LateUpdate()
     {
@@ -93,6 +103,7 @@ public class MainScreenPanel : MonoBehaviour
         SetPlayer_Silhouette_Color(chest, PlayerManager.status.damageByPart.Chest_Amount);
 
         SetCurrentWeaponProperties();
+        SetTimeText();
     }
 
 }
