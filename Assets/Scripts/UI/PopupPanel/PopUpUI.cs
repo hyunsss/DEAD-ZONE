@@ -26,7 +26,7 @@ public class PopUpUI : MonoBehaviour {
         closeButton.onClick.AddListener(CloseUI);
         if (itemcellPanel != null)
         {
-            GetComponent<RectTransform>().sizeDelta = itemcellPanel.GetComponent<RectTransform>().sizeDelta + new Vector2(10f, 10f);
+            GetComponent<RectTransform>().sizeDelta = itemcellPanel.GetComponent<RectTransform>().sizeDelta + new Vector2(20f, 50f);
             cellPanel = itemcellPanel;
             // content_rect.sizeDelta = new Vector2(item.cellwidth * 70 + 10f, item.cellheight * 70 + 10f);
             cellPanel.transform.SetParent(content_rect, false);

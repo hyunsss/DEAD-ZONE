@@ -95,18 +95,17 @@ public class PlayerLook : MonoBehaviour
 
         _3rdParam_base.CameraDistance = Mathf.Lerp(_3rdParam_base.CameraDistance, zoomDistance, 0.1f);
         _3rdParam_base.ShoulderOffset.x = Mathf.Lerp(_3rdParam_base.ShoulderOffset.x, delta_tilt_X, 0.1f);
-    }
 
-    private void FixedUpdate() {
         //화면 정중앙에 레이 발사
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        Ray ray = new Ray(followTarget.transform.position + new Vector3(0, 1.5f, 0), followTarget.transform.forward);
 
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, Mathf.Infinity, ~0 & ~(1 << 7 | 1 << 3 | 1 << 9 | 1 << 11))) {
+        int layermask =  ~((1 << 7) | (1 << 3) | (1 << 9) | (1 << 11));
+
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, layermask)) {
             zoomTarget.transform.position = hit.point;   
         }
-
     }
 
     public void ProcessLook(Vector2 input)

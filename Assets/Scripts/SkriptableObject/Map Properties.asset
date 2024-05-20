@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62bc0f2e2cf7d4d25b77a4eac4eb07f5, type: 3}
+  m_Name: Map Properties
+  m_EditorClassIdentifier: 
+  map_Object: {fileID: 8123321358198672775, guid: 29133a71059a39540be4bbde8e3eae21,
+    type: 3}
+  play_Time: 300
+  escape_Points: []
+  spawn_Points:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

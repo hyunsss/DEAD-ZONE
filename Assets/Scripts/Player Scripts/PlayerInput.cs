@@ -13,8 +13,11 @@ public class PlayerInput : MonoBehaviour
     public InputActionAsset inputActions;
     private bool isOnShift_UI;
 
-    Plane plane;
-    Vector3 plane_RayCastPos;
+    public Transform head_Transform;
+    Vector3 hit_RayCastPos;
+    private Ray lastRay;
+    bool hitSomething;
+    RaycastHit lasthit;
 
     #region double click properties
     float doubleClickTimeLimit = 0.3f;
@@ -23,7 +26,6 @@ public class PlayerInput : MonoBehaviour
 
     void Awake()
     {
-        plane = new Plane(Vector3.up, Vector3.zero);
         isInteraction = true;
     }
 
@@ -31,26 +33,29 @@ public class PlayerInput : MonoBehaviour
     {
         if (UIManager.Instance.Inventory.activeSelf == false && isInteraction == true)
         {
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+            lastRay = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+
             Collider[] colliders;
             //Raycast(ray, out hit, Mathf.Infinity, 1 << 7 | 1 << 8)
-            if (plane.Raycast(ray, out float enter))
+            if (Physics.Raycast(lastRay, out lasthit, Mathf.Infinity))
             {
-                plane_RayCastPos = ray.GetPoint(enter);
+                hitSomething = true; ////////////
 
-                float playerToRay = Vector3.Distance(plane_RayCastPos, transform.position);
+                hit_RayCastPos = lasthit.point;
+                float playerToRay = Vector3.Distance(hit_RayCastPos, transform.position);
 
                 if (playerToRay < 2f)
                 {
-                    colliders = Physics.OverlapSphere(plane_RayCastPos, 0.5f, 1 << 7 | 1 << 8);
+                    colliders = Physics.OverlapSphere(hit_RayCastPos, 3f, 1 << 7 | 1 << 8);
 
                     float shortDistance = 999f;
                     GameObject nearObject = null;
                     foreach (Collider collider in colliders)
                     {
-                        if (Vector3.Distance(plane_RayCastPos, collider.transform.position) < shortDistance)
+                        if (Vector3.Distance(hit_RayCastPos, collider.transform.position) < shortDistance)
                         {
-                            shortDistance = Vector3.Distance(plane_RayCastPos, collider.transform.position);
+                            shortDistance = Vector3.Distance(hit_RayCastPos, collider.transform.position);
                             nearObject = collider.gameObject;
                         }
                     }
@@ -84,17 +89,26 @@ public class PlayerInput : MonoBehaviour
                 {
                     UIManager.Instance.TryDespawnInteractPanel();
                 }
-            }
+            } else hitSomething = false; //////////
         }
 
     }
 
+    
+
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;  // 기즈모의 색 설정
-        if (plane_RayCastPos != null && Vector3.Distance(plane_RayCastPos, transform.position) < 2f)
+        Gizmos.color = Color.red;
+        if (hitSomething)
         {
-            Gizmos.DrawWireSphere(plane_RayCastPos, 0.5f);  // 와이어프레임 스피어 그리기
+            // 레이가 충돌한 경우
+            Gizmos.DrawLine(lastRay.origin, lasthit.point);
+            Gizmos.DrawSphere(lasthit.point, 0.1f);
+        }
+        else
+        {
+            // 레이가 충돌하지 않은 경우
+            Gizmos.DrawLine(lastRay.origin, lastRay.origin + lastRay.direction * 100);
         }
     }
 
@@ -210,7 +224,6 @@ public class PlayerInput : MonoBehaviour
     public void OnShift(InputValue value)
     {
         isOnShift_UI = value.isPressed;
-        Debug.Log("isOnShift" + isOnShift_UI);
     }
 
     public void OnClick(InputValue value)
@@ -351,6 +364,21 @@ public class PlayerInput : MonoBehaviour
     {
         bool isPressed = value.Get<float>() == 1 ? true : false;
         PlayerManager.look.IsZoom = isPressed;
+    }
+
+    public void OnOpenEscapePoint(InputValue value) {
+
+        float clickTime = Time.time - lastClickTime;
+            if (clickTime <= doubleClickTimeLimit)
+            {
+                //더블 클릭 함수 실행
+                DoubleClick();
+                lastClickTime = 0;
+            }
+            else
+            {
+                lastClickTime = Time.time;
+            }
     }
 
     void StartTiltingLeft()

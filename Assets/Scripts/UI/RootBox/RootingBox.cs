@@ -39,6 +39,22 @@ public class RootingBox : MonoBehaviour, IInteractable
         GetBoxItems();
     }
 
+    private void OnEnable() {
+        RectTransform rect = currentItemCellPanel.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0, 1);
+        rect.anchorMax = new Vector2(0, 1);
+        rect.pivot = new Vector2(0, 1);
+        rect.position = new Vector2(25, -25f);
+    }
+
+    private void OnDisable() {
+        RectTransform rect = currentItemCellPanel.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.position = Vector2.zero;
+    }
+
     public void StopMyCoroutine()
     {
         if (SearchCoroutine != null)
@@ -140,6 +156,10 @@ public class RootingBox : MonoBehaviour, IInteractable
         {
             int itemcount = Random.Range(8, 35);
             ammo.Count = itemcount;
+        }
+        else if (item_obj.TryGetComponent(out Money money)) {
+            int itemcount = Random.Range(500, 9999);
+            money.Count = itemcount;
         }
 
         ItemManager.Instance.MoveToInventoryFindCell(currentItemCellPanel.grid, item_obj.GetComponent<Item>(), out bool Finish);

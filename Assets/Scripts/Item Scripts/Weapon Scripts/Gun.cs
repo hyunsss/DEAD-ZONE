@@ -39,6 +39,10 @@ public class Gun : Weapon
     [Header("Recoil")]
     public Recoil recoil;
 
+    private void OnDisable() {
+        Debug.Log("gun disable");
+    }
+
     protected override void Awake()
     {
         base.Awake();

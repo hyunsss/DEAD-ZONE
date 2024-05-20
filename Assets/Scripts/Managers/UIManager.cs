@@ -49,6 +49,10 @@ public class UIManager : MonoBehaviour
     public UsageValueSettingPanel usageValueSetting_prefab;
     public UsageValueSettingPanel current_usageValueSetting;
 
+    [Space]
+    [Header("탈출구 지점 리스트 패널")]
+    public RectTransform escape_PointPanel;
+
 
     [Space]
     [Header("Magazine Coroutine")]
@@ -236,6 +240,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public IEnumerator ShowEscapeListPanel() {
+        escape_PointPanel.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(4f);
+        escape_PointPanel.gameObject.SetActive(false);
+
+    }
+
     public IEnumerator GameObjectActiveOper(GameObject gameObject, bool active)
     {
         yield return new WaitForSeconds(0.3f);
@@ -320,6 +332,8 @@ public class UIManager : MonoBehaviour
             LateStart();
             firstInit = true;
         }
+
+
     }
 
     public void CellRayCastTarget(bool isallow)

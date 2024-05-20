@@ -192,27 +192,27 @@ public class ZombieStateMachineConroller : MonoBehaviour, INoiseWeight
         target_LastPos = target.transform.position;
     }
 
-    void OnDrawGizmos()
-    {
-        // 벽 감지 레이 기즈모
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(headPosition.position, transform.position + transform.forward * wallRayLength);
+    // void OnDrawGizmos()
+    // {
+    //     // 벽 감지 레이 기즈모
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawLine(headPosition.position, transform.position + transform.forward * wallRayLength);
 
-        // 타겟 감지 레이 기즈모 1
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(headPosition.position, (transform.forward + (transform.right * 0.5f)) * targetRayLength);
+    //     // 타겟 감지 레이 기즈모 1
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawLine(headPosition.position, (transform.forward + (transform.right * 0.5f)) * targetRayLength);
 
-        // 타겟 감지 레이 기즈모 2
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(headPosition.position, (transform.forward - transform.right * 0.5f) * targetRayLength);
+    //     // 타겟 감지 레이 기즈모 2
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawLine(headPosition.position, (transform.forward - transform.right * 0.5f) * targetRayLength);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(headPosition.position, (transform.forward + (transform.right * 0.25f)) * targetRayLength);
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawLine(headPosition.position, (transform.forward + (transform.right * 0.25f)) * targetRayLength);
 
-        // 타겟 감지 레이 기즈모 2
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(headPosition.position, (transform.forward - transform.right * 0.25f) * targetRayLength);
-    }
+    //     // 타겟 감지 레이 기즈모 2
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawLine(headPosition.position, (transform.forward - transform.right * 0.25f) * targetRayLength);
+    // }
 
     public bool IsAnimationComplete(string stateName, int layer)
     {
