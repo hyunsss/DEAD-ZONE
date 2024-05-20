@@ -33,8 +33,8 @@ public class PlayerInput : MonoBehaviour
     {
         if (UIManager.Instance.Inventory.activeSelf == false && isInteraction == true)
         {
-
-            lastRay = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+            Vector3 ray_dir = (PlayerManager.look.zoomTarget.transform.position - head_Transform.position).normalized;
+            lastRay = new Ray(head_Transform.position, ray_dir);
 
             Collider[] colliders;
             //Raycast(ray, out hit, Mathf.Infinity, 1 << 7 | 1 << 8)
@@ -47,7 +47,7 @@ public class PlayerInput : MonoBehaviour
 
                 if (playerToRay < 2f)
                 {
-                    colliders = Physics.OverlapSphere(hit_RayCastPos, 3f, 1 << 7 | 1 << 8);
+                    colliders = Physics.OverlapSphere(hit_RayCastPos, 0.8f, 1 << 7 | 1 << 8);
 
                     float shortDistance = 999f;
                     GameObject nearObject = null;
