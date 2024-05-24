@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class RootingBox : MonoBehaviour, IInteractable
 {
+    public string box_Name;
+
     public List<Item> keyMatchItemList = new List<Item>();
     UIElementClickHandler[] currentBoxItems;
     private int itemCount;

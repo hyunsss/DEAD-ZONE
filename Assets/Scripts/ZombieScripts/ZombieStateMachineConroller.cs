@@ -8,14 +8,30 @@ public enum StateType { Idle, Walk, GotoNoise, FindEnemy, ChaseEnemy, Attack, Di
 
 public class ZombieStateMachineConroller : MonoBehaviour, INoiseWeight
 {
+    public Dictionary<StateType, BaseState> state_Dic = new Dictionary<StateType, BaseState>();
+
+    private void Awake()
+    {
+        state_Dic = new Dictionary<StateType, BaseState>(){
+            { StateType.Idle, new IdleState(this)},
+            { StateType.Walk, new WalkState(this)},
+            { StateType.GotoNoise, new GoToNoiseState(this)},
+            { StateType.FindEnemy, new FindEnemyState(this)},
+            { StateType.ChaseEnemy, new ChaseEnemyState(this, target)},
+            { StateType.Attack, new AttackState(this)},
+            { StateType.Die, new DieState(this)},
+        };
+        headPosition = transform.Find("headPos");
+        anim_params = new List<string>() { "Idle", "Walk", "Chase", "Attack", "Die" };
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+    }
+
 
     public int damage;
 
     public StateType state;
     public Animator animator;
-
-    public Dictionary<StateType, BaseState> state_Dic = new Dictionary<StateType, BaseState>();
-
     public Coroutine currentState;
 
     public Transform headPosition;
@@ -48,23 +64,6 @@ public class ZombieStateMachineConroller : MonoBehaviour, INoiseWeight
 
     public ZombieAttack[] attack_skripts;
 
-    private void Awake()
-    {
-        state_Dic = new Dictionary<StateType, BaseState>(){
-            { StateType.Idle, new IdleState(this)},
-            { StateType.Walk, new WalkState(this)},
-            { StateType.GotoNoise, new GoToNoiseState(this)},
-            { StateType.FindEnemy, new FindEnemyState(this)},
-            { StateType.ChaseEnemy, new ChaseEnemyState(this, target)},
-            { StateType.Attack, new AttackState(this)},
-            { StateType.Die, new DieState(this)},
-        };
-        headPosition = transform.Find("headPos");
-        anim_params = new List<string>() { "Idle", "Walk", "Chase", "Attack", "Die" };
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-
-    }
 
     private void Start() {
         Init();
@@ -239,8 +238,6 @@ public abstract class BaseState
 
     public abstract void ExitState();
 }
-
-
 public class IdleState : BaseState
 {
     public IdleState(ZombieStateMachineConroller owner) : base(owner)
@@ -270,7 +267,6 @@ public class IdleState : BaseState
 
     }
 }
-
 public class WalkState : BaseState
 {
     public WalkState(ZombieStateMachineConroller owner) : base(owner)
@@ -301,8 +297,6 @@ public class WalkState : BaseState
         throw new System.NotImplementedException();
     }
 }
-
-
 public class GoToNoiseState : BaseState
 {
     private Vector3 noisePos;
@@ -360,7 +354,6 @@ public class GoToNoiseState : BaseState
         throw new System.NotImplementedException();
     }
 }
-
 public class FindEnemyState : BaseState
 {
     private Vector3 target_lastPos;
@@ -433,7 +426,6 @@ public class FindEnemyState : BaseState
 
     }
 }
-
 public class ChaseEnemyState : BaseState
 {
     private Transform target;
@@ -469,7 +461,6 @@ public class ChaseEnemyState : BaseState
 
     }
 }
-
 public class AttackState : BaseState
 {
     private Transform target;
@@ -505,7 +496,6 @@ public class AttackState : BaseState
 
     }
 }
-
 public class DieState : BaseState
 {
     public DieState(ZombieStateMachineConroller owner) : base(owner)

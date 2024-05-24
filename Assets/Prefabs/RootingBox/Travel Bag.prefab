@@ -45,13 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686557be408e9432b9987a10051085e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box_Name: "\uC5EC\uD589 \uAC00\uBC29"
   keyMatchItemList: []
-  minitemCount: 0
+  minitemCount: 1
   maxitemCount: 2
   currentItemCellPanel: {fileID: 0}
-  cellPanelPrefab: {fileID: 2255807845658480249, guid: a9787a86ff6d64149857183faa30aad3,
+  cellPanelPrefab: {fileID: 2255807845658480249, guid: b671871e711eb4854b16894eda767bd2,
     type: 3}
-  allowItemKey: 4336
+  allowItemKey: 4320
 --- !u!1001 &88673603124870830
 PrefabInstance:
   m_ObjectHideFlags: 0

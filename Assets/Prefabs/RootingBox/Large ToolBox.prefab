@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686557be408e9432b9987a10051085e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box_Name: "\uD070 \uACF5\uAD6C\uC0C1\uC790"
   keyMatchItemList: []
-  minitemCount: 0
+  minitemCount: 3
   maxitemCount: 9
   currentItemCellPanel: {fileID: 0}
   cellPanelPrefab: {fileID: 2255807845658480249, guid: f0ce01945e6a14f4b8e7ba5327b2b4bb,

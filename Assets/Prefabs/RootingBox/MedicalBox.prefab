@@ -45,13 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686557be408e9432b9987a10051085e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box_Name: "\uC758\uC57D\uD488 \uC0C1\uC790"
   keyMatchItemList: []
   minitemCount: 2
   maxitemCount: 8
   currentItemCellPanel: {fileID: 0}
   cellPanelPrefab: {fileID: 2255807845658480249, guid: a5f701a667626417493c9b990c0b338e,
     type: 3}
-  allowItemKey: 16
+  allowItemKey: 8191
 --- !u!1 &5429802428665727313
 GameObject:
   m_ObjectHideFlags: 0

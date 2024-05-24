@@ -177,8 +177,8 @@ MonoBehaviour:
   durability: 15
   maxDurability: 15
   delay: 4
-  energy: 20
-  moisture: 20
+  energy: 10
+  moisture: 0
 --- !u!54 &5384267043761982847
 Rigidbody:
   m_ObjectHideFlags: 0

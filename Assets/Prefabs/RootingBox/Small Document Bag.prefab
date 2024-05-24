@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686557be408e9432b9987a10051085e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box_Name: "\uC11C\uB958 \uAC00\uBC29"
   keyMatchItemList: []
   minitemCount: 0
   maxitemCount: 2

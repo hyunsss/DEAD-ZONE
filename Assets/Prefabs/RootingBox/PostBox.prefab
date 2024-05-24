@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686557be408e9432b9987a10051085e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  box_Name: "\uC6B0\uD3B8\uD568"
   keyMatchItemList: []
   minitemCount: 0
   maxitemCount: 1

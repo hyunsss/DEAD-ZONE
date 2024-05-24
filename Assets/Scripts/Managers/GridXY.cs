@@ -5,18 +5,18 @@ using UnityEngine;
 //그리드 클래스
 [Serializable]
 public class GridXY
-{   //기본 Plane 오브젝트 스케일의 0.5배가 게임 내의 cell 1칸
+{   
+    private Cell[,] gridArray;
     private int width;
     private int height;
     private float cellSize;
-    private Cell[,] gridArray;
     private Transform trans_parent;
     public bool isInit;
 
+    public Cell[,] GridArray => gridArray;
     public int Width => width;
     public int Height => height;
     public float CellSize => cellSize;
-    public Cell[,] GridArray => gridArray;
     public Transform Trans_parent => trans_parent;
 
     public int MaxSize { get => width * height; }
@@ -69,7 +69,14 @@ public class GridXY
         
         return null;
     }
-
+    /// <summary>
+    /// 아이템을 옮기기 위한 셀의 정보를 리스트에 담아 반환합니다.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="Start_cell">아이템을 이동시키기 위한 첫번 째 셀 위치</param>
+    /// <param name="isComplete">아이템의 width, height가 인덱스 인벤토리의 인덱스 범위를 넘는다면 false를 리턴</param>
+    /// <param name="isRotation">아이템의 회전여부를 설정 // 디폴트 : false</param>
+    /// <returns></returns>
     public List<Cell> SizeofItemCellList(Item item, Cell Start_cell, out bool isComplete, bool isRotation = false) {
         List<Cell> tempCells = new List<Cell>();
         int cellx, celly;
@@ -82,18 +89,21 @@ public class GridXY
             if(celly - item.cellheight < -1 || cellx + item.cellwidth > width) {
                 isComplete = false;
                 return null;
-            }   
+            }
+            //인덱스 범위를 벗어나지 않았으므로 필요한 셀의 정보를 리스트에 담아 리턴시킵니다.   
             for(int y = celly; y > celly - item.cellheight; y--) {
                 for(int x = cellx; x < cellx + item.cellwidth; x++) {
                     tempCells.Add(GetCell(x, y));
                 }
             }
+        // isRotation == true : 아이템의 회전여부가 true일 때
         } else {
             //인덱스 범위를 넘어간다면 리턴
             if(celly + item.cellwidth > height || cellx + item.cellheight > width) {
                 isComplete = false;
                 return null;
             }
+            //인덱스 범위를 벗어나지 않았으므로 필요한 셀의 정보를 리스트에 담아 리턴시킵니다.  
             for(int y = celly; y < celly + item.cellwidth; y++) {
                 for(int x = cellx; x < cellx + item.cellheight; x++) {
                     tempCells.Add(GetCell(x, y));

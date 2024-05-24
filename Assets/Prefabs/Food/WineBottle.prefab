@@ -177,7 +177,7 @@ MonoBehaviour:
   durability: 65
   maxDurability: 65
   delay: 4
-  energy: 20
+  energy: 5
   moisture: 20
 --- !u!54 &4357330430818759987
 Rigidbody:

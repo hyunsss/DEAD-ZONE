@@ -69,11 +69,11 @@ public class PlayerInput : MonoBehaviour
 
                         if (nearObject.transform.parent.TryGetComponent(out Item item))
                         {
-                            UIManager.Instance.current_interactionPanel.SetText(item.name, "줍기 F");
+                            UIManager.Instance.current_interactionPanel.SetText(item.item_name, "줍기 F");
                         }
                         else if (nearObject.transform.parent.TryGetComponent(out RootingBox rootingBox))
                         {
-                            UIManager.Instance.current_interactionPanel.SetText(rootingBox.name, "열기 F");
+                            UIManager.Instance.current_interactionPanel.SetText(rootingBox.box_Name, "열기 F");
                         }
 
                         interactable = nearObject.GetComponentInParent<IInteractable>();

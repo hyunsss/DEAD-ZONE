@@ -232,7 +232,9 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
     /// <param name="currentcell"></param>
     public void InsertCellItem(Cell currentcell)
     {
-        List<Cell> tempList = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete, isRotation);
+        List<Cell> tempList 
+            = currentcell.ParentPanel.grid.SizeofItemCellList(myItem, currentcell, out bool isComplete, isRotation);
+        //아이템이 인벤토리의 인덱스 범위를 벗어나지 않으면서 그 리스트의 셀들의 아이템이 비어있는지 여부를 확인하는 부분
         if (isComplete == true && currentcell.ParentPanel.grid.IsCellInItemPossible(tempList) == true)
         {
             foreach (Cell cell in tempList)
@@ -241,9 +243,9 @@ public class UIElementClickHandler : MonoBehaviour, IBeginDragHandler, IDragHand
                 cell.Item_ParentCell = currentcell;
             }
 
+            //함수 종료 후 parentAfterCell로 아이템을 이동시킴
             parentAfterCell = currentcell;
             itemCells = tempList;
-            // current_Rotation = rotation;
         }
         else
         {

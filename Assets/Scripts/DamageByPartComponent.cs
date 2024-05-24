@@ -6,6 +6,9 @@ public class DamageByPartComponent : MonoBehaviour
 {
     public enum DamageType { Head, L_Arm, R_Arm, Chest, L_Leg, R_Leg }
 
+    public Dictionary<DamageType, int> hp_by_Part;
+    public Dictionary<Collider, DamageType> part_cols = new Dictionary<Collider, DamageType>();
+
     public int head_HP;
     public int l_Arm_HP;
     public int r_Arm_HP;
@@ -15,8 +18,6 @@ public class DamageByPartComponent : MonoBehaviour
 
     private Transform hips;
 
-    public Dictionary<DamageType, int> hp_by_Part;
-    public Dictionary<Collider, DamageType> part_cols = new Dictionary<Collider, DamageType>();
 
     public float Head_Amount { get => (float)hp_by_Part[DamageType.Head] / head_HP; }
     public float L_Arm_Amount { get => (float)hp_by_Part[DamageType.L_Arm] / l_Arm_HP; }
@@ -50,25 +51,22 @@ public class DamageByPartComponent : MonoBehaviour
 
     public void TakeDamage(DamageType hit_Part, int damage, Action death, Action hit_Animation = null)
     {
-        Debug.Log($"Name :: {gameObject.name}, TakeDamage :: {damage}");
-        Debug.Log($"{hp_by_Part[DamageType.Head]} :: {hp_by_Part[DamageType.L_Arm]} :: {hp_by_Part[DamageType.R_Arm]} :: {hp_by_Part[DamageType.Chest]} :: {hp_by_Part[DamageType.L_Leg]} :: {hp_by_Part[DamageType.R_Leg]}");
+        //공격 받은 부위가 머리 또는 몸통인지 먼저 체크
         if (hit_Part == DamageType.Head || hit_Part == DamageType.Chest)
         {
-            if (hp_by_Part[hit_Part] == 0)
+            if (hp_by_Part[hit_Part] - damage < 0)
             {
-                //공격당한 부위가 머리나 몸통일 때 또한 그곳의 체력이 0이었을 때 한번더 공격을 받는다면 바로 사망처리
-
-                //죽음
                 death?.Invoke();
                 Debug.Log("death Invoke");
             }
         }
-
+        //피격 받은 부위에 데미지가 들어가는 부분
         if (hp_by_Part[hit_Part] > damage)
         {
             hp_by_Part[hit_Part] -= damage;
             hit_Animation?.Invoke();
         }
+        //받은 데미지가 현재 부위 체력보다 높을 때 남은 데미지는 다른 부위에 나눠서 적용
         else if (hp_by_Part[hit_Part] < damage)
         {
             int currentHp = hp_by_Part[hit_Part];
@@ -79,10 +77,9 @@ public class DamageByPartComponent : MonoBehaviour
 
             SplitDamage(remainDamage);
         }
-
+        //데미지 적용 후 사망처리
         if (DeathCondition())
         {
-            //죽음
             death?.Invoke();
             Debug.Log("death Invoke");
         }
@@ -138,7 +135,6 @@ public class DamageByPartComponent : MonoBehaviour
     void FindPartColliders()
     {
         Collider collider;
-
         collider = hips.transform.Find("Spine_01/Spine_02/Spine_03/Neck/Head").GetComponent<Collider>();
         part_cols.Add(collider, DamageType.Head);
 

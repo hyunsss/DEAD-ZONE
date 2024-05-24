@@ -62,6 +62,8 @@ public class PlayerStatus : MonoBehaviour
 
             if(moisture < 5) {
                 text_Moisture.color = Color.red;
+            } else if(moisture < 6) {
+                text_Moisture.color = Color.white;
             }
         }
     }
@@ -81,6 +83,8 @@ public class PlayerStatus : MonoBehaviour
 
             if(hungry < 5) {
                 text_Moisture.color = Color.red;
+            } if(hungry < 6) {
+                text_Moisture.color = Color.white;
             }
         }
     }
